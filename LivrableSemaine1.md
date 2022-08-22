@@ -45,7 +45,7 @@ suivantes:
 - Reine 3 pts
 - Valet 2 pts
 
-Toutes les autres cartes valents 0 pts.
+Toutes les autres cartes valent 0 pts.
 La victoire est remportée par la première équipe atteignant les 1000 pts.
 
 Chaque partie doit se terminer par un arrêt volontaire, une victoire ou une défaite de l'utilisateur.
