@@ -16,9 +16,12 @@ de jouer au Jass contre un bot ou un autre joueur au travers d'une session.
 
 A suivre...
 
-# Worklof IJass
-
 ## Processus de developpement
+
+### Méthodologie
+
+Afin de mener à bien ce projet, nous avons décidé d'utiliser la méthode agile tout en y associant des principe de la programmation SCRUM.
+Comme nous préférons avancer à petits pas rapides sur notre projet, nous avons pensé que cette méthode incrémentale conviendrait au groupe.
 
 ### Organisation du repository github
 
@@ -30,6 +33,8 @@ A suivre...
 - *feature/nom_feature* : ajout de fonctionnalités à la version courante
 - *fix/nom_fix* : résolution d'issues
 
+La branche *main* ne pourra pas être modifié
+
 ### Technologies utilisées
 
 #### Frontend
@@ -40,6 +45,7 @@ A suivre...
 
 - Java
 - Scala (à voir)
+- Docker/Kubernetes (à définir, mais plutôt Docker)
 
 ### Build et deployement
 
@@ -48,28 +54,42 @@ Deployement via image docker ou Kubernetes (à choisir, mais préférence pour d
 
 ### Ajout d'une fonctionnalité
 
-Création d'une nouvelle branche dûment nommée (p.ex feat/nomfeature). Conception locale, puis pull request lors de la fin de la feature. La requête est ensuite reviewed
+Afin d'ajouter une fonctionnalité au projet, il faut commencer par cérer une nouvelle branche dûment nommée (p.ex feat/nomfeature). Tout ajout de code concernant la fonctionnalité se fait sur la branche créée, puis pull request lors de la fin de la feature. La requête est ensuite reviewed
 par un autre membre du groupe puis merge ou non selon l'état de la branche feature.
 
 ### Tests
 
-Conception des tests à la main et automatisation via un outil (à choisir).
+Conception des tests à la main et automatisation via un outil (à définir). Nous prévoyons de nous concentrer sur des tests unitaires, puis d'éventuellement pousser les tests plus loins si nous en avons le temps et les moyens.
 
 ## Convention de nommage et stories
 
 ### User stories
 
-Créer une issue sur github afin de définir les actions git autorisée par les différents acteurs. Définir le temps optimiste, réaliste et
+Créer une issue sur github afin de définir les actions git autorisées par les différents acteurs. Définir le temps optimiste, réaliste et
 pessimiste que prendra la story. Attitrer la story. Créer une nouvelle branche, nommée *feat/nom_feature* depuis le main et travailler uniquement
 sur cette branche. Commit early, commit often. Une fois la story terminée, effectuer une pull request afin qu'elle soit revue par un autre
 membre du groupe. Si la story est validée, effectuer un merge de la branche sur le main, sinon le responsable de la branche doit régler les issues
 créées par la story.
 
-## Issues
+### Issues
 
 Créer une issue sur github et la relier à la story qui la concerne. Effectuer une estimation de temps (avant ou après avoir travaillé dessus). Effectuer
 un feedback sur le temps de résolution et l'estimation. Les personnes s'auto-attitrent les issues et leur validation doit être faite par un membre
 tiers.
+
+### Commits
+Lorsqu'un commit est effectué, il faut impérativement que son message permette de saisir sa nature à l'aide d'une description succinte.
+Le modèle de message de commit est donc le suivant:
+`<type> : <description>
+
+<corps du message optionnel>`
+Les types de commits peuvent être les suivants:
+- feat: ajout d'une fonctionnalité au code
+- fix: correction d'un bug
+- docs: ajout ou modification de la documentation
+- style: changement de la présentation du code (identation, fin de ligne, ...)
+- perf: amélioration de la performance du code
+- chore: modification n'impactant pas l'utilisateur (p.ex modifications du fichier pom.xml)
 
 ## Tableau Kanban
 
@@ -79,4 +99,5 @@ Nous avons décidé d'utiliser un tableau Kanban afin de travailler avec no user
 - En cours
 - Terminé
 
+# Sprint 1
 
