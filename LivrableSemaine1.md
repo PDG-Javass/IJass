@@ -24,7 +24,7 @@ Le serveur sera un simple container Docker *définir quelle image on choisit !* 
 Les joueurs jouent par équipe de deux et ne peuvent pas jouer l'un après l'autre.
 La Hiérarchie des cartes est la suivante: Toutes les couleurs sauf l'atout suit les règles conventionnelles
 (As, Roi, Reine, Valet, 10, 9, ...). Concernant l'atout, la carte la plus forte est le valet, que l'on nomme
-*bourg* suivi par le neuf, appelé *nel*. Les autres cartes suivent les règles conventionnelles entre elles.
+*buur* suivi par le neuf, appelé *nell*. Les autres cartes suivent les règles conventionnelles entre elles.
 L'atout bat toutefois les cartes d'autres couleurs quelles qu'elles soient.
 Chaque partie comprend plusieurs round, eux-même composés de 9 tours.
 Au début de chaque round, chaque joueur se voit distribuer 9 cartes parmis un paquet de 36 cartes. Un des joueur choisit
@@ -32,13 +32,13 @@ la couleur de l'atout.
 Une fois la partie commencée, chaque joueur pose une carte à chaque tour. La première carte posée définit la couleur
 courante du tour. Un joueur se voit obliger de *jeter* une de ses cartes si il ne possède pas la couleur 
 couramment jouée ou de l'atout. À contrario, si un joueur possède une unique carte de la couleur jouée, il se voit
-obligé de la jouer, sauf s'il s'agit du bourg (valet d'atout).
+obligé de la jouer, sauf s'il s'agit du buur.
 Un tour se termine lorsque chaque joueur a joué ou jeté une carte. Au terme de chaque tour, la personne ayant posé
 la carte la plus forte remporte le tas pour son équipe.
 Un round se termine lorsque toutes les cartes ont été jouées. Les points sont alors compatibilisés selon les règles
 suivantes:
-- Bourg 20 pts
-- Nel 14 pts
+- Buur 20 pts
+- Nell 14 pts
 - As 11 pts
 - Dix 10 pts
 - Roi 4 pts
