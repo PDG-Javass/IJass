@@ -1,1 +1,48 @@
 # PDG 2022 - Livrable Semaine 1
+
+## Description du projet
+
+Pour ce travail de groupe, nous avons décidé de concevoir un jeu de Jass. L'objectif de ce projet est de pouvoir
+jouer au Jass avec un/des joueurs/bots en ligne. Un utilisateur peut jouer une partie en faisant équipe avec un
+autre joueur ou un bot.
+Cette plateforme de jeu permettra aux utilisateurs de jouer au Jass seul ou avec ses amis tout en comptabilisant
+les points au fil des parties.
+
+## Requirements fonctionnels
+
+Notre programme doit permettre de se connecter et lancer une partie à tout moment. Dès lors, nous aurons besoin de
+deux entités:
+- Clients : permettant aux utilisateurs de se connecter à la plateforme.
+- Serveur : permet aux utilisateurs de jouer entre eux ou contre la machine.
+
+La Hiérarchie des cartes est la suivante: Toutes les couleurs sauf l'atout suit les règles conventionnelles
+(As, Roi, Reine, Valet, 10, 9, ...). Concernant l'atout, la carte la plus forte est le valet, que l'on nomme
+*bourg* suivi par le neuf, appelé *nel*. Les autres cartes suivent les règles conventionnelles. L'atout bat toutefois
+les cartes d'autres couleurs quelles qu'elles soient.
+au début de la partie, un joueur se voit distribuer 9 cartes parmis un paquet de 36 cartes. Un des joueur choisit
+la couleur de l'atout.
+Une fois la partie commencée, chaque joueur pose une carte à chaque tour. La première carte posée définit la couleur
+courante du tour. Un joueur se voit obliger de *jeter* une de ses cartes si il ne possède pas la couleur 
+couramment jouée ou de l'atout. À contrario, si un joueur possède une unique carte de la couleur jouée, il se voit
+obligé de la jouer, sauf s'il s'agit du bourg (valet d'atout).
+Chaque partie doit se terminer par un arrêt volontaire, une victoire ou une défaite de l'utilisateur.
+
+### Client
+
+Concernant le client de notre programme, il nous faudra:
+- Game Manager : qui interagit avec l'utilisateur et transmet les commandes au jeu
+- Modélisation des cartes sous la forme de classes
+- Assets pour les cartes à jouer
+- UI permettant d'afficher la partie en cours
+
+
+## Requirements non-fonctionnels
+
+Le programme doit assurer une partie fluide, en tout cas pendant la manche. Ce qui implique que l'interaction
+entre l'utilisateur et le serveur doit être rapide et que le bot doit jouer rapidement.
+
+## Mockups
+
+## Landing page
+
+## Méthodologie
