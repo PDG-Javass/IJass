@@ -39,7 +39,7 @@ Comme nous préférons avancer à petits pas rapides sur notre projet, nous avon
 - *feature/nom_feature* : ajout de fonctionnalités à la version courante
 - *fix/nom_fix* : résolution d'issues
 
-La branche *main* ne pourra pas être modifié
+La branche *main* ne pourra être modifiée que sous certaines conditions.
 
 ### Technologies utilisées
 
