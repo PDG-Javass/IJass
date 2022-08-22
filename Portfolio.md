@@ -5,6 +5,12 @@
 Pour ce projet de groupe, nous avons décidé de créer une plateforme de jeu de Jass multijoueur. L'application permettra à l'utilisateur
 de jouer au Jass contre un bot ou un autre joueur au travers d'une session. 
 
+### Licence et code de conduite
+
+Le projet est disponible sous [licence MIT](https://en.wikipedia.org/wiki/MIT_License).
+
+Il est fortemenent recommandé de lire et d'appliquer le [code de conduite](./CODE_OF_CONDUCT.md).
+
 ### Auteurs
 - Egger Magali
 - Huart Hugo
