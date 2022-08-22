@@ -44,6 +44,7 @@ suivantes:
 - Roi 4 pts
 - Reine 3 pts
 - Valet 2 pts
+
 Toutes les autres cartes valents 0 pts.
 La victoire est remportée par la première équipe atteignant les 1000 pts.
 
