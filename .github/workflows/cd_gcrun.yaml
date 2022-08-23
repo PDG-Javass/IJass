@@ -21,7 +21,7 @@ name: Build and Deploy to Cloud Run
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   SERVICE: server
-  REGION: us-east-1
+  REGION: us-east1
 
 jobs:
   deploy:
