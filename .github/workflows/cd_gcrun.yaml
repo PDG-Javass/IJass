@@ -16,7 +16,7 @@ on:
   push:
     branches:
      - example
-     
+
 name: Build and Deploy to Cloud Run
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
