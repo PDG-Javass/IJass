@@ -107,3 +107,20 @@ Nous avons décidé d'utiliser un tableau Kanban afin de travailler avec no user
 
 # Sprint 1
 
+
+## Fonctionnalités espérées
+
+Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces trois semaines.
+
+- Les 36 cartes sont mélangées.
+- Les 36 cartes sont distribuées aux 4 joueurs (donc 9 par personne).
+- Chaque joueur pose une carte par tour.
+- La carte la plus forte emporte la plie.
+- Si notre coéquipier gagne la plie, le score s'incrémente.
+- Le score s'incrémente du nombre de points selon ce qui est écrit dans livrable/Semaine1.md.
+- Le joueur choisit l'atout.
+- L'atout l'emporte sur les trois autres familles.
+- Le buur puis le nell sont les deux plus fortes cartes.
+- Le joueur est obligé de suivre la famille qui a été posé en premier.
+    - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
+    - Le joueur peut couper avec un atout si une autre famille a été posé. 
