@@ -98,7 +98,7 @@ terminée, une PR permet de la merge à la branche *develop*.
 ## Landing page
 
 ## Méthodologie
-Afin de mener à bien ce projet, notre équipe a choisi de pratiquer une méthode agile SRUM. Cette méthodologie
+Afin de mener à bien ce projet, notre équipe a choisi de pratiquer une méthode agile SCRUM. Cette méthodologie
 incrémentale correspond à notre dynamique de groupe. Nous allons donc effectuer ce travail sur 3 Sprints correspondant
 à chaque semaine. 
 
