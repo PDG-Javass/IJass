@@ -22,9 +22,11 @@ Si l'on souhaite jouer à plusieurs, le site crée une session et génère un li
 - le décompte des points pour les deux équipes se fait en direct sur un encart situé en haut à gauche de l'écran
 - les cartes jouables à chaque tour sont mises en surbrillance, pour poser une carte il suffit de cliquer sur une carte jouable
 - si le joueur clique sur une carte qui n'est pas jouable, celle-ci n'est pas posée afin d'éviter toute forme de triche et ainsi offrir une plus-value supplémentaire par rapport au chibre traditionnel
+- à la fin de chaque manche, un écran s'affiche et indique le nombre de points marqués par chaque équipe avant d'ajouter ces points à leur total respectif
+- à la fin de la partie, un écran s'affiche et indique si le joueur actif a gagné ou perdu ainsi que le score total de chaque équipe
 
 ## Comment le site a été construit
-Nous sommes une équipe de 5 étudiants en dernière année de bachelor à la HEIG-VD. Deux d'entre nous sont issus de la section logicielle, deux autres viennent de la section données et la dernière provient de la section réseau afin de couvrir le champ de compétences le plus large possible. Nous avons codé cette application dans le cadre d'un projet de HES d'été d'une durée de trois semaines.
+Nous sommes une équipe de 5 étudiants en dernière année de bachelor à la HEIG-VD dans la filière Informatique et systèmes de communication. Magali Egger et Tania Nunez sont issues de l'orientation Informatique logicielle, Hugo Huart et Nicolas Wichoud viennent de l'orientation Ingénierie des données tandis que Maëlle Vogel provient de l'orientation Réseaux et systèmes. Cette diversité dans les orientations nous permet de couvrir un champ de compétences relativement large afin d'obtenir le projet le plus complet possible. Nous avons codé cette application dans le cadre d'un projet de HES d'été d'une durée de trois semaines.
 
 ![](groupe.jpg)
 *L'équipe du projet, avec de gauche à droite Maëlle Vogel, Hugo Huart, Tania Nunez, Nicolas Wichoud et Magali Egger*
