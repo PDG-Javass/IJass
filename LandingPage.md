@@ -4,7 +4,7 @@
 ## Comment tout a commencé
 Le jass est un jeu particulièrement populaire et emblématique de la Suisse. S'il est toujours agréable d'y jouer avec des amis ou de la famille, nous avons constaté qu'il n'existe pas vraiment de
 solution idéale pour quelqu'un qui veut jouer seul ou affronter des gens en ligne. Nous avons donc choisi de remédier à ces deux problématiques en créant Javass,
-une application web qui permet de jouer au chibre contre des bots perfectionnés ou contre des personnes en chair et en os à distance, voire un mélange des deux.
+une application web qui permet de jouer au chibre contre des bots perfectionnés ou contre des personnes en chair et en os à distance, voire un mélange des deux si l'un des participants est déconnecté en cours de partie.
 
 ## Comment ça se joue
 Le jass est un jeu de cartes qui se décline en plusieurs variantes. Dans le cadre de ce projet, nous avons choisi de nous concentrer sur la variante considérée comme la plus populaire, à savoir le chibre. Celui-ci se joue en deux équipes de deux joueurs dont l'objectif est d'engranger un maximum de points.
@@ -22,3 +22,9 @@ Si l'on souhaite jouer à plusieurs, le site crée une session et génère un li
 - le décompte des points pour les deux équipes se fait en direct sur un encart situé en haut à gauche de l'écran
 - les cartes jouables à chaque tour sont mises en surbrillance, pour poser une carte il suffit de cliquer sur une carte jouable
 - si le joueur clique sur une carte qui n'est pas jouable, celle-ci n'est pas posée afin d'éviter toute forme de triche et ainsi offrir une plus-value supplémentaire par rapport au chibre traditionnel
+
+## Comment le site a été construit
+Nous sommes une équipe de 5 étudiants en dernière année de bachelor à la HEIG-VD. Deux d'entre nous sont issus de la section logicielle, deux autres viennent de la section données et la dernière provient de la section réseau afin de couvrir le champ de compétences le plus large possible. Nous avons codé cette application dans le cadre d'un projet de HES d'été d'une durée de trois semaines.
+
+![](groupe.jpg)
+*L'équipe du projet, avec de gauche à droite Maëlle Vogel, Hugo Huart, Tania Nunez, Nicolas Wichoud et Magali Egger*
