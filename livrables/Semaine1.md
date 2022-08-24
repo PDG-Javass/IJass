@@ -98,3 +98,15 @@ terminée, une PR permet de la merge à la branche *develop*.
 ## Landing page
 
 ## Méthodologie
+Afin de mener à bien ce projet, notre équipe a choisi de pratiquer une méthode agile SRUM. Cette méthodologie
+incrémentale correspond à notre dynamique de groupe. Nous allons donc effectuer ce travail sur 3 Sprints correspondant
+à chaque semaine. 
+
+Chaque début de semaine, nous décomposerons le travail à faire en User stories, elles-même possiblement
+décomposées afin d'être partagées entre plusieurs membres du groupe. Chaque membre se voit attitrer (par un autre membre
+ou lui-même) une story. Chaque membre doit effectuer trois estimations du temps que prendra la story.
+Nous tenons toutefois à appliquer un peu le principe de pair programming si nécessaire.
+
+À la fin d'un sprint, nous repasserons sur les estimations de temps et effectuerons un feedback général afin de
+pouvoir améliorer ces aspects au fil des sprints. Si certaines stories ne sont pas achevée à terme du sprint
+correspondant, il sera passé au prochain sprint avec la plus haute priorité.
