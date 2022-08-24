@@ -18,8 +18,8 @@ Notre programme doit permettre de se connecter et jouer une partie à tout momen
 deux entités:
 - Client : permettant aux utilisateurs de se connecter à la plateforme.
 - Serveur : permet aux utilisateurs de jouer entre eux ou contre la machine.
-Le serveur sera un simple container Docker *définir quelle image on choisit !* sur lequel notre script Java sera
-éxécuté.
+  Le serveur sera un simple container Docker *définir quelle image on choisit !* sur lequel notre script Java sera
+  éxécuté.
 
 Les joueurs jouent par équipe de deux et ne peuvent pas jouer l'un après l'autre.
 La Hiérarchie des cartes est la suivante: Toutes les couleurs sauf l'atout suit les règles conventionnelles
@@ -32,7 +32,7 @@ Chaque partie comprend plusieurs round, eux-même composés de 9 tours.
 Au début de chaque round, chaque joueur se voit distribuer 9 cartes parmis un paquet de 36 cartes. Un des joueur choisit
 la couleur de l'atout.
 Une fois la partie commencée, chaque joueur pose une carte à chaque tour. La première carte posée définit la couleur
-courante du tour. Un joueur se voit obliger de *jeter* une de ses cartes si il ne possède pas la couleur 
+courante du tour. Un joueur se voit obliger de *jeter* une de ses cartes si il ne possède pas la couleur
 couramment jouée ou de l'atout. À contrario, si un joueur possède une unique carte de la couleur jouée, il se voit
 obligé de la jouer, sauf s'il s'agit du buur.
 
@@ -70,6 +70,28 @@ entre l'utilisateur et le serveur doit être rapide et que le bot doit jouer rap
 L'affichage des points doit être propre et soit affiché en permanence, soit accessible facilement.
 Lors de session de jeu multijoueur, la connexion entre eux doit rester stable et si l'un des joueurs se voit
 déconnecté, il doit pouvoir rejoindre la partie ou être remplacé par un bot.
+
+## Choix technologiques
+
+### Application
+Frontend
+- Javascript
+
+Backend
+- Java
+- Scala (à voir)
+- Docker/Kubernetes (à définir, mais plutôt Docker)
+
+### Outils utilisés sur le repository github
+Nous avons décidé d'utiliser gitflow afin de travailler propremement sur différentes branches avec différents
+niveaux de protection.
+Nous avons configuré la branche main afin qu'elle ne puisse pas être modifiée par une autre action
+qu'une Pull Request. Cette même PR doit être validée par une autre personne.
+Le workflow gitflow consiste également en la création de la branche *develop* qui est celle sur laquelle
+nous allons effectivement travailler. Lorsque nous souhaitons effectuer une release, il suffit de merge
+la branche develop au *main*. Chaque fonctionnalité nécessite donc la création d'une nouvelle branche à partir
+de *develop* et tout ajout de code se fait exclusivement sur les branches prévues à cet effet. Une fois la feature
+terminée, une PR permet de la merge à la branche *develop*.
 
 ## Mockups
 
