@@ -37,7 +37,7 @@ Toutes les couleurs sauf l'atout suivent les règles conventionnelles
 L'atout bat toutefois les cartes d'autres couleurs quelles qu'elles soient.
 
 
-Chaque partie comprend plusieurs rounds, eux-mêmes composés de 9 tours.
+Chaque partie comprend plusieurs rounds (autant qu'il en faut pour atteindre 1000 pts).
 Au début de chaque round, chaque joueur se voit distribuer 9 cartes parmi un paquet de 36 cartes. Un des joueurs choisit
 la couleur de l'atout.
 Une fois la partie commencée, chaque joueur pose une carte par tour. La première carte posée définit la couleur
@@ -47,7 +47,7 @@ jouée, il se voit obligé de la jouer, sauf s'il s'agit du buur.
 
 
 Un tour se termine lorsque chaque joueur a joué ou jeté une carte. Au terme de chaque tour, la personne ayant posé
-la carte la plus forte remporte le tas pour son équipe.
+la carte la plus forte remporte le tas pour son équipe et gagne le droit de commencer la prochaine manche.
 Un round se termine lorsque toutes les cartes ont été jouées. Les points sont alors comptabilisés selon les règles
 suivantes :
 - Buur 20 pts
