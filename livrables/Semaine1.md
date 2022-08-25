@@ -68,11 +68,10 @@ Chaque partie doit se terminer par un arrêt volontaire, une victoire ou une dé
 Concernant le client de notre programme, il nous faudra :
 - Game Manager : qui interagit avec l'utilisateur et transmet les commandes au jeu
 - Modélisation des cartes sous la forme d'une classe
-- Assets pour les cartes à jouer
 - UI permettant d'afficher la partie en cours
 
 
-## Requirements non-fonctionnels
+## Requirements non fonctionnels
 
 Le programme doit assurer une partie fluide, en tout cas pendant chaque tour. Ce qui implique que l'interaction
 entre l'utilisateur et le serveur doit être rapide et que le bot doit jouer rapidement.
