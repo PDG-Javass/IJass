@@ -19,31 +19,32 @@ deux entités principales :
 - Le client : permettant aux utilisateurs de se connecter à la plateforme et gérant les interactions entre le joueur
 et le jeu.
 - Le serveur : permet aux utilisateurs de jouer entre eux ou contre la machine.
-  Le serveur est un simple container Docker (l'image choisie est alpine 17) deployé sur la plateforme Google Cloud
+  Le serveur est un simple container Docker (l'image choisie est alpine 17) déployé sur la plateforme Google Cloud
 Run.
 
 Les joueurs jouent par équipe de deux et jouent en alternance.
+
 La Hiérarchie des cartes est la suivante : 
 
-Toutes les couleurs sauf l'atout suit les règles conventionnelles
-(As, Roi, Reine, Valet, 10, 9, ...). Concernant l'atout, la carte la plus forte est le valet, que l'on nomme
+Toutes les couleurs sauf l'atout suivent les règles conventionnelles
+(As, Roi, Reine, Valet, 10, 9, ..., 6). Concernant l'atout, la carte la plus forte est le valet, que l'on nomme
 *buur* suivi par le neuf, appelé *nell*. Les autres cartes suivent les règles conventionnelles entre elles.
 L'atout bat toutefois les cartes d'autres couleurs quelles qu'elles soient.
 
 
-Chaque partie comprend plusieurs round, eux-même composés de 9 tours.
-Au début de chaque round, chaque joueur se voit distribuer 9 cartes parmis un paquet de 36 cartes. Un des joueur choisit
+Chaque partie comprend plusieurs rounds, eux-mêmes composés de 9 tours.
+Au début de chaque round, chaque joueur se voit distribuer 9 cartes parmi un paquet de 36 cartes. Un des joueurs choisit
 la couleur de l'atout.
-Une fois la partie commencée, chaque joueur pose une carte à chaque tour. La première carte posée définit la couleur
-courante du tour. Un joueur se voit obliger de *jeter* une de ses cartes si il ne possède pas la couleur
-couramment jouée ou de l'atout. À contrario, si un joueur possède une unique carte de la couleur jouée, il se voit
-obligé de la jouer, sauf s'il s'agit du buur.
+Une fois la partie commencée, chaque joueur pose une carte par tour. La première carte posée définit la couleur
+courante du tour. Un joueur se voit obliger de *jeter* une de ses cartes s'il ne possède pas la couleur
+couramment jouée ou de l'atout pour *couper* la plie. À contrario, si un joueur possède une unique carte de la couleur
+jouée, il se voit obligé de la jouer, sauf s'il s'agit du buur.
 
 
 Un tour se termine lorsque chaque joueur a joué ou jeté une carte. Au terme de chaque tour, la personne ayant posé
 la carte la plus forte remporte le tas pour son équipe.
-Un round se termine lorsque toutes les cartes ont été jouées. Les points sont alors compatibilisés selon les règles
-suivantes:
+Un round se termine lorsque toutes les cartes ont été jouées. Les points sont alors comptabilisés selon les règles
+suivantes :
 - Buur 20 pts
 - Nell 14 pts
 - As 11 pts
@@ -77,19 +78,24 @@ déconnecté, il doit pouvoir rejoindre la partie ou être remplacé par un bot.
 ## Choix technologiques
 
 ### Application
+
 Frontend
-- Javascript
+- Svelte (Javascript FW)
+- (Hébergement à choisir) Heroku, Netlify
 
 Backend
 - Java
-- Scala (à voir)
-- Docker/Kubernetes (à définir, mais plutôt Docker)
+- Spring
+- Docker
+- Google Cloud Run
 
 ### Outils utilisés sur le repository github
-Nous avons décidé d'utiliser gitflow afin de travailler propremement sur différentes branches avec différents
+
+Nous avons décidé d'utiliser gitflow afin de travailler proprement sur différentes branches avec différents
 niveaux de protection.
 Nous avons configuré la branche main afin qu'elle ne puisse pas être modifiée par une autre action
-qu'une Pull Request. Cette même PR doit être validée par une autre personne.
+qu'un Pull Request. Cette même PR doit être validée par une autre personne.
+La branche *develop* est définie comme celle par défaut sur notre repository.
 Le workflow gitflow consiste également en la création de la branche *develop* qui est celle sur laquelle
 nous allons effectivement travailler. Lorsque nous souhaitons effectuer une release, il suffit de merge
 la branche develop au *main*. Chaque fonctionnalité nécessite donc la création d'une nouvelle branche à partir
@@ -105,7 +111,7 @@ Afin de mener à bien ce projet, notre équipe a choisi de pratiquer une méthod
 incrémentale correspond à notre dynamique de groupe. Nous allons donc effectuer ce travail sur 3 Sprints correspondant
 à chaque semaine. 
 
-Chaque début de semaine, nous décomposerons le travail à faire en User stories, elles-même possiblement
+Chaque début de semaine, nous décomposerons le travail à faire en User stories, elles-mêmes possiblement
 décomposées afin d'être partagées entre plusieurs membres du groupe. Chaque membre se voit attitrer (par un autre membre
 ou lui-même) une story. Chaque membre doit effectuer trois estimations du temps que prendra la story.
 Nous tenons toutefois à appliquer un peu le principe de pair programming si nécessaire.
