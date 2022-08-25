@@ -162,10 +162,10 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
     - Le joueur peut couper avec un atout si une autre famille a été posée.
     - La sous-coupe est interdite. Si quelqu'un coupe on ne peut pas mettre un atout plus faible. Sauf si c'est notre dernière carte.
 
-### si le temps le permet
+### Si le temps le permet
 
 - Jouer en ligne avec des joueurs.
-- Ajouter le chypre (demander à son coéquipier de choisir l'atout pour nous).
+- Ajouter le chibre (demander à son coéquipier de choisir l'atout pour nous).
 - Ajouter les annonces. Au début, on annonce des combinaisons spéciales de cartes pour gagner plus de points.
 - Rendre les bots plus intelligent.
 
