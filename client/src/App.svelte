@@ -27,7 +27,7 @@
     {#await data}
       <p>...veuillez patienter</p>
     {:then content}
-      <p>Le serveur dit {data}</p>
+      <p>Le serveur dit {content}</p>
     {:catch error}
       <p style="color: red">Erreur</p>
     {/await}
