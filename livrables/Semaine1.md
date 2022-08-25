@@ -25,7 +25,7 @@ et le jeu.
 Run.
 
 Lorsqu'un joueur lance une partie seul, il se voit attribuer un id unique de partie qui sera utilisé dans les requêtes 
-GET. Dès lors plusieurs parties peuvent prendre lieu en même temps.
+GET. Dès lors plusieurs parties peuvent avoir lieu en même temps.
 
 Les joueurs jouent par équipe de deux et jouent en alternance.
 
@@ -58,10 +58,14 @@ suivantes :
 - Reine 3 pts
 - Valet 2 pts
 
-Toutes les autres cartes valent 0 pts.
+Toutes les autres cartes valent 0 pt.
 La victoire est remportée par la première équipe atteignant les 1000 pts.
 
 Chaque partie doit se terminer par un arrêt volontaire, une victoire ou une défaite de l'utilisateur.
+
+Quand l'utilisateur se connecte au site, une page d'accueil s'affiche avec un unique bouton "Start a game". Quand il appuie sur ce bouton, le site lui propose alors de soit cliquer sur un lien qui redirige l'utilisateur vers un site expliquant les règles du chibre, soit d'appuyer sur un bouton "Continuer". Ce dernier permet d'accéder à un nouvel écran sur lequel l'utilisateur peut choisir entre deux boutons, respectivement lancer une "partie locale" ou une "partie entre amis".Une fois la partie lancée, il est possible de jouer une partie de jass. Lorsque c'est le tour de l'utilisateur de choisir l'atout, quatre boutons apparaissent représentant les quatres couleurs des cartes. La couleur de l'atout choisi sera affichée pendant la partie. Les points sont ajoutés au score de l'équipe qui a remporté la plie à la fin de celle-ci. Le score courant est visible en permanence dans un encart situé en haut à gauche de l'écran de jeu. Les cartes jouées sont positionnées devant le joueur auquel elles appartiennent. Un bouton "quitter le jeu" est présent en tout temps en haut à droite de l'écran de jeu et permet d'abandonner la partie et revenir à la page d'accueil. A la fin de chaque manche, un tableau récapitulatif des scores est affiché avant de passer à la manche suivante. A l'issue de la partie, un écran indiquant les scores finaux ainsi que la vitoire ou la défaite de l'utilisateur apparaît. L'utilisateur peut alors cliquer n'importe où sur l'écran pour revenir à l'écran d'accueil et relancer une partie ou quitter le jeu.
+
+Un exemple détaillé de l'utilisation du site est présenté dans les mockups situés ci-dessous, indiquant ainsi visuellement les principaux requirements du site du point de vue d'un utilisateur lambda.
 
 ### Client
 
