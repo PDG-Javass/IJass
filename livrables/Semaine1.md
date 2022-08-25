@@ -37,7 +37,7 @@ Toutes les couleurs sauf l'atout suivent les règles conventionnelles
 L'atout bat toutefois les cartes d'autres couleurs quelles qu'elles soient.
 
 
-Chaque partie comprend plusieurs rounds (autant qu'il en faut pour atteindre 1000 pts).
+Chaque partie comprend plusieurs rounds, eux-mêmes composés de 9 tours.
 Au début de chaque round, chaque joueur se voit distribuer 9 cartes parmi un paquet de 36 cartes. Un des joueurs choisit
 la couleur de l'atout.
 Une fois la partie commencée, chaque joueur pose une carte par tour. La première carte posée définit la couleur
@@ -47,7 +47,7 @@ jouée, il se voit obligé de la jouer, sauf s'il s'agit du buur.
 
 
 Un tour se termine lorsque chaque joueur a joué ou jeté une carte. Au terme de chaque tour, la personne ayant posé
-la carte la plus forte remporte le tas pour son équipe et gagne le droit de commencer la prochaine manche.
+la carte la plus forte remporte le tas pour son équipe.
 Un round se termine lorsque toutes les cartes ont été jouées. Les points sont alors comptabilisés selon les règles
 suivantes :
 - Buur 20 pts
@@ -68,10 +68,11 @@ Chaque partie doit se terminer par un arrêt volontaire, une victoire ou une dé
 Concernant le client de notre programme, il nous faudra :
 - Game Manager : qui interagit avec l'utilisateur et transmet les commandes au jeu
 - Modélisation des cartes sous la forme d'une classe
+- Assets pour les cartes à jouer
 - UI permettant d'afficher la partie en cours
 
 
-## Requirements non fonctionnels
+## Requirements non-fonctionnels
 
 Le programme doit assurer une partie fluide, en tout cas pendant chaque tour. Ce qui implique que l'interaction
 entre l'utilisateur et le serveur doit être rapide et que le bot doit jouer rapidement.
@@ -130,9 +131,11 @@ au centre de l'écran et le score en haut à gauche.
 
 ![](Img/page_partie_en_cours.jpg)
 
+A la fin de chaque plie, le score de l'équipe qui a remporté la plie est automatiquement mis à jour en y ajoutant les points de celle-ci
+
 ![](Img/page_partie_en_cours_2.jpg)
 
-Il est possible de zoomer sur le tableau des scores.
+A la fin de chaque manche, un tableau récapitulatif des scores de la manche est affiché avant de passer à la manche suivante.
 
 ![](Img/tableau_score.jpg)
 
