@@ -1,4 +1,3 @@
-
 # Landing Page
 
 ## Comment tout a commencé

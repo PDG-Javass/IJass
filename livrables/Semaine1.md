@@ -62,7 +62,7 @@ Chaque partie doit se terminer par un arrêt volontaire, une victoire ou une dé
 
 ### Client
 
-Concernant le client de notre programme, il nous faudra:
+Concernant le client de notre programme, il nous faudra :
 - Game Manager : qui interagit avec l'utilisateur et transmet les commandes au jeu
 - Modélisation des cartes sous la forme d'une classe
 - Assets pour les cartes à jouer
@@ -105,6 +105,40 @@ de *develop* et tout ajout de code se fait exclusivement sur les branches prévu
 terminée, une PR permet de la merge à la branche *develop*.
 
 ## Mockups
+
+La page d'accueil de Javass est la suivante :
+![](/Img/page_accueil.jpg)
+
+Lorsque vous appuyez sur "Start a Game", vous êtes menés à une page vous proposant de relire les règles
+si vous êtes un profane ou que vous n'avez pas joué depuis longtemps.
+
+![](/Img/page_regles.jpg)
+
+Une fois votre relecture des règles terminée, appuyer sur continuer affichera une page permettant de choisir
+le type de partie souhaitée.
+
+![](/Img/page_choix_type_partie.jpg)
+
+Avant de commencer à jouer chaque manche, chacun leur tour, les joueurs choisissent la couleur d'atout.
+
+![](/Img/choix_atout.jpg)
+
+Une fois la partie lancée, les joueurs et votre main sont affichés. Les cartes jouées sont face contre ciel
+au centre de l'écran et le score en haut à gauche.
+
+![](/Img/page_partie_en_cours.jpg)
+
+![](/Img/page_partie_en_cours_2.jpg)
+
+Il est possible de zoomer sur le tableau des scores.
+
+![](/Img/tableau_score.jpg)
+
+À l'issue de la partie les scores sont affichés et les vainqueurs désignés.
+
+![](/Img/page_victoire.jpg)
+
+![](/Img/page_defaite.jpg)
 
 ## Landing page
 
