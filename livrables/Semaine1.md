@@ -40,7 +40,7 @@ obligé de la jouer, sauf s'il s'agit du buur.
 Un tour se termine lorsque chaque joueur a joué ou jeté une carte. Au terme de chaque tour, la personne ayant posé
 la carte la plus forte remporte le tas pour son équipe.
 Un round se termine lorsque toutes les cartes ont été jouées. Les points sont alors compatibilisés selon les règles
-suivantes:
+suivantes :
 - Buur 20 pts
 - Nell 14 pts
 - As 11 pts
