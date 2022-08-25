@@ -124,3 +124,33 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 - Le joueur est obligé de suivre la famille qui a été posé en premier.
     - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
     - Le joueur peut couper avec un atout si une autre famille a été posé. 
+
+## Tests du respect des règles
+|Règle à tester|Réussite du test|
+|:-|:-:|
+|Au début de chaque manche, les 36 cartes sont mélangées de façon aléatoire|-|
+|Les joueurs commencent chaque manche avec 9 cartes aléatoires chacun|-|
+|Les cartes dans la main du joueur actif sont triées en tout temps par couleur dans l'ordre carreau-pique-coeur-trèfle dans le sens de lecture|-|
+|Les cartes dans la main du joueur actif de même couleur sont ensuite triées entre elles par puissance croissante dans le sens de lecture sans prendre en compte le buur et le nell|-|
+|Chaque carte est présente une et une seule fois dans l'ensemble des mains de tous les joueurs au début de chaque manche|-|
+|Chaque joueur peut et doit poser une et une seule carte jouable par tour avant de passer au joueur suivant|-|
+|Chacune des deux équipes et constituée de deux joueurs situés de part et d'autre du tapis de jeu|-|
+|Le joueur qui choisit l'atout pour la première manche est choisi aléatoirement parmi les quatre joueurs|-|
+|Les joueurs choisissent l'atout chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
+|Le joueur qui choisit l'atout à chaque manche joue la première carte de la première plie de la manche|-|
+|Les joueurs posent une carte chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
+|Le joueur qui remporte une plie pose la première carte de la plie suivante|-|
+|Si la première carte de la plie est un atout, tous les joueurs qui possèdent au moins un atout différent du buur sont obligés de poser un atout|-|
+|Si la première carte de la plie est un atout, le joueur actif peut poser n'importe quelle carte s'il ne possède pas d'atouts ou uniquement le buur|-|
+|Si la première carte de la plie n'est pas un atout, tous les joueurs qui peuvent suivre dans cette couleur doivent le faire ou couper la plie|-|
+|Si la première carte de la plie n'est pas un atout, le joueur actif peut poser n'importe quelle carte s'il ne peut pas suivre dans la couleur d'entrée|-|
+|Si la première carte de la plie n'est pas un atout et qu'un joueur coupe la plie, les joueurs suivants ne peuvent pas sous-couper à moins de ne pas avoir le choix|-|
+|L'équipe qui remporte la dernière plie de la manche remporte 5 points supplémentaires|-|
+|A la fin de chaque manche, 157 points sont distribués entre les deux équipes|-|
+|Quand une équipe atteint 1000 points, la partie s'arrête et l'équipe qui a atteint ce pallier est déclarée vainqueure|-|
+|Si aucun atout n'est posé, le joueur qui pose la carte la plus haute de la même couleur que la carte d'entrée remporte la plie|-|
+|Si un ou plusieurs joueurs coupent la plie, le joueur ayant posé l'atout le plus puissant remporte la plie|-|
+|En dehors de l'atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : as, roi, dame, valet, dix, neuf, huit, sept et six|-|
+|En dehors de l'atout, l'as vaut 11 points, le roi 4 points, la dame 3 points, le valet 2 points, le dix 10 points et le reste des cartes 0 point|-|
+|En atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : valet/buur, neuf/nell, as, roi, dame, dix, huit, sept et six|-|
+|En atout, le valet/buur vaut 20 points, le neuf/nell 14 points, l'as 11 points, le roi 4 points, la dame 3 points, le dix 10 points et le reste des cartes 0 point|-|
