@@ -25,7 +25,7 @@ et le jeu.
 Run.
 
 Lorsqu'un joueur lance une partie seul, il se voit attribuer un id unique de partie qui sera utilisé dans les requêtes 
-GET. Dès lors plusieurs parties peuvent prendre lieu en même temps.
+GET. Dès lors plusieurs parties peuvent avoir lieu en même temps.
 
 Les joueurs jouent par équipe de deux et jouent en alternance.
 
@@ -58,10 +58,12 @@ suivantes :
 - Reine 3 pts
 - Valet 2 pts
 
-Toutes les autres cartes valent 0 pts.
+Toutes les autres cartes valent 0 pt.
 La victoire est remportée par la première équipe atteignant les 1000 pts.
 
 Chaque partie doit se terminer par un arrêt volontaire, une victoire ou une défaite de l'utilisateur.
+
+Un exemple détaillé de l'utilisation du site est présenté dans les mockups situés ci-dessous, indiquant ainsi visuellement les principaux requirements du site du point de vue d'un utilisateur lambda.
 
 ### Client
 
