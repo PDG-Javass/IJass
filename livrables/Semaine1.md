@@ -86,13 +86,27 @@ déconnecté, il doit pouvoir rejoindre la partie ou être remplacé par un bot.
 
 Frontend
 - Svelte (Javascript FW)
-- (Hébergement à choisir) Heroku, Netlify
+- Hébergement sur Netlify
 
 Backend
 - Java
 - Spring
 - Docker
 - Google Cloud Run
+
+### Déploiement
+
+#### Frontend
+
+Le frontend est déployé sur Netlify, accessible actuellement via l'URL de [déploiement par défaut](https://radiant-cucurucho-67d710.netlify.app/).
+
+Une action GitHub est configurée pour effectuer le déploiement sur Netlify automatiquement (génération de l'application avec npm puis chargement sur Netlify), depuis la branche `main` à l'issue de chaque push sur celle-ci.
+
+#### Backend
+
+Le backend est déployé sur Google Cloud Run, accessible actuellement via l'URL de [déploiement par défaut](https://server-xxcwjwt7qq-ue.a.run.app/).
+
+Comme pour le frontend, une action GitHub est configurée pour effectuer le déploiement sur Google Cloud Run (packaging avec Maven, création et chargement de l'image Docker dans Google Container Registry), lors de chaque modification de la branche `main`.
 
 ### Outils utilisés sur le repository github
 
