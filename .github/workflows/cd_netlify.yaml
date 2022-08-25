@@ -11,13 +11,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Build client
+      - name: Set up node
         uses: actions/setup-node@v3
         with:
           node-version: 16
+
+      - name: Build client app
         working-directory: ./client
-        run: npm i
-        run: npm run build
+        run: |
+          npm i
+          npm run build
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
