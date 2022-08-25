@@ -24,6 +24,9 @@ et le jeu.
   Le serveur est un simple container Docker (l'image choisie est alpine 17) déployé sur la plateforme Google Cloud
 Run.
 
+Lorsqu'un joueur lance une partie seul, il se voit attribuer un id unique de partie qui sera utilisé dans les requêtes 
+GET. Dès lors plusieurs parties peuvent prendre lieu en même temps.
+
 Les joueurs jouent par équipe de deux et jouent en alternance.
 
 La Hiérarchie des cartes est la suivante : 
