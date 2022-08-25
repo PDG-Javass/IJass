@@ -6,23 +6,26 @@ Pour ce travail de groupe, nous avons décidé de concevoir un jeu de Jass. L'ob
 jouer au Jass avec un/des joueurs/bots en ligne. Un utilisateur peut jouer une partie en faisant équipe avec un
 autre joueur ou un bot.
 Cette plateforme de jeu permettra aux utilisateurs de jouer au Jass seul ou avec ses amis tout en comptabilisant
-les points au fil des parties.
+les points au fil des manches et des parties.
 Lorsqu'un utilisateur arrive sur la plateforme, il peut choisir de jouer en local (avec et contre des bots) ou
-en ligne (avec et/ou contre des bots/joueurs).
+en ligne.
 Lorsqu'il joue en ligne, un joueur peut créer une partie ou la rejoindre. Le propriétaire d'une partie peut ajouter
 ou retirer des bots comme il le souhaite pour atteindre 4 joueurs.
 
 ## Requirements fonctionnels
 
 Notre programme doit permettre de se connecter et jouer une partie à tout moment. Dès lors, nous aurons besoin de
-deux entités:
-- Client : permettant aux utilisateurs de se connecter à la plateforme.
-- Serveur : permet aux utilisateurs de jouer entre eux ou contre la machine.
-  Le serveur sera un simple container Docker *définir quelle image on choisit !* sur lequel notre script Java sera
-  éxécuté.
+deux entités principales :
+- Le client : permettant aux utilisateurs de se connecter à la plateforme et gérant les interactions entre le joueur
+et le jeu.
+- Le serveur : permet aux utilisateurs de jouer entre eux ou contre la machine.
+  Le serveur est un simple container Docker (l'image choisie est alpine 17) deployé sur la plateforme Google Cloud
+Run.
 
-Les joueurs jouent par équipe de deux et ne peuvent pas jouer l'un après l'autre.
-La Hiérarchie des cartes est la suivante: Toutes les couleurs sauf l'atout suit les règles conventionnelles
+Les joueurs jouent par équipe de deux et jouent en alternance.
+La Hiérarchie des cartes est la suivante : 
+
+Toutes les couleurs sauf l'atout suit les règles conventionnelles
 (As, Roi, Reine, Valet, 10, 9, ...). Concernant l'atout, la carte la plus forte est le valet, que l'on nomme
 *buur* suivi par le neuf, appelé *nell*. Les autres cartes suivent les règles conventionnelles entre elles.
 L'atout bat toutefois les cartes d'autres couleurs quelles qu'elles soient.
