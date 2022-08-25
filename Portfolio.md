@@ -128,6 +128,11 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 ## Tests du respect des règles
 |Règle à tester|Réussite du test|
 |:-|:-:|
+|Au début de chaque manche, les 36 cartes sont mélangées de façon aléatoire|-|
+|Les joueurs commencent chaque manche avec 9 cartes aléatoires chacun|-|
+|Chaque carte est présente une et une seule fois dans l'ensemble des mains de tous les joueurs au début de chaque manche|-|
+|Chaque joueur peut et doit poser une et une seule carte jouable par tour avant de passer au joueur suivant|-|
+|Chacune des deux équipes et constituée de deux joueurs situés de part et d'autre du tapis de jeu|-|
 |Le joueur qui choisit l'atout pour la première manche est choisi aléatoirement parmi les quatre joueurs|-|
 |Les joueurs choisissent l'atout chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
 |Le joueur qui choisit l'atout à chaque manche joue la première carte de la première plie de la manche|-|
