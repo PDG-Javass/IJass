@@ -130,6 +130,8 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 |:-|:-:|
 |Au début de chaque manche, les 36 cartes sont mélangées de façon aléatoire|-|
 |Les joueurs commencent chaque manche avec 9 cartes aléatoires chacun|-|
+|Les cartes dans la main du joueur actif sont triées en tout temps par couleur dans l'ordre carreau-pique-coeur-trèfle dans le sens de lecture|-|
+|Les cartes dans la main du joueur actif de même couleur sont ensuite triées entre elles par puissance croissante dans le sens de lecture sans prendre en compte le buur et le nell|-|
 |Chaque carte est présente une et une seule fois dans l'ensemble des mains de tous les joueurs au début de chaque manche|-|
 |Chaque joueur peut et doit poser une et une seule carte jouable par tour avant de passer au joueur suivant|-|
 |Chacune des deux équipes et constituée de deux joueurs situés de part et d'autre du tapis de jeu|-|
