@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - feature/cd-netlify
+      - main
 
 name: Build and Deploy to Netlify
 jobs:
