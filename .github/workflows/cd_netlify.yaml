@@ -1,8 +1,9 @@
-name: Build and Deploy to Netlify
 on:
   push:
     branches:
-      "sandbox"
+      - "sandbox"
+
+name: Build and Deploy to Netlify
 jobs:
   build:
     runs-on: ubuntu-18.04
