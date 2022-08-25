@@ -124,3 +124,21 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 - Le joueur est obligé de suivre la famille qui a été posé en premier.
     - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
     - Le joueur peut couper avec un atout si une autre famille a été posé. 
+
+## Tests du respect des règles
+|Règle à tester|Réussite du test|
+|:-|:-:|
+|Le joueur qui possède le 7 de carreau choisit l'atout pour la première manche|-|
+|Les joueurs choisissent l'atout chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
+|Les joueurs posent une carte chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
+|Le joueur qui remporte une plie pose la première carte de la plie suivante|-|
+|Si la première carte de la plie est un atout, tous les joueurs qui possèdent au moins un atout différent du buur sont obligés de poser un atout|-|
+|Si la première carte de la plie est un atout, le joueur actif peut poser n'importe quelle carte s'il ne possède pas d'atouts ou uniquement le buur|-|
+|Si la première carte de la plie n'est pas un atout, tous les joueurs qui peuvent suivre dans cette couleur doivent le faire ou couper la plie|-|
+|Si la première carte de la plie n'est pas un atout, le joueur actif peut poser n'importe quelle carte s'il ne peut pas suivre dans la couleur d'entrée|-|
+|Si la première carte de la plie n'est pas un atout et qu'un joueur coupe la plie, les joueurs suivants ne peuvent pas sous-couper à moins de ne pas avoir le choix|-|
+|L'équipe qui remporte la dernière plie de la manche remporte 5 points supplémentaires|-|
+|A la fin de chaque manche, 157 points sont distribués entre les deux équipes|-|
+|Quand une équipe atteint 1000 points, la partie s'arrête et l'équipe qui a atteint ce pallier est déclarée vainqueure|-|
+|Si aucun autout n'est posé, le joueur qui pose la carte la plus haute de la même couleur que la carte d'entrée remporte la plie|-|
+|Si un ou plusieurs joueurs coupent la plie, le joueur ayant posé l'atout le plus puissant remporte la plie|-|
