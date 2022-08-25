@@ -128,7 +128,7 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 ## Tests du respect des règles
 |Règle à tester|Réussite du test|
 |:-|:-:|
-|Le joueur qui possède le 7 de carreau choisit l'atout pour la première manche|-|
+|Le joueur qui choisit l'atout pour la première manche est choisi aléatoirement parmi les quatre joueurs|-|
 |Les joueurs choisissent l'atout chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
 |Le joueur qui choisit l'atout à chaque manche joue la première carte de la première plie de la manche|-|
 |Les joueurs posent une carte chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
