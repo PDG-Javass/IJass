@@ -108,6 +108,31 @@ terminée, une PR permet de la merge à la branche *develop*.
 
 ## Landing page
 
+## Fonctionnalités espérées
+
+Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces trois semaines.
+
+- Les 36 cartes sont mélangées.
+- Les 36 cartes sont distribuées aux 4 joueurs (donc 9 par personne).
+- Chaque joueur pose une carte par tour.
+- La carte la plus forte emporte la plie.
+- Si notre coéquipier gagne la plie, le score s'incrémente.
+- Le score s'incrémente du nombre de points selon ce qui est écrit au-dessus.
+- Le joueur choisit l'atout.
+- L'atout l'emporte sur les trois autres familles.
+- Le buur puis le nell sont les deux plus fortes cartes.
+- Le joueur est obligé de suivre la famille qui a été posé en premier.
+    - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
+    - Le joueur peut couper avec un atout si une autre famille a été posée.
+    - La sous-coupe est interdite. Si quelqu'un coupe on ne peut pas mettre un atout plus faible. Sauf si c'est notre dernière carte.
+
+### si le temps le permet
+
+- Jouer en ligne avec des joueurs.
+- Ajouter le chypre (demander à son coéquipier de choisir l'atout pour nous).
+- Ajouter les annonces. Au début, on annonce des combinaisons spéciales de cartes pour gagner plus de points.
+- Rendre les bots plus intelligent.
+
 ## Méthodologie
 Afin de mener à bien ce projet, notre équipe a choisi de pratiquer une méthode agile SCRUM. Cette méthodologie
 incrémentale correspond à notre dynamique de groupe. Nous allons donc effectuer ce travail sur 3 Sprints correspondant
