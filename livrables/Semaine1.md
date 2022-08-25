@@ -145,9 +145,11 @@ au centre de l'écran et le score en haut à gauche.
 
 ![](Img/page_partie_en_cours.jpg)
 
+A la fin de chaque plie, le score de l'équipe qui a remporté la plie est automatiquement mis à jour en y ajoutant les points de celle-ci
+
 ![](Img/page_partie_en_cours_2.jpg)
 
-Il est possible de zoomer sur le tableau des scores.
+A la fin de chaque manche, un tableau récapitulatif des scores de la manche est affiché avant de passer à la manche suivante.
 
 ![](Img/tableau_score.jpg)
 
