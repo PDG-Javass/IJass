@@ -7,8 +7,8 @@ une application web qui permet de jouer au chibre contre des bots perfectionnés
 
 ## Comment ça se joue
 Le jass est un jeu de cartes qui se décline en plusieurs variantes. Dans le cadre de ce projet, nous avons choisi de nous concentrer sur la variante considérée comme la plus populaire, à savoir le chibre. Celui-ci se joue en deux équipes de deux joueurs dont l'objectif est d'engranger un maximum de points.
-Au début de chaque manche, chaque joueur reçoit neuf cartes. Chacun leur tour, les joueurs posent une carte et le joueur ayant posé la carte la plus haute remporte la plie et commence à jouer pour la plie suivante. Quand tous les joueurs ont posé leurs neuf cartes, la manche s'arrête et les points accumulés par chaque équipe sont comptés et ajoutés à leur total de points. 
-Chaque carte possède un certain nombre de point, le but du jeu étant d'atteindre mille points au total avant l'équipe adverse. 
+Au début de chaque manche, chaque joueur reçoit neuf cartes. Chacun leur tour, les joueurs posent une carte et le joueur ayant posé la carte la plus haute remporte la plie. Quand tous les joueurs ont posé leurs neuf cartes, la manche s'arrête et les points accumulés par chaque équipe sont comptés et ajoutés à leur total de points. 
+Chaque carte possède un certain nombre de point, le but du jeu étant d'atteindre mille points au total avant l'équipe adverse. Consulter ce [lien](https://www.swisslos.ch/fr/jass/informations/les-regles-du-jass/le-chibre.html "Règles du chibre") pour de plus amples détails concernant les règles du chibre.
 
 ## Comment utiliser le site
 Pour pouvoir jouer, il suffit de se rendre sur le site et d'indiquer si l'on souhaite jouer seul ou à plusieurs. Si l'on choisit de jouer seul, un algorithme 
