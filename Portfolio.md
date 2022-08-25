@@ -130,6 +130,7 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 |:-|:-:|
 |Le joueur qui possède le 7 de carreau choisit l'atout pour la première manche|-|
 |Les joueurs choisissent l'atout chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
+|Le joueur qui choisit l'atout à chaque manche joue la première carte de la première plie de la manche|-|
 |Les joueurs posent une carte chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
 |Le joueur qui remporte une plie pose la première carte de la plie suivante|-|
 |Si la première carte de la plie est un atout, tous les joueurs qui possèdent au moins un atout différent du buur sont obligés de poser un atout|-|
@@ -140,5 +141,9 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 |L'équipe qui remporte la dernière plie de la manche remporte 5 points supplémentaires|-|
 |A la fin de chaque manche, 157 points sont distribués entre les deux équipes|-|
 |Quand une équipe atteint 1000 points, la partie s'arrête et l'équipe qui a atteint ce pallier est déclarée vainqueure|-|
-|Si aucun autout n'est posé, le joueur qui pose la carte la plus haute de la même couleur que la carte d'entrée remporte la plie|-|
+|Si aucun atout n'est posé, le joueur qui pose la carte la plus haute de la même couleur que la carte d'entrée remporte la plie|-|
 |Si un ou plusieurs joueurs coupent la plie, le joueur ayant posé l'atout le plus puissant remporte la plie|-|
+|En dehors de l'atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : as, roi, dame, valet, dix, neuf, huit, sept et six|-|
+|En dehors de l'atout, l'as vaut 11 points, le roi 4 points, la dame 3 points, le valet 2 points, le dix 10 points et le reste des cartes 0 point|-|
+|En atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : valet/buur, neuf/nell, as, roi, dame, dix, huit, sept et six|-|
+|En atout, le valet/buur vaut 20 points, le neuf/nell 14 points, l'as 11 points, le roi 4 points, la dame 3 points, le dix 10 points et le reste des cartes 0 point|-|
