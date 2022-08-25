@@ -1,5 +1,7 @@
 # PDG 2022 - Livrable Semaine 1
 
+Auteurs : Egger Magali, Huart Hugo, Nunez Tania, Vogel Maëlle, Wichoud Nicolas
+
 ## Description du projet
 
 Pour ce travail de groupe, nous avons décidé de concevoir un jeu de Jass. L'objectif de ce projet est de pouvoir
