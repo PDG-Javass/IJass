@@ -1,4 +1,4 @@
-package IJass;
+package ch.ijass.engine.Cards;
 
 public enum CardValue {
     SIX,

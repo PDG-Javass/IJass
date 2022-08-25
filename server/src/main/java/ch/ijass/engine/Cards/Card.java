@@ -1,4 +1,6 @@
-package IJass;
+package ch.ijass.engine.Cards;
+
+import ch.ijass.engine.Players.Player;
 
 import java.util.Collections;
 import java.util.Vector;
@@ -6,6 +8,8 @@ import java.util.Vector;
 public class Card implements Comparable{
     private final CardColor color;
     private final CardValue value;
+
+    private Player owner;
 
     /**
      * Constructeur privé de carte

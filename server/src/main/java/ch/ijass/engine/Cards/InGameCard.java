@@ -1,15 +1,13 @@
-package IJass;
+package ch.ijass.engine.Cards;
 
 import java.util.Collections;
-import java.util.Vector;
 
-public class CardDeck {
-    private Vector<Card> content;
+public class InGameCard extends Deck {
 
     /**
      * Constructeur sans paramètre du deck de Jass
      */
-    public CardDeck() { initializeDeck(); }
+    public InGameCard() { initializeDeck(); }
 
     /**
      * Initialise le deck sans les mélanger
@@ -22,10 +20,10 @@ public class CardDeck {
     public void shuffle() { Collections.shuffle(content); }
 
     /**
-     * Fonction permettant de tirer une carte aléatoirement dans le deck, cette dernière ne se trouv
-     * @return la carte choisie, si il en reste
+     * Fonction permettant de tirer une carte aléatoirement dans le deck, cette dernière ne se trouve
+     * @return la carte choisie, s'il en reste
      */
-    public Card pickCard() {
+    public Card pickCardRandomly() {
         Card ret = null;
         shuffle();
         ret = content.get(0);
