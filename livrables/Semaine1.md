@@ -40,6 +40,7 @@ L'atout bat toutefois les cartes d'autres couleurs quelles qu'elles soient.
 Chaque partie comprend plusieurs rounds, eux-mêmes composés de 9 tours.
 Au début de chaque round, chaque joueur se voit distribuer 9 cartes parmi un paquet de 36 cartes. Un des joueurs choisit
 la couleur de l'atout.
+
 Une fois la partie commencée, chaque joueur pose une carte par tour. La première carte posée définit la couleur
 courante du tour. Un joueur se voit obliger de *jeter* une de ses cartes s'il ne possède pas la couleur
 couramment jouée ou de l'atout pour *couper* la plie. À contrario, si un joueur possède une unique carte de la couleur
