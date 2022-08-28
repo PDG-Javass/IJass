@@ -142,7 +142,7 @@ le type de partie souhaitée.
 
 Avant de commencer à jouer chaque manche, chacun leur tour, les joueurs choisissent la couleur d'atout.
 
-![](Img/choix_atout.jpg)
+![](Img/page_choix_atout.jpg)
 
 Une fois la partie lancée, les joueurs et votre main sont affichés. Les cartes jouées sont face contre ciel
 au centre de l'écran et le score en haut à gauche.
