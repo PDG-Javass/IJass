@@ -21,7 +21,7 @@ deux entités principales :
 - Le client : permettant aux utilisateurs de se connecter à la plateforme et gérant les interactions entre le joueur
   et le jeu.
 - Le serveur : permet aux utilisateurs de jouer entre eux ou contre la machine.
-  Le serveur est un simple container Docker (l'image choisie est alpine 17) déployé sur la plateforme Google Cloud
+  Le serveur est un simple container Docker (image Alpine avec OpenJDK17 et le code) déployé sur la plateforme Google Cloud
   Run.
 
 Lorsqu'un joueur lance une partie seul, il se voit attribuer un id unique de partie qui sera utilisé dans les requêtes
