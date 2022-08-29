@@ -16,7 +16,16 @@ public class Hand extends Deck {
         return ret;
     }
 
-    public CardColor getColorMostPresent(){
+    public int getNumberOfCardsByColor(CardColor color) {
+        int count = 0;
+        for (Card c : content) {
+            if (c.getColor() == color)
+                count++;
+        }
+        return count;
+    }
+
+    public CardColor getColorMostPresent(CardColor color){
         int nbHearts = 0;
         int nbDiamons = 0;
         int nbSpades = 0;
