@@ -5,6 +5,7 @@ import ch.ijass.engine.Cards.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
 
@@ -78,5 +79,30 @@ public class GameTests {
         for (Card c : h3.getContent()) {
             assert(!h4.contains(c));
         }
+    }
+
+    @Test
+    void CardsManipulations() {
+        Hand h1 = new Hand();
+        GameDeck gd = new GameDeck();
+
+        for (int i = 0; i < 10; i++) {
+            h1.addCard(gd.pickCardRandomly());
+        }
+
+        h1.sort();
+
+        // Vérification de l'ordre deux à deux
+        Vector<Card> content = h1.getContent();
+        Card c = content.get(0);
+        for (int i = 1; i < content.size(); i++) {
+            assert(c.getColor() != content.get(i).getColor()
+                    || c.getValue().ordinal() < content.get(i).getValue().ordinal());
+            c = content.get(i);
+        }
+
+        content = h1.getCardsOfColor(CardColor.DIAMONDS);
+        for (Card ca : content)
+            assert(ca.getColor() == CardColor.DIAMONDS);
     }
 }

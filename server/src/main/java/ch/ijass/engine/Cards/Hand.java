@@ -45,7 +45,7 @@ public class Hand extends Deck {
     }
 
 
-    public Vector<Card> getPlayableCard(InGameCard playMat){
+    public Vector<Card> getPlayableCard(/*InGameCard playMat*/){
         return new Vector<Card>(); // todo a implementer
     }
 
