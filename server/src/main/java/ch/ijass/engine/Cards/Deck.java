@@ -41,6 +41,20 @@ public class Deck {
         return false;
     }
 
+    public boolean isEqual(Deck other) {
+        for (Card c : content) {
+            if (!other.contains(c))
+                return false;
+        }
+        return true;
+    }
 
-
+    public Vector<Card> getCardsOfColor(CardColor color) {
+        Vector<Card> ret = new Vector<>();
+        for (Card c : content) {
+            if (c.getColor() == color)
+                ret.add(c);
+        }
+        return ret;
+    }
 }

@@ -5,17 +5,9 @@ import ch.ijass.engine.Players.Player;
 import java.util.Collections;
 import java.util.Vector;
 
-public class Card implements Comparable{
-    public CardValue getValue() {
-        return value;
-    }
-
+public class Card implements Comparable {
     private final CardColor color;
     private final CardValue value;
-
-    public Player getOwner() {
-        return owner;
-    }
 
     private Player owner;
 
@@ -27,11 +19,13 @@ public class Card implements Comparable{
     private Card(CardColor c, CardValue v) { color = c; value = v; }
 
     public Card() { color = CardColor.SPADES; value = CardValue.ACE; }
-    public Card(Card other) { color = other.color; value = other.value; }
+    public Card(Card other) { color = other.color; value = other.value; owner = other.owner;}
+
     /**
      * Construit un deck initial pour le jeu de Jass
      * @return un nouveau vecteur de cartes contenant toutes les cartes du jeu
      */
+
     public static Vector<Card> getInitialDeck() {
         Vector<Card> ret = new Vector<>();
         for (int i = 0; i < CardColor.values().length; i++) {
@@ -41,6 +35,14 @@ public class Card implements Comparable{
         }
         return ret;
     }
+
+    public CardValue getValue() { return value; }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) { this.owner = owner; }
 
     /**
      * Indique le nombre de points que vaut la carte sous la couleur d'atout spécifiée
@@ -55,10 +57,6 @@ public class Card implements Comparable{
                 return 14;
         }
         return value.points();
-    }
-
-    public boolean isEqual(Card other) {
-        return color == other.color && value == other.value;
     }
 
     public String toString() {
@@ -84,22 +82,6 @@ public class Card implements Comparable{
         return sb.toString();
     }
 
-    public static void main(String[] args) {
-        Vector<Card> test = getInitialDeck();
-        Collections.shuffle(test);
-        System.out.println("Before");
-        for (Card c : test) {
-            System.out.println(c);
-        }
-        Collections.sort(test);
-        System.out.println("After");
-        for (Card c : test) {
-            System.out.println(c);
-            System.out.print(c.value.points());
-            System.out.println(" pts");
-        }
-    }
-
     @Override
     public int compareTo(Object o) {
         if (o.getClass() != Card.class)
@@ -113,6 +95,10 @@ public class Card implements Comparable{
             else
                 return valueDiff;
         }
+    }
+
+    public boolean isEqual(Card other) {
+        return compareTo(other) == 0;
     }
 
     public CardColor getColor(){
