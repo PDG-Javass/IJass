@@ -19,17 +19,17 @@ ou retirer des bots comme il le souhaite pour atteindre 4 joueurs.
 Notre programme doit permettre de se connecter et jouer une partie à tout moment. Dès lors, nous aurons besoin de
 deux entités principales :
 - Le client : permettant aux utilisateurs de se connecter à la plateforme et gérant les interactions entre le joueur
-et le jeu.
+  et le jeu.
 - Le serveur : permet aux utilisateurs de jouer entre eux ou contre la machine.
   Le serveur est un simple container Docker (l'image choisie est alpine 17) déployé sur la plateforme Google Cloud
-Run.
+  Run.
 
-Lorsqu'un joueur lance une partie seul, il se voit attribuer un id unique de partie qui sera utilisé dans les requêtes 
+Lorsqu'un joueur lance une partie seul, il se voit attribuer un id unique de partie qui sera utilisé dans les requêtes
 GET. Dès lors plusieurs parties peuvent avoir lieu en même temps.
 
 Les joueurs jouent par équipe de deux et jouent en alternance.
 
-La Hiérarchie des cartes est la suivante : 
+La Hiérarchie des cartes est la suivante :
 
 Toutes les couleurs sauf l'atout suivent les règles conventionnelles
 (As, Roi, Reine, Valet, 10, 9, ..., 6). Concernant l'atout, la carte la plus forte est le valet, que l'on nomme
@@ -62,8 +62,6 @@ Toutes les autres cartes valent 0 pt.
 La victoire est remportée par la première équipe atteignant les 1000 pts.
 
 Chaque partie doit se terminer par un arrêt volontaire, une victoire ou une défaite de l'utilisateur.
-
-Quand l'utilisateur se connecte au site, une page d'accueil s'affiche avec un unique bouton "Start a game". Quand il appuie sur ce bouton, le site lui propose alors de soit cliquer sur un lien qui redirige l'utilisateur vers un site expliquant les règles du chibre, soit d'appuyer sur un bouton "Continuer". Ce dernier permet d'accéder à un nouvel écran sur lequel l'utilisateur peut choisir entre deux boutons, respectivement lancer une "partie locale" ou une "partie entre amis".Une fois la partie lancée, il est possible de jouer une partie de jass. Lorsque c'est le tour de l'utilisateur de choisir l'atout, quatre boutons apparaissent représentant les quatres couleurs des cartes. La couleur de l'atout choisi sera affichée pendant la partie. Les points sont ajoutés au score de l'équipe qui a remporté la plie à la fin de celle-ci. Le score courant est visible en permanence dans un encart situé en haut à gauche de l'écran de jeu. Les cartes jouées sont positionnées devant le joueur auquel elles appartiennent. Un bouton "quitter le jeu" est présent en tout temps en haut à droite de l'écran de jeu et permet d'abandonner la partie et revenir à la page d'accueil. A la fin de chaque manche, un tableau récapitulatif des scores est affiché avant de passer à la manche suivante. A l'issue de la partie, un écran indiquant les scores finaux ainsi que la vitoire ou la défaite de l'utilisateur apparaît. L'utilisateur peut alors cliquer n'importe où sur l'écran pour revenir à l'écran d'accueil et relancer une partie ou quitter le jeu.
 
 Un exemple détaillé de l'utilisation du site est présenté dans les mockups situés ci-dessous, indiquant ainsi visuellement les principaux requirements du site du point de vue d'un utilisateur lambda.
 
@@ -142,7 +140,7 @@ le type de partie souhaitée.
 
 Avant de commencer à jouer chaque manche, chacun leur tour, les joueurs choisissent la couleur d'atout.
 
-![](Img/choix_atout.jpg)
+![](Img/page_choix_atout.jpg)
 
 Une fois la partie lancée, les joueurs et votre main sont affichés. Les cartes jouées sont face contre ciel
 au centre de l'écran et le score en haut à gauche.
@@ -181,9 +179,9 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 - L'atout l'emporte sur les trois autres familles.
 - Le buur puis le nell sont les deux plus fortes cartes.
 - Le joueur est obligé de suivre la famille qui a été posé en premier.
-    - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
-    - Le joueur peut couper avec un atout si une autre famille a été posée.
-    - La sous-coupe est interdite. Si quelqu'un coupe on ne peut pas mettre un atout plus faible. Sauf si c'est notre dernière carte.
+  - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
+  - Le joueur peut couper avec un atout si une autre famille a été posée.
+  - La sous-coupe est interdite. Si quelqu'un coupe on ne peut pas mettre un atout plus faible. Sauf si c'est notre dernière carte.
 
 ### Si le temps le permet
 
@@ -193,9 +191,10 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 - Rendre les bots plus intelligent.
 
 ## Méthodologie
+
 Afin de mener à bien ce projet, notre équipe a choisi de pratiquer une méthode agile SCRUM. Cette méthodologie
 incrémentale correspond à notre dynamique de groupe. Nous allons donc effectuer ce travail sur 3 Sprints correspondant
-à chaque semaine. 
+à chaque semaine.
 
 Chaque début de semaine, nous décomposerons le travail à faire en User stories, elles-mêmes possiblement
 décomposées afin d'être partagées entre plusieurs membres du groupe. Chaque membre se voit attitrer (par un autre membre
@@ -205,3 +204,4 @@ Nous tenons toutefois à appliquer un peu le principe de pair programming si né
 À la fin d'un sprint, nous repasserons sur les estimations de temps et effectuerons un feedback général afin de
 pouvoir améliorer ces aspects au fil des sprints. Si certaines stories ne sont pas achevée à terme du sprint
 correspondant, il sera passé au prochain sprint avec la plus haute priorité.
+
