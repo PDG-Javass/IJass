@@ -114,4 +114,8 @@ public class Card implements Comparable{
                 return valueDiff;
         }
     }
+
+    public CardColor getColor(){
+        return color;
+    }
 }
