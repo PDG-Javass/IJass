@@ -40,13 +40,13 @@ L'atout bat toutefois les cartes d'autres couleurs quelles qu'elles soient.
 Chaque partie comprend plusieurs rounds, eux-mêmes composés de 9 plie.
 Au début de chaque round, chaque joueur se voit distribuer 9 cartes parmi un paquet de 36 cartes. Un des joueurs choisit
 la couleur de l'atout. La première fois, c'est celui qui a le 7 de carreau qui choisit l'atout et ensuite cela tourne dans le sens contraire des aiguilles d'une montre.
-Une fois la partie commencée, chaque joueur pose une carte par tour. La première carte posée définit la couleur
-courante du tour. Un joueur se voit obliger de *jeter* une de ses cartes s'il ne possède pas la couleur
+Une fois la partie commencée, chaque joueur pose une carte par plie. La première carte posée définit la couleur
+courante du plie. Un joueur se voit obliger de *jeter* une de ses cartes s'il ne possède pas la couleur
 couramment jouée ou de l'atout pour *couper* la plie. À contrario, si un joueur possède une unique carte de la couleur
 jouée, il se voit obligé de la jouer, sauf s'il s'agit du buur.
 
 
-Un tour se termine lorsque chaque joueur a joué ou jeté une carte. Au terme de chaque tour, la personne ayant posé
+Un plie se termine lorsque chaque joueur a joué ou jeté une carte. Au terme de chaque plie, la personne ayant posé
 la carte la plus forte remporte le tas pour son équipe.
 Un round se termine lorsque toutes les cartes ont été jouées. Les points sont alors comptabilisés selon les règles
 suivantes :
@@ -81,7 +81,7 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 
 - Les 36 cartes sont mélangées.
 - Les 36 cartes sont distribuées aux 4 joueurs (donc 9 par personne).
-- Chaque joueur pose une carte par tour.
+- Chaque joueur pose une carte par plie.
 - La carte la plus forte emporte la plie.
 - Si notre coéquipier ou nous-même gagnons la plie, le score s'incrémente.
 - Le score s'incrémente du nombre de points selon ce qui est écrit au-dessus.
@@ -104,7 +104,7 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 
 ## Requirements non-fonctionnels
 
-Le programme doit assurer une partie fluide, en tout cas pendant chaque tour. Ce qui implique que l'interaction
+Le programme doit assurer une partie fluide, en tout cas pendant chaque plie. Ce qui implique que l'interaction
 entre l'utilisateur et le serveur doit être de 2 secondes maximum.
 L'affichage des points doit être propre et soit affiché en permanence, soit accessible facilement.
 Le score doit être mis à jour 2 secondes après la fin de la plie.
