@@ -6,8 +6,16 @@ import java.util.Collections;
 import java.util.Vector;
 
 public class Card implements Comparable{
+    public CardValue getValue() {
+        return value;
+    }
+
     private final CardColor color;
     private final CardValue value;
+
+    public Player getOwner() {
+        return owner;
+    }
 
     private Player owner;
 

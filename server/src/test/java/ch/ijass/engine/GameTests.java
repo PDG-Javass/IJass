@@ -40,7 +40,7 @@ public class GameTests {
             Vector<Card> cardsShuffled = d.getContent();
             // Vérifie si le paquet a bien été mélangé en interrogeant le même index de leur contenu
             Random r = new Random();
-            int index = r.nextInt(0, 36);
+            int index = r.nextInt(0, 36); // TODO: ne pas mettre le nombre de cartes en dur ?
             if (!cards.get(index).isEqual(cardsShuffled.get(index)))
                 essaisReussis++;
         }
@@ -63,7 +63,7 @@ public class GameTests {
         assert(h1.numberOfCards() == h2.numberOfCards() && h2.numberOfCards() == h3.numberOfCards()
                && h3.numberOfCards() == h4.numberOfCards());
 
-        // Vérifie qu'aucune carte n'ai été distribué à double
+        // Vérifie qu'aucune carte n'a été distribuée à double
         for (Card c : h1.getContent()) {
             assert(!h2.contains(c));
             assert(!h3.contains(c));
