@@ -18,6 +18,7 @@ public class Card implements Comparable{
      */
     private Card(CardColor c, CardValue v) { color = c; value = v; }
 
+    public Card(Card other) { color = other.color; value = other.value; }
     /**
      * Construit un deck initial pour le jeu de Jass
      * @return un nouveau vecteur de cartes contenant toutes les cartes du jeu
@@ -45,6 +46,10 @@ public class Card implements Comparable{
                 return 14;
         }
         return value.points();
+    }
+
+    public boolean isEqual(Card other) {
+        return color == other.color && value == other.value;
     }
 
     public String toString() {

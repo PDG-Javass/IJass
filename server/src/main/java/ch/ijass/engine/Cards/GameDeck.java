@@ -2,12 +2,12 @@ package ch.ijass.engine.Cards;
 
 import java.util.Collections;
 
-public class InGameCard extends Deck {
+public class GameDeck extends Deck {
 
     /**
      * Constructeur sans paramètre du deck de Jass
      */
-    public InGameCard() { initializeDeck(); }
+    public GameDeck() { initializeDeck(); }
 
     /**
      * Initialise le deck sans les mélanger
