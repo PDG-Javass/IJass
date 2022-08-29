@@ -93,7 +93,7 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
   - Le joueur peut couper avec un atout si une autre famille a été posée.
   - La sous-coupe est interdite. Si quelqu'un coupe on ne peut pas mettre un atout plus faible. Sauf si c'est notre dernière carte.
 - Notre coéquipier est toujours lapinou car il est en face de nous.
-- Le bot respecte les règles mais joue une carte aléatoire.
+- Le bot respecte les règles, mais joue une carte aléatoire.
 
 ### Si le temps le permet
 

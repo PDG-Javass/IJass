@@ -45,13 +45,15 @@ La branche *main* ne pourra être modifiée que sous certaines conditions.
 
 #### Frontend
 
-- Javascript
+- Svelte (Javascript FW)
+- Hébergement sur Netlify
 
 #### Backend
 
 - Java
-- Scala (à voir)
-- Docker/Kubernetes (à définir, mais plutôt Docker)
+- Spring
+- Docker
+- Google Cloud Run
 
 ### Build et deployement
 
@@ -100,13 +102,12 @@ Les types de commits peuvent être les suivants:
 ## Tableau Kanban
 
 Nous avons décidé d'utiliser un tableau Kanban afin de travailler avec no user stories :
-- Product Backlog
+- User Stories
 - A faire
 - En cours
 - Terminé
 
 # Sprint 1
-
 
 ## Fonctionnalités espérées
 
@@ -114,21 +115,25 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 
 - Les 36 cartes sont mélangées.
 - Les 36 cartes sont distribuées aux 4 joueurs (donc 9 par personne).
-- Chaque joueur pose une carte par tour.
+- Chaque joueur pose une carte par plie.
 - La carte la plus forte emporte la plie.
-- Si notre coéquipier gagne la plie, le score s'incrémente.
-- Le score s'incrémente du nombre de points selon ce qui est écrit dans livrable/Semaine1.md.
+- Si notre coéquipier ou nous-même gagnons la plie, le score s'incrémente.
+- Le score s'incrémente du nombre de points selon ce qui est écrit au-dessus.
 - Le joueur choisit l'atout.
 - L'atout l'emporte sur les trois autres familles.
 - Le buur puis le nell sont les deux plus fortes cartes.
 - Le joueur est obligé de suivre la famille qui a été posé en premier.
-    - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
-    - Le joueur peut couper avec un atout si une autre famille a été posé. 
+  - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
+  - Le joueur peut couper avec un atout si une autre famille a été posée.
+  - La sous-coupe est interdite. Si quelqu'un coupe on ne peut pas mettre un atout plus faible. Sauf si c'est notre dernière carte.
+- Notre coéquipier est toujours lapinou car il est en face de nous.
+- Le bot respecte les règles, mais joue une carte aléatoire.
 
-## Tests du respect des règles
-|Règle à tester|Réussite du test|
+# Tests du respect des règles
+
+| Règle à tester | Réussite du test |
 |:-|:-:|
-|Au début de chaque manche, les 36 cartes sont mélangées de façon aléatoire|-|
+|Au début de chaque manche, les 36 cartes sont mélangées de façon aléatoire | - |
 |Les joueurs commencent chaque manche avec 9 cartes aléatoires chacun|-|
 |Les cartes dans la main du joueur actif sont triées en tout temps par couleur dans l'ordre carreau-pique-coeur-trèfle dans le sens de lecture|-|
 |Les cartes dans la main du joueur actif de même couleur sont ensuite triées entre elles par puissance croissante dans le sens de lecture sans prendre en compte le buur et le nell|-|
