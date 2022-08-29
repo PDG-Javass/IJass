@@ -16,7 +16,7 @@ public class Hand extends Deck {
         return ret;
     }
 
-    public CardColor getColorMostPresent(CardColor color){
+    public CardColor getColorMostPresent(){
         int nbHearts = 0;
         int nbDiamons = 0;
         int nbSpades = 0;
@@ -31,20 +31,26 @@ public class Hand extends Deck {
             }
         }
 
-        Map<CardColor, Integer> map = Map.of(CardColor.HEARTS, nbHearts, CardColor.DIAMONDS, nbDiamons);
+        Map<CardColor, Integer> map = Map.of(CardColor.HEARTS, nbHearts, CardColor.DIAMONDS, nbDiamons,CardColor.SPADES, nbSpades, CardColor.CLUBS, nbClubs );
+        return Collections.max(map.entrySet(), (entry1, entry2) -> entry1.getValue() - entry2.getValue()).getKey();
+    }
 
-        int max = Collections.max(Arrays.asList(nbHearts, nbDiamons, nbSpades, nbClubs));
 
+    public Vector<Card> getPlayableCard(InGameCard playMat){
+        return new Vector<Card>(); // todo a implementer
+    }
 
+    public void throwCard(Card card){
+        content.removeElement(card);
+    }
 
-        switch (max){
-            /*
-            case nbHearts : return CardColor.HEARTS;
-            case nbDiamons : return CardColor.DIAMONDS;
-            case nbSpades : return CardColor.SPADES;
-            case nbClubs : return CardColor.CLUBS;*/
+    Card findCard(CardColor color, CardValue value){
+        for(Card card : content){
+            if(card.getColor() == color && card.getValue() == value){
+                return card;
+            }
         }
-        return CardColor.HEARTS;
+        return null;
     }
 
 
