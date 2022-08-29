@@ -21,7 +21,7 @@ deux entités principales :
 - Le client : permettant aux utilisateurs de se connecter à la plateforme et gérant les interactions entre le joueur
   et le jeu.
 - Le serveur : permet aux utilisateurs de jouer entre eux ou contre la machine.
-  Le serveur est un simple container Docker (l'image choisie est alpine 17) déployé sur la plateforme Google Cloud
+  Le serveur est un simple container Docker (l'image choisie est [openjdk:17-alpine](https://hub.docker.com/layers/openjdk/library/openjdk/17-alpine/images/sha256-a996cdcc040704ec6badaf5fecf1e144c096e00231a29188596c784bcf858d05?context=explore)) déployé sur la plateforme Google Cloud
   Run.
 
 Lorsqu'un joueur lance une partie seul, il se voit attribuer un id unique de partie qui sera utilisé dans les requêtes
@@ -37,9 +37,9 @@ Toutes les couleurs sauf l'atout suivent les règles conventionnelles
 L'atout bat toutefois les cartes d'autres couleurs quelles qu'elles soient.
 
 
-Chaque partie comprend plusieurs rounds, eux-mêmes composés de 9 tours.
+Chaque partie comprend plusieurs rounds, eux-mêmes composés de 9 plie.
 Au début de chaque round, chaque joueur se voit distribuer 9 cartes parmi un paquet de 36 cartes. Un des joueurs choisit
-la couleur de l'atout.
+la couleur de l'atout. La première fois, c'est celui qui a le 7 de carreau qui choisit l'atout et ensuite cela tourne dans le sens contraire des aiguilles d'une montre.
 Une fois la partie commencée, chaque joueur pose une carte par tour. La première carte posée définit la couleur
 courante du tour. Un joueur se voit obliger de *jeter* une de ses cartes s'il ne possède pas la couleur
 couramment jouée ou de l'atout pour *couper* la plie. À contrario, si un joueur possède une unique carte de la couleur
@@ -73,12 +73,41 @@ Concernant le client de notre programme, il nous faudra :
 - Assets pour les cartes à jouer
 - UI permettant d'afficher la partie en cours
 
+Cette partie sera plus détaillée durant la semaine 2.
+
+## Fonctionnalités espérées
+
+Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces trois semaines.
+
+- Les 36 cartes sont mélangées.
+- Les 36 cartes sont distribuées aux 4 joueurs (donc 9 par personne).
+- Chaque joueur pose une carte par tour.
+- La carte la plus forte emporte la plie.
+- Si notre coéquipier ou nous-même gagnons la plie, le score s'incrémente.
+- Le score s'incrémente du nombre de points selon ce qui est écrit au-dessus.
+- Le joueur choisit l'atout.
+- L'atout l'emporte sur les trois autres familles.
+- Le buur puis le nell sont les deux plus fortes cartes.
+- Le joueur est obligé de suivre la famille qui a été posé en premier.
+  - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
+  - Le joueur peut couper avec un atout si une autre famille a été posée.
+  - La sous-coupe est interdite. Si quelqu'un coupe on ne peut pas mettre un atout plus faible. Sauf si c'est notre dernière carte.
+- Notre coéquipier est toujours lapinou car il est en face de nous.
+- Le bot respecte les règles mais joue une carte aléatoire.
+
+### Si le temps le permet
+
+- Jouer en ligne avec des joueurs.
+- Ajouter le chibre (demander à son coéquipier de choisir l'atout pour nous).
+- Ajouter les annonces. Au début, on annonce des combinaisons spéciales de cartes pour gagner plus de points.
+- Rendre les bots plus intelligent. Qu'ils puissent calculer la probabilité de gagner la plie selon ce qu'ils posent.
 
 ## Requirements non-fonctionnels
 
 Le programme doit assurer une partie fluide, en tout cas pendant chaque tour. Ce qui implique que l'interaction
-entre l'utilisateur et le serveur doit être rapide et que le bot doit jouer rapidement.
+entre l'utilisateur et le serveur doit être de 2 secondes maximum.
 L'affichage des points doit être propre et soit affiché en permanence, soit accessible facilement.
+Le score doit être mis à jour 2 secondes après la fin de la plie.
 Lors de session de jeu multijoueur, la connexion entre eux doit rester stable et si l'un des joueurs se voit
 déconnecté, il doit pouvoir rejoindre la partie ou être remplacé par un bot.
 
@@ -112,7 +141,7 @@ Comme pour le frontend, une action GitHub est configurée pour effectuer le dép
 
 ### Outils utilisés sur le repository github
 
-Nous avons décidé d'utiliser gitflow afin de travailler proprement sur différentes branches avec différents
+Nous avons décidé d'utiliser [gitflow](http://danielkummer.github.io/git-flow-cheatsheet/) afin de travailler proprement sur différentes branches avec différents
 niveaux de protection.
 Nous avons configuré la branche main afin qu'elle ne puisse pas être modifiée par une autre action
 qu'un Pull Request. Cette même PR doit être validée par une autre personne.
@@ -134,7 +163,7 @@ si vous êtes un profane ou que vous n'avez pas joué depuis longtemps.
 ![](Img/page_regles.jpg)
 
 Une fois votre relecture des règles terminée, appuyer sur continuer affichera une page permettant de choisir
-le type de partie souhaitée.
+le type de partie souhaitée. En local veut dire que vous jouez contre des bots.
 
 ![](Img/page_choix_type_partie.jpg)
 
@@ -165,30 +194,7 @@ A la fin de chaque manche, un tableau récapitulatif des scores de la manche est
 
 *Fichier joint*
 
-## Fonctionnalités espérées
 
-Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces trois semaines.
-
-- Les 36 cartes sont mélangées.
-- Les 36 cartes sont distribuées aux 4 joueurs (donc 9 par personne).
-- Chaque joueur pose une carte par tour.
-- La carte la plus forte emporte la plie.
-- Si notre coéquipier gagne la plie, le score s'incrémente.
-- Le score s'incrémente du nombre de points selon ce qui est écrit au-dessus.
-- Le joueur choisit l'atout.
-- L'atout l'emporte sur les trois autres familles.
-- Le buur puis le nell sont les deux plus fortes cartes.
-- Le joueur est obligé de suivre la famille qui a été posé en premier.
-  - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
-  - Le joueur peut couper avec un atout si une autre famille a été posée.
-  - La sous-coupe est interdite. Si quelqu'un coupe on ne peut pas mettre un atout plus faible. Sauf si c'est notre dernière carte.
-
-### Si le temps le permet
-
-- Jouer en ligne avec des joueurs.
-- Ajouter le chibre (demander à son coéquipier de choisir l'atout pour nous).
-- Ajouter les annonces. Au début, on annonce des combinaisons spéciales de cartes pour gagner plus de points.
-- Rendre les bots plus intelligent.
 
 ## Méthodologie
 
