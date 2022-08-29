@@ -18,6 +18,7 @@ public class Card implements Comparable{
      */
     private Card(CardColor c, CardValue v) { color = c; value = v; }
 
+    public Card() { color = CardColor.SPADES; value = CardValue.ACE; }
     public Card(Card other) { color = other.color; value = other.value; }
     /**
      * Construit un deck initial pour le jeu de Jass

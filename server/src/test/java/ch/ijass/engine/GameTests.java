@@ -8,24 +8,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Random;
 import java.util.Vector;
 
-@SpringBootTest
+@SpringBootTest(classes={Card.class, Deck.class, GameDeck.class, Hand.class})
 public class GameTests {
     @Test
     void creatingGameDeck() {
         GameDeck d1 = new GameDeck();
         GameDeck d2 = new GameDeck();
 
-        Card c1 = null;
-        int count = 0;
-        for (Card c : d1.getContent()) {
+        Vector<Card> content = d1.getContent();
+        Card c1 = content.get(0);
+        int count = 1;
+        for (int i = 1; i < content.size(); i++) {
             count++;
-            if (c1 == null)
-                c1 = c;
-            else {
-                // Vérifie qu'il n'y ait aucune carte à double
-                assert(!c1.isEqual(c));
-                c1 = c;
-            }
+            // Vérifie qu'il n'y ait aucune carte à double
+            assert(!c1.isEqual(content.get(i)));
+            c1 = content.get(i);
+
         }
         // Vérifie que les deux decks possèdent toutes les cartes
         assert(count == d2.numberOfCards() && count == 36);
@@ -67,18 +65,18 @@ public class GameTests {
 
         // Vérifie qu'aucune carte n'ai été distribué à double
         for (Card c : h1.getContent()) {
-            assert(h2.contains(c));
-            assert(h3.contains(c));
-            assert(h4.contains(c));
+            assert(!h2.contains(c));
+            assert(!h3.contains(c));
+            assert(!h4.contains(c));
         }
 
         for (Card c : h2.getContent()) {
-            assert(h3.contains(c));
-            assert(h4.contains(c));
+            assert(!h3.contains(c));
+            assert(!h4.contains(c));
         }
 
         for (Card c : h3.getContent()) {
-            assert(h4.contains(c));
+            assert(!h4.contains(c));
         }
     }
 }
