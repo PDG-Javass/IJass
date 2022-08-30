@@ -45,13 +45,15 @@ La branche *main* ne pourra être modifiée que sous certaines conditions.
 
 #### Frontend
 
-- Javascript
+- Svelte (Javascript FW)
+- Hébergement sur Netlify
 
 #### Backend
 
 - Java
-- Scala (à voir)
-- Docker/Kubernetes (à définir, mais plutôt Docker)
+- Spring
+- Docker
+- Google Cloud Run
 
 ### Build et deployement
 
@@ -100,13 +102,12 @@ Les types de commits peuvent être les suivants:
 ## Tableau Kanban
 
 Nous avons décidé d'utiliser un tableau Kanban afin de travailler avec no user stories :
-- Product Backlog
+- User Stories
 - A faire
 - En cours
 - Terminé
 
 # Sprint 1
-
 
 ## Fonctionnalités espérées
 
@@ -114,13 +115,47 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 
 - Les 36 cartes sont mélangées.
 - Les 36 cartes sont distribuées aux 4 joueurs (donc 9 par personne).
-- Chaque joueur pose une carte par tour.
+- Chaque joueur pose une carte par plie.
 - La carte la plus forte emporte la plie.
-- Si notre coéquipier gagne la plie, le score s'incrémente.
-- Le score s'incrémente du nombre de points selon ce qui est écrit dans livrable/Semaine1.md.
+- Si notre coéquipier ou nous-même gagnons la plie, le score s'incrémente.
+- Le score s'incrémente du nombre de points selon ce qui est écrit au-dessus.
 - Le joueur choisit l'atout.
 - L'atout l'emporte sur les trois autres familles.
 - Le buur puis le nell sont les deux plus fortes cartes.
 - Le joueur est obligé de suivre la famille qui a été posé en premier.
-    - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
-    - Le joueur peut couper avec un atout si une autre famille a été posé. 
+  - Exception si le joueur n'a pas la famille qui a été posé. Il peut poser n'importe quelle autre carte.
+  - Le joueur peut couper avec un atout si une autre famille a été posée.
+  - La sous-coupe est interdite. Si quelqu'un coupe on ne peut pas mettre un atout plus faible. Sauf si c'est notre dernière carte.
+- Notre coéquipier est toujours lapinou car il est en face de nous.
+- Le bot respecte les règles, mais joue une carte aléatoire.
+
+# Tests du respect des règles
+
+| Règle à tester | Réussite du test |
+|:-|:-:|
+|Au début de chaque manche, les 36 cartes sont mélangées de façon aléatoire | - |
+|Les joueurs commencent chaque manche avec 9 cartes aléatoires chacun|-|
+|Les cartes dans la main du joueur actif sont triées en tout temps par couleur dans l'ordre carreau-pique-coeur-trèfle dans le sens de lecture|-|
+|Les cartes dans la main du joueur actif de même couleur sont ensuite triées entre elles par puissance croissante dans le sens de lecture sans prendre en compte le buur et le nell|-|
+|Chaque carte est présente une et une seule fois dans l'ensemble des mains de tous les joueurs au début de chaque manche|-|
+|Chaque joueur peut et doit poser une et une seule carte jouable par tour avant de passer au joueur suivant|-|
+|Chacune des deux équipes et constituée de deux joueurs situés de part et d'autre du tapis de jeu|-|
+|Le joueur qui choisit l'atout pour la première manche est celui qui possède le 7 de carreau|-|
+|Les joueurs choisissent l'atout chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
+|Le joueur qui choisit l'atout à chaque manche joue la première carte de la première plie de la manche|-|
+|Les joueurs posent une carte chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
+|Le joueur qui remporte une plie pose la première carte de la plie suivante|-|
+|Si la première carte de la plie est un atout, tous les joueurs qui possèdent au moins un atout différent du buur sont obligés de poser un atout|-|
+|Si la première carte de la plie est un atout, le joueur actif peut poser n'importe quelle carte s'il ne possède pas d'atouts ou uniquement le buur|-|
+|Si la première carte de la plie n'est pas un atout, tous les joueurs qui peuvent suivre dans cette couleur doivent le faire ou couper la plie|-|
+|Si la première carte de la plie n'est pas un atout, le joueur actif peut poser n'importe quelle carte s'il ne peut pas suivre dans la couleur d'entrée|-|
+|Si la première carte de la plie n'est pas un atout et qu'un joueur coupe la plie, les joueurs suivants ne peuvent pas sous-couper à moins de ne pas avoir le choix|-|
+|L'équipe qui remporte la dernière plie de la manche remporte 5 points supplémentaires|-|
+|A la fin de chaque manche, 157 points sont distribués entre les deux équipes|-|
+|Quand une équipe atteint 1000 points, la partie s'arrête et l'équipe qui a atteint ce pallier est déclarée vainqueure|-|
+|Si aucun atout n'est posé, le joueur qui pose la carte la plus haute de la même couleur que la carte d'entrée remporte la plie|-|
+|Si un ou plusieurs joueurs coupent la plie, le joueur ayant posé l'atout le plus puissant remporte la plie|-|
+|En dehors de l'atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : as, roi, dame, valet, dix, neuf, huit, sept et six|-|
+|En dehors de l'atout, l'as vaut 11 points, le roi 4 points, la dame 3 points, le valet 2 points, le dix 10 points et le reste des cartes 0 point|-|
+|En atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : valet/buur, neuf/nell, as, roi, dame, dix, huit, sept et six|-|
+|En atout, le valet/buur vaut 20 points, le neuf/nell 14 points, l'as 11 points, le roi 4 points, la dame 3 points, le dix 10 points et le reste des cartes 0 point|-|
