@@ -3,6 +3,7 @@ package ch.ijass.engine.Players;
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
 import ch.ijass.engine.Cards.Hand;
+import ch.ijass.engine.Cards.InGameCard;
 
 import java.util.Collection;
 
@@ -27,7 +28,7 @@ public abstract class Player {
         hand = new Hand();
     }
 
-    abstract public Card play();
+    abstract public Card play(InGameCard playMat, CardColor trump);
 
     public Team getTeam() {
         return team;
@@ -35,12 +36,6 @@ public abstract class Player {
 
 
     abstract CardColor chooseTrump();
-/*
-    public Card play() {
-        int index = askCardToPlay(); // TODO: implémenter les méthodes des sous-classes Bot/PersonPlayer
-        return hand.play(index);
-    }
-     */
 
     public void setHand(Collection<Card> content) {
         this.hand.emptyDeck();

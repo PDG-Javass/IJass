@@ -5,7 +5,7 @@ import ch.ijass.engine.Players.Player;
 public class InGameCard extends Deck{
 
     public int countPoints(CardColor trump){
-        isValid();
+        allPlayersPlayed();
         int result = 0;
         for(Card card: content){
             result += card.points(trump);
@@ -41,9 +41,9 @@ public class InGameCard extends Deck{
     }
 
 
-    private void isValid(){
+    private void allPlayersPlayed(){
         if( content.size() != 4){
-            throw new RuntimeException(); // todo pas sur que ce soit la bonne exception
+            throw new RuntimeException("Not all players played");
         }
     }
 
