@@ -4,44 +4,43 @@ import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
 import ch.ijass.engine.Cards.Hand;
 import ch.ijass.engine.Cards.InGameCard;
-
 import java.util.Collection;
 
 public abstract class Player {
-    private final String name;
-    protected Hand hand;
-    private Team team;
+  private final String name;
+  protected Hand hand;
+  private Team team;
 
-    private Player(String name, Collection<Card> hand) {
-        this.name = name;
-        this.hand = new Hand();
-        this.hand.copyDeck(hand);
-    }
+  private Player(String name, Collection<Card> hand) {
+    this.name = name;
+    this.hand = new Hand();
+    this.hand.copyDeck(hand);
+  }
 
-    public Player() {
-        this.name = "Unnamed";
-        this.hand = new Hand();
-    }
+  public Player() {
+    this.name = "Unnamed";
+    this.hand = new Hand();
+  }
 
-    public Player(String name) {
-        this.name = name;
-        hand = new Hand();
-    }
+  public Player(String name) {
+    this.name = name;
+    hand = new Hand();
+  }
 
-    abstract public Card play(InGameCard playMat, CardColor trump);
+  public abstract Card play(InGameCard playMat, CardColor trump);
 
-    public Team getTeam() {
-        return team;
-    }
+  public Team getTeam() {
+    return team;
+  }
 
+  abstract CardColor chooseTrump();
 
-    abstract CardColor chooseTrump();
+  public void setHand(Collection<Card> content) {
+    this.hand.emptyDeck();
+    this.hand.initializeDeck(content);
+  }
 
-    public void setHand(Collection<Card> content) {
-        this.hand.emptyDeck();
-        this.hand.initializeDeck(content);
-    }
-
-    public void emptyHand() { hand.emptyDeck(); }
-
+  public void emptyHand() {
+    hand.emptyDeck();
+  }
 }
