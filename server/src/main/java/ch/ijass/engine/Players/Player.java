@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public abstract class Player {
     private final String name;
-    private Hand hand;
+    protected Hand hand;
     private Team team;
 
     private Player(String name, Collection<Card> hand) {
@@ -27,18 +27,20 @@ public abstract class Player {
         hand = new Hand();
     }
 
+    abstract public Card play();
+
     public Team getTeam() {
         return team;
     }
 
-    abstract int askCardToPlay();
 
     abstract CardColor chooseTrump();
-
+/*
     public Card play() {
         int index = askCardToPlay(); // TODO: implémenter les méthodes des sous-classes Bot/PersonPlayer
         return hand.play(index);
     }
+     */
 
     public void setHand(Collection<Card> content) {
         this.hand.emptyDeck();

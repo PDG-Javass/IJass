@@ -2,16 +2,18 @@ package ch.ijass.engine.Players;
 
 import ch.ijass.engine.Cards.CardColor;
 
+import ch.ijass.engine.Cards.Card;
+import ch.ijass.engine.Cards.Hand;
+
 public class PersonPlayer extends Player {
 
-
     @Override
-    int askCardToPlay() {
-        return 0;
+    public Card play() {
+        return hand.getContent().firstElement();    // todo a modifier pour l'instant rend la 1er carte de la main
     }
 
-    @Override
-    CardColor chooseTrump() {
+
+    public CardColor chooseTrump() {
         return CardColor.SPADES;
     }
 }
