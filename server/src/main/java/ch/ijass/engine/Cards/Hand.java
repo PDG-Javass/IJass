@@ -88,19 +88,8 @@ public class Hand extends Deck {
 
                 } else {
 
-                    // trouver la carte atout la plus elevée
-                    Card highestTrump = null;
-                    for(Card card: playMat.content){
-                        if(card.getColor() == trump){
-                            if(highestTrump == null){
-                                highestTrump = card;
-                            } else {
-                                if(card.getValue().ordinal() > highestTrump.getValue().ordinal()){
-                                    highestTrump = card;
-                                }
-                            }
-                        }
-                    }
+                    // trouver la carte atout la plus elevée sur le tapis
+                    Card highestTrump = playMat.getHighestByColor(trump);
                     // construire un vecteur avec les cartes atouts plus elevées que la carte atout la plus elevée
                     for(Card card: content){
                         if(card.getColor() == trump){

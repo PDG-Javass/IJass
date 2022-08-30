@@ -13,19 +13,33 @@ public class InGameCard extends Deck{
         return result;
     }
 
-    /*
+
     public Player getWinner(CardColor colorAsked, CardColor trump){
-        isValid();
-
-         s'il y a de l'atout joué
-                alors on cherche la plus haute carte d'atout
-           sinon
-                on itère sur
-           la plus haute carte parmis la couleur demandé l'emporte
-
+        allPlayersPlayed();
+        
+        if( isCut(trump)){
+            return getHighestByColor(trump).getOwner();
+        } else {
+            return getHighestByColor(colorAsked).getOwner();
+        }
     }
 
-     */
+    public Card getHighestByColor(CardColor color){
+        Card highestTrump = null;
+        for(Card card: content){
+            if(card.getColor() == color){
+                if(highestTrump == null){
+                    highestTrump = card;
+                } else {
+                    if(card.getValue().ordinal() > highestTrump.getValue().ordinal()){
+                        highestTrump = card;
+                    }
+                }
+            }
+        }
+        return highestTrump;
+    }
+
 
     private void isValid(){
         if( content.size() != 4){
