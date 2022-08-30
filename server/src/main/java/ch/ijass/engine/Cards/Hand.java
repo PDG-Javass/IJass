@@ -99,7 +99,6 @@ public class Hand extends Deck {
         // si personne n'a coupé
         if (!playMat.isCut(trump)) {
           ret.addAll(getAllCardOfColor(trump));
-          return ret;
 
         } else {
 
@@ -114,8 +113,8 @@ public class Hand extends Deck {
               }
             }
           }
-          return ret;
         }
+        return ret.isEmpty() ? content : ret;
       }
     }
   }
