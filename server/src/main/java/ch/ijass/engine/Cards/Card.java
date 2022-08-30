@@ -75,22 +75,35 @@ public class Card implements Comparable {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     switch (value) {
-      case SIX -> sb.append("Six");
-      case SEVEN -> sb.append("Seven");
-      case EIGHT -> sb.append("Eight");
-      case NINE -> sb.append("Nine");
-      case TEN -> sb.append("Ten");
-      case JACK -> sb.append("Jack");
-      case QUEEN -> sb.append("Queen");
-      case KING -> sb.append("King");
-      case ACE -> sb.append("Ace");
+      case SIX:
+        sb.append("Six");
+      case SEVEN:
+        sb.append("Seven");
+      case EIGHT:
+        sb.append("Eight");
+      case NINE:
+        sb.append("Nine");
+      case TEN:
+        sb.append("Ten");
+      case JACK:
+        sb.append("Jack");
+      case QUEEN:
+        sb.append("Queen");
+      case KING:
+        sb.append("King");
+      case ACE:
+        sb.append("Ace");
     }
     sb.append(" of ");
     switch (color) {
-      case CLUBS -> sb.append("Clubs");
-      case SPADES -> sb.append("Spades");
-      case HEARTS -> sb.append("Hearts");
-      case DIAMONDS -> sb.append("Diamonds");
+      case CLUBS:
+        sb.append("Clubs");
+      case SPADES:
+        sb.append("Spades");
+      case HEARTS:
+        sb.append("Hearts");
+      case DIAMONDS:
+        sb.append("Diamonds");
     }
     return sb.toString();
   }
