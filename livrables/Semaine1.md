@@ -48,7 +48,10 @@ jouée, il se voit obligé de la jouer, sauf s'il s'agit du buur.
 
 Un plie se termine lorsque chaque joueur a joué ou jeté une carte. Au terme de chaque plie, la personne ayant posé
 la carte la plus forte remporte le tas pour son équipe.
+
+
 Un round se termine lorsque toutes les cartes ont été jouées. Les points sont alors comptabilisés selon les règles
+
 suivantes :
 - Buur 20 pts
 - Nell 14 pts
