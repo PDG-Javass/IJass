@@ -16,6 +16,15 @@ public class Hand extends Deck {
         return ret;
     }
 
+    public Vector<Card> getAllCardOfColor(CardColor color){
+        Vector<Card> ret = new Vector<>();
+        for (Card card : content) {
+            if (card.getColor() == color)
+                ret.add(card);
+        }
+        return ret;
+    }
+
     public int getNumberOfCardsByColor(CardColor color) {
         int count = 0;
         for (Card c : content) {
@@ -25,7 +34,7 @@ public class Hand extends Deck {
         return count;
     }
 
-    public CardColor getColorMostPresent(CardColor color){
+    public CardColor getColorMostPresent(){
         int nbHearts = 0;
         int nbDiamons = 0;
         int nbSpades = 0;
@@ -45,9 +54,68 @@ public class Hand extends Deck {
     }
 
 
-    public Vector<Card> getPlayableCard(/*InGameCard playMat*/){
-        return new Vector<Card>(); // todo a implementer
+    public Vector<Card> getPlayableCard(InGameCard playMat, CardColor trump){
+
+        // 1er joue nimporte quoi
+        if(playMat.size() == 0){
+            return content;
+
+        } else {
+
+            CardColor color = playMat.colorAsked();
+
+            // si la couleur demandée est atout
+            if(color == trump){
+                if (getNumberOfCardsByColor(trump) == 0 || (getNumberOfCardsByColor(trump) == 1 && findCard(trump, CardValue.JACK) != null)){
+                    return content;
+                } else {
+                    return getAllCardOfColor(trump);
+                }
+            }
+
+
+            // si la couleur demandée n'est pas atout
+            else {
+
+                Vector<Card> ret = new Vector<>();
+                ret.addAll(getAllCardOfColor(color));
+
+
+                // si personne n'a coupé
+                if( ! playMat.isCut(trump)){
+                    ret.addAll(getAllCardOfColor(trump));
+                    return ret;
+
+                } else {
+
+                    // trouver la carte atout la plus elevée
+                    Card highestTrump = null;
+                    for(Card card: playMat.content){
+                        if(card.getColor() == trump){
+                            if(highestTrump == null){
+                                highestTrump = card;
+                            } else {
+                                if(card.getValue().ordinal() > highestTrump.getValue().ordinal()){
+                                    highestTrump = card;
+                                }
+                            }
+                        }
+                    }
+                    // construire un vecteur avec les cartes atouts plus elevées que la carte atout la plus elevée
+                    for(Card card: content){
+                        if(card.getColor() == trump){
+                            if(card.getValue().ordinal() > highestTrump.getValue().ordinal()){
+                                ret.add(card);
+                            }
+                        }
+                    }
+                    return ret;
+                }
+            }
+        }
     }
+
+
 
     public void throwCard(Card card){
         content.removeElement(card);

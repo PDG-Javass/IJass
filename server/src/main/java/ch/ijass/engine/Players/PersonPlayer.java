@@ -15,5 +15,5 @@ public class PersonPlayer extends Player {
 
     public CardColor chooseTrump() {
         return CardColor.SPADES;
-    }
+    } // todo a modifier
 }
