@@ -40,12 +40,14 @@ public class GameManager {
 
     }
 
+    Vector<Player> getPlayers() { return players; }
+
     public void initiateRound() {
         playMat = new InGameCard();
         playedCards = new Deck();
         initialDeck = new GameDeck();
-
         counterFold = 1;
+        distribute();
     }
 
     public void initiateFold() {
@@ -72,10 +74,10 @@ public class GameManager {
 
     public void doOneRound() {
         initiateRound();
-        distribute();
         updateFirstForRound(); // todo update le systeme de nexte player
         firstForFold = firstForRound;
         trump = firstForRound.chooseTrump();
+        initiateFold();
 
         // Déroulement de la manche
         while (counterRound < 10) {
@@ -88,6 +90,9 @@ public class GameManager {
         for (Player player : players) {
             player.emptyHand();
         }
+
+        // Vide les cartes jouées pendant le round
+        playedCards.emptyDeck();
     }
 
     public Player find7ofDiamonds(){
@@ -122,13 +127,13 @@ public class GameManager {
 
     private CardColor everybodyPlays(){
         Player current = firstForFold;
-        Card firstCard = current.play(playMat, trump);
+        Card firstCard = current.playCard(playMat, trump);
         playMat.addCard(firstCard);
         CardColor colorAsked = firstCard.getColor();
 
         int startIndex = players.indexOf(current) + 1;
         for (int i = 0; i < 3; ++i) {
-            playMat.addCard(players.get(startIndex + i).play(playMat, trump));
+            playMat.addCard(players.get((startIndex + i) % 4).playCard(playMat, trump));
         }
 
         return colorAsked;
@@ -143,6 +148,7 @@ public class GameManager {
 
         // todo : changé pour conserver les cartes jouées
         // Vector<Card> playedCard = playMat.emptyDeck();
+        playedCards.addCards(playMat.getContent());
         playMat.emptyDeck();
 
         if(counterFold == 9) firstForFold.getTeam().addPoints(CINQDEDER);

@@ -6,7 +6,9 @@ import java.util.Vector;
 public class Deck {
   protected Vector<Card> content;
 
-  public void initializeDeck(Collection<Card> content) {
+  public Deck() { content = new Vector<>(); }
+
+  public void addCards(Collection<Card> content) {
     this.content.addAll(content);
   }
 
@@ -57,5 +59,13 @@ public class Deck {
       if (c.getColor() == color) ret.add(c);
     }
     return ret;
+  }
+
+  public Card play(Card card) {
+    if (content.contains(card)) {
+      content.remove(card);
+      return card;
+    }
+    throw new RuntimeException("Can not play a card not in the Deck");
   }
 }

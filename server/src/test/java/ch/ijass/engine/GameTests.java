@@ -115,4 +115,19 @@ public class GameTests {
       assert(gm.find7ofDiamonds().getHand().contains(new Card(CardColor.DIAMONDS, CardValue.SEVEN)));
     }
   }
+
+  @Test
+  void foldTests() {
+    GameManager gm = new GameManager();
+    int nCards = 9;
+    gm.initiateRound();
+    for (int i = 0; i < 9; i++) {
+      for (Player player : gm.getPlayers()) {
+        assert(player.numberOfCardsInHand() == nCards);
+      }
+      gm.doOneFold();
+      nCards--;
+    }
+
+  }
 }

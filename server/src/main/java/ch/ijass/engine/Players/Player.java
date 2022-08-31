@@ -28,17 +28,24 @@ public abstract class Player {
     hand = new Hand();
   }
 
+  public Card playCard(InGameCard playMat, CardColor trump) {
+    Card cardToPlay = play(playMat, trump);
+    hand.play(cardToPlay);
+    return cardToPlay;
+  }
+
   public abstract Card play(InGameCard playMat, CardColor trump);
 
   public Team getTeam() {
     return team;
   }
 
+  public int numberOfCardsInHand() { return hand.numberOfCards(); }
   public abstract CardColor chooseTrump();
 
   public void setHand(Collection<Card> content) {
     this.hand.emptyDeck();
-    this.hand.initializeDeck(content);
+    this.hand.addCards(content);
     for (Card card : content) {
       card.setOwner(this);
     }

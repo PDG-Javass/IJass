@@ -4,9 +4,7 @@ import java.util.*;
 
 public class Hand extends Deck {
 
-  public Hand() {
-    content = new Vector<>();
-  }
+  public Hand() { super(); }
 
   public void sort() {
     Collections.sort(content);

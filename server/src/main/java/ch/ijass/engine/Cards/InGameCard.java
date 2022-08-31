@@ -4,6 +4,7 @@ import ch.ijass.engine.Players.Player;
 
 public class InGameCard extends Deck {
 
+  public InGameCard() { super(); }
   public int countPoints(CardColor trump) {
     allPlayersPlayed();
     int result = 0;
