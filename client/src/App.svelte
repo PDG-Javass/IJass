@@ -18,16 +18,9 @@
 		data = getData();
 	}
 
-  let card_0 = "cards/card_0_1_160.png";
-  let card_1 = "cards/card_0_2_160.png";
-  let card_2 = "cards/card_0_3_160.png";
-  let card_3 = "cards/card_0_4_160.png";
-  let card_4 = "cards/card_0_5_160.png";
-  let card_5 = "cards/card_0_6_160.png";
-  let card_6 = "cards/card_0_7_160.png";
-  let card_7 = "cards/card_0_8_160.png";
-  let card_8 = "cards/card_0_0_160.png";
 
+
+  //player's deck
   let deck = [
     {name: "cards/card_0_0_160.png", visible: true},
     {name: "cards/card_0_1_160.png", visible: true},
@@ -45,6 +38,7 @@
   let card_board ='';
   let visible = false;
 
+//play the selected card
   function moveCardToBoard(x){
     deck[x].visible = false;
     visible = true;
@@ -73,10 +67,12 @@
 </main>
 
 <body>
+  <!-- board with cards -->
   <div class="main">
     <div class="table">
       <div class="board">
 
+        <!-- fold cards -->
         <div class="tapis">
           <table class="tab_tapis">
             <tr>
@@ -91,18 +87,22 @@
             </tr>
             <tr>
               <td></td>
+
               {#if visible}
               <td id="card_me" class="card-small"><img src={card_board} alt="carte"></td>
               {/if}
+
               <td></td>
             </tr>
           </table>
         </div>
 
         <div>
+          <!-- players cards-->
           <table class="tab_tapis">
             <tr>
 
+              <!-- each card is visible at the beginning. On click goes to board and dispear -->
               {#each deck as {name, visible}, i}
                 {#if visible}
                 <td id="card_0"><div class="card-small">
@@ -114,7 +114,7 @@
               
             </tr>
           </table>
-      </div>
+        </div>
         
         
       </div>
@@ -125,5 +125,3 @@
 
 </body>
 
-<style>
-</style>
