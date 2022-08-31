@@ -17,6 +17,43 @@
 	function handleClick() {
 		data = getData();
 	}
+
+  let card_0 = "cards/card_0_1_160.png";
+  let card_1 = "cards/card_0_2_160.png";
+  let card_2 = "cards/card_0_3_160.png";
+  let card_3 = "cards/card_0_4_160.png";
+  let card_4 = "cards/card_0_5_160.png";
+  let card_5 = "cards/card_0_6_160.png";
+  let card_6 = "cards/card_0_7_160.png";
+  let card_7 = "cards/card_0_8_160.png";
+  let card_8 = "cards/card_0_0_160.png";
+
+  let deck = [
+    {name: "cards/card_0_0_160.png", visible: true},
+    {name: "cards/card_0_1_160.png", visible: true},
+    {name: "cards/card_0_2_160.png", visible: true},
+    {name: "cards/card_0_3_160.png", visible: true},
+    {name: "cards/card_0_4_160.png", visible: true},
+    {name: "cards/card_0_5_160.png", visible: true},
+    {name: "cards/card_0_6_160.png", visible: true},
+    {name: "cards/card_0_7_160.png", visible: true},
+    {name: "cards/card_0_8_160.png", visible: true}
+
+  ];
+
+
+  let card_board ='';
+  let visible = false;
+
+  function moveCardToBoard(x){
+    deck[x].visible = false;
+    visible = true;
+    card_board = deck[x].name;
+  }
+
+
+
+
 </script>
 
 <main>
@@ -54,7 +91,9 @@
             </tr>
             <tr>
               <td></td>
-              <td id="card_me" class="card-small"><img src="cards/card_1_5_160.png" alt="carte"></td>
+              {#if visible}
+              <td id="card_me" class="card-small"><img src={card_board} alt="carte"></td>
+              {/if}
               <td></td>
             </tr>
           </table>
@@ -63,30 +102,15 @@
         <div>
           <table class="tab_tapis">
             <tr>
-              <td id="card_0"><div class="card-small">
-                <img src="cards/card_0_0_160.png" alt="carte">
-              </div></td>
-              <td id="card_1"><div class="card-small">
-                <img src="cards/card_0_0_160.png" alt="carte">
-              </div></td>
-              <td id="card_2"><div class="card-small">
-                <img src="cards/card_0_0_160.png" alt="carte">
-              </div></td>
-              <td id="card_3"><div class="card-small">
-                <img src="cards/card_0_0_160.png" alt="carte">
-              </div></td>
-              <td id="card_4"><div class="card-small">
-                <img src="cards/card_0_0_160.png" alt="carte">
-              </div></td>
-              <td id="card_5"><div class="card-small">
-                <img src="cards/card_0_0_160.png" alt="carte">
-              </div></td>
-              <td id="card_6"><div class="card-small">
-                <img src="cards/card_0_0_160.png" alt="carte">
-              </div></td>
-              <td id="card_7"><div class="card-small">
-                <img src="cards/card_0_0_160.png" alt="carte">
-              </div></td>
+
+              {#each deck as {name, visible}, i}
+                {#if visible}
+                <td id="card_0"><div class="card-small">
+                  <img src={name} alt="carte" on:click={() => moveCardToBoard(i)}>
+                </div></td>
+                {/if}
+              {/each}
+
               
             </tr>
           </table>
