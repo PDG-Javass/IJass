@@ -70,6 +70,21 @@ public class Hand extends Deck {
         .getKey();
   }
 
+
+  public void throwCard(Card card) {
+    content.removeElement(card);
+  }
+
+  public Card findCard(CardColor color, CardValue value) {
+    for (Card card : content) {
+      if (card.getColor() == color && card.getValue() == value) {
+        return card;
+      }
+    }
+    return null;
+  }
+
+
   public Vector<Card> getPlayableCard(InGameCard playMat, CardColor trump) {
 
     // 1er joue nimporte quoi
@@ -83,7 +98,7 @@ public class Hand extends Deck {
       // si la couleur demandée est atout
       if (color == trump) {
         if (getNumberOfCardsByColor(trump) == 0
-            || (getNumberOfCardsByColor(trump) == 1 && findCard(trump, CardValue.JACK) != null)) {
+                || (getNumberOfCardsByColor(trump) == 1 && findCard(trump, CardValue.JACK) != null)) {
           return content;
         } else {
           return getAllCardOfColor(trump);
@@ -99,7 +114,6 @@ public class Hand extends Deck {
         // si personne n'a coupé
         if (!playMat.isCut(trump)) {
           ret.addAll(getAllCardOfColor(trump));
-          return ret;
 
         } else {
 
@@ -114,22 +128,10 @@ public class Hand extends Deck {
               }
             }
           }
-          return ret;
         }
+        return ret.isEmpty() ? content : ret;
       }
     }
   }
 
-  public void throwCard(Card card) {
-    content.removeElement(card);
-  }
-
-  Card findCard(CardColor color, CardValue value) {
-    for (Card card : content) {
-      if (card.getColor() == color && card.getValue() == value) {
-        return card;
-      }
-    }
-    return null;
-  }
 }

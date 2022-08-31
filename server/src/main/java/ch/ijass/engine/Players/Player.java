@@ -10,6 +10,7 @@ public abstract class Player {
   private final String name;
   protected Hand hand;
   private Team team;
+  private Player next;
 
   private Player(String name, Collection<Card> hand) {
     this.name = name;
@@ -24,6 +25,7 @@ public abstract class Player {
 
   public Player(String name) {
     this.name = name;
+    this.team = team;
     hand = new Hand();
   }
 
@@ -33,7 +35,7 @@ public abstract class Player {
     return team;
   }
 
-  abstract CardColor chooseTrump();
+  public abstract CardColor chooseTrump();
 
   public void setHand(Collection<Card> content) {
     this.hand.emptyDeck();
@@ -42,5 +44,13 @@ public abstract class Player {
 
   public void emptyHand() {
     hand.emptyDeck();
+  }
+
+  public Hand getHand(){
+    return hand;
+  }
+
+  public Player getNext(){
+    return next;
   }
 }

@@ -11,8 +11,10 @@ public class BotPlayer extends Player {
   public Card play(InGameCard playMat, CardColor trump) {
     Vector<Card> playableCards = hand.getPlayableCard(playMat, trump);
 
-    return playableCards
-        .firstElement(); // todo a modifier pour l'instant rend la 1er carte playable
+    return hand.getPlayableCard(playMat,trump).firstElement();
+    // todo a modifier pour l'instant rend la 1er carte playable
+
+    // A ne pas oublié : doit enlever la carte joué de sa hand
   }
 
   @Override
