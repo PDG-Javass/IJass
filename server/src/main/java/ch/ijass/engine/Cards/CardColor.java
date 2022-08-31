@@ -4,5 +4,9 @@ public enum CardColor {
     DIAMONDS,
     SPADES,
     HEARTS,
-    CLUBS
+    CLUBS;
+
+    private boolean trump;
+    public void setTrump(boolean trump) { this.trump = trump; }
+
 }

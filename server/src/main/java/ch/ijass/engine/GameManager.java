@@ -27,40 +27,21 @@ public class GameManager {
 
     final int POINTS = 1000;
 
-    /*
     GameManager() {
-        this(null);
-        players = new Vector<Player>();
+        players = new Vector<>();
+        team1 = new Team();
+        team2 = new Team();
         players.add(new BotPlayer("Lapinou ", team1));
         players.add(new BotPlayer("Chacha ", team2));
         players.add(new BotPlayer("Titi ", team1));
-        players.add(new PersonPlayer("Toto ", team2));
-
-    }
-
-    GameManager(Vector<Player> players) {
-        this.players = new Vector<>(players);
-        playMat = new InGameCard();
-        firstForFold = players.firstElement();
-        firstForRound = players.firstElement();
+        players.add(new BotPlayer("Toto ", team2));
         counterRound = 1;
-    }
-     */
 
-    GameManager(){
-        team1 = new Team();
-        team2 = new Team();
-        players = new Vector<Player>();
-        players.add(new PersonPlayer("Toto ", team1));
-        players.add(new BotPlayer("Titi ", team2));
-        players.add(new BotPlayer("Lapinou ", team1));
-        players.add(new BotPlayer("Chacha ", team2));
-
-        playMat = new InGameCard();
-        firstForFold = players.firstElement();
         firstForRound = players.firstElement();
-        counterRound = 1;
+        firstForFold = firstForRound;
     }
+
+    public void setPlayers(Vector<Player> players) { this.players = players; }
 
     Vector<Player> getPlayers() { return players; }
 
@@ -73,7 +54,7 @@ public class GameManager {
         playedCards = new Deck();
         initialDeck = new GameDeck();
         counterFold = 1;
-        counterRound++;
+        distribute();
     }
 
     public void distribute() {
@@ -95,9 +76,7 @@ public class GameManager {
 
 
     public void doOneRound() {
-
         initiateRound();
-        distribute();
         updateFirstForRound(); // todo update le systeme de nexte player
         firstForFold = firstForRound;
         trump = firstForRound.chooseTrump();
@@ -120,7 +99,7 @@ public class GameManager {
         playedCards.emptyDeck();
     }
 
-    public Player find7ofDiamonds(){
+    public Player find7ofDiamonds() {
         for(Player player : players){
             Card card = player.getHand().findCard(CardColor.DIAMONDS, CardValue.SEVEN);
             if( card != null) return card.getOwner();
@@ -136,15 +115,15 @@ public class GameManager {
         trump = firstForRound.chooseTrump();
     }
 
-    public void updateFirstForRound(){
-        if(counterRound == 1){
+    public void updateFirstForRound() {
+        if(counterRound == 1) {
             firstForRound = find7ofDiamonds();
         } else {
             firstForRound = players.get((players.indexOf(firstForRound) + 1) % 4);
         }
     }
 
-    private CardColor everybodyPlays(){
+    private CardColor everybodyPlays() { // 🎵🎵🎵
         Player current = firstForFold;
         Card firstCard = current.playCard(playMat, trump);
         playMat.addCard(firstCard);

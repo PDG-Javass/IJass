@@ -111,7 +111,6 @@ public class GameTests {
     for (int i = 0; i < NTESTS; i++) {
       GameManager gm = new GameManager();
       gm.initiateRound();
-      gm.distribute();
       assert(gm.find7ofDiamonds().getHand().contains(new Card(CardColor.DIAMONDS, CardValue.SEVEN)));
     }
   }
@@ -165,6 +164,7 @@ public class GameTests {
 
   @Test
   void roundTests() {
+    GameManager gm = new GameManager();
 
   }
 }

@@ -2,10 +2,16 @@ package ch.ijass.engine.Cards;
 
 public enum CardValue {
 
+
   SIX,
   SEVEN,
   EIGHT,
-  NINE,
+  NINE {
+    @Override
+    public int ordinalWithTrump() {
+      return 9;
+    }
+  },
   TEN {
     @Override
     public int points() {
@@ -16,6 +22,10 @@ public enum CardValue {
     @Override
     public int points() {
       return 2;
+    }
+    @Override
+    public int ordinalWithTrump() {
+      return 10;
     }
   },
   QUEEN {
@@ -41,6 +51,8 @@ public enum CardValue {
     return 0;
   }
 
-
+  public int ordinalWithTrump() {
+    return ordinal();
+  }
 
 };

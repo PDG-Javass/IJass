@@ -20,35 +20,32 @@ public class InGameCard extends Deck {
     if (isCut(trump)) {
       return getHighestByColor(trump, true).getOwner();
     } else {
-      return getHighestByColor(colorAsked, false).getOwner();
+      return getHighestByColor(colorAsked, colorAsked == trump).getOwner();
     }
   }
 
   public Card getHighestByColor(CardColor color, boolean trump) {
-    Card highestTrump = null;
+    Card highestCard = content.firstElement();
+
     if (trump) {
       for (Card card : content) {
-        if(card.getColor() == color){
-          if(card.getValue() == CardValue.JACK){
-            return card;
-          }
-        }
-        if (card.getValue() == CardValue.JACK || card.getValue() == CardValue.NINE) // todo fix this
-          return card;
+        if (card.getValue().ordinalWithTrump() > highestCard.getValue().ordinalWithTrump())
+          highestCard = card;
       }
+      return highestCard;
     }
     for (Card card : content) {
       if (card.getColor() == color) {
-        if (highestTrump == null) {
-          highestTrump = card;
+        if (highestCard == null) {
+          highestCard = card;
         } else {
-          if (card.getValue().ordinal() > highestTrump.getValue().ordinal()) {
-            highestTrump = card;
+          if (card.getValue().ordinal() > highestCard.getValue().ordinal()) {
+            highestCard = card;
           }
         }
       }
     }
-    return highestTrump;
+    return highestCard;
   }
 
   private void allPlayersPlayed() {
