@@ -16,7 +16,6 @@ public class InGameCard extends Deck {
 
   public Player getFoldWinner(CardColor colorAsked, CardColor trump) {
     allPlayersPlayed();
-
     if (isCut(trump)) {
       return getHighestByColor(trump, true).getOwner();
     } else {
@@ -29,18 +28,26 @@ public class InGameCard extends Deck {
 
     if (trump) {
       for (Card card : content) {
-        if (card.getValue().ordinalWithTrump() > highestCard.getValue().ordinalWithTrump())
-          highestCard = card;
-      }
-      return highestCard;
-    }
-    for (Card card : content) {
-      if (card.getColor() == color) {
-        if (highestCard == null) {
-          highestCard = card;
-        } else {
-          if (card.getValue().ordinal() > highestCard.getValue().ordinal()) {
+        if (card.getColor() == color) {
+          if (highestCard == null) {
             highestCard = card;
+          } else {
+            if (card.getValue().ordinalWithTrump() > highestCard.getValue().ordinalWithTrump()) {
+              highestCard = card;
+            }
+          }
+        }
+      }
+    }
+    else {
+      for (Card card : content) {
+        if (card.getColor() == color) {
+          if (highestCard == null) {
+            highestCard = card;
+          } else {
+            if (card.getValue().ordinal() > highestCard.getValue().ordinal()) {
+              highestCard = card;
+            }
           }
         }
       }

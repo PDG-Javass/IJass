@@ -67,4 +67,7 @@ public abstract class Player {
         return name;
     }
 
+  public int numberOfCardsInHand() {
+    return hand.numberOfCards();
+  }
 }
