@@ -116,7 +116,7 @@ public class Hand extends Deck {
         } else {
 
           // trouver la carte atout la plus elevée sur le tapis
-          Card highestTrump = playMat.getHighestByColor(trump);
+          Card highestTrump = playMat.getHighestByColor(trump, true);
           // construire un vecteur avec les cartes atouts plus elevées que la carte atout la plus
           // elevée
           for (Card card : content) {

@@ -121,6 +121,8 @@ public class GameTests {
     GameManager gm = new GameManager();
     int nCards = 9;
     gm.initiateRound();
+
+    // Vérifie que les joueurs jouent bien une carte à chaque plie
     for (int i = 0; i < 9; i++) {
       for (Player player : gm.getPlayers()) {
         assert(player.numberOfCardsInHand() == nCards);
@@ -128,6 +130,40 @@ public class GameTests {
       gm.doOneFold();
       nCards--;
     }
+
+  }
+
+  @Test
+  void getWinnerTests() {
+
+    PersonPlayer p1 = new PersonPlayer(), p2 = new PersonPlayer(), p3 = new PersonPlayer(), p4 = new PersonPlayer();
+
+    InGameCard igc = new InGameCard();
+    Card c1 = new Card(CardColor.SPADES, CardValue.JACK), c2 = new Card(CardColor.SPADES, CardValue.NINE),
+    c3 = new Card(CardColor.CLUBS, CardValue.QUEEN), c4 = new Card(CardColor.SPADES, CardValue.ACE);
+    c1.setOwner(p1); c2.setOwner(p2); c3.setOwner(p3); c4.setOwner(p4);
+
+    igc.addCard(c1); igc.addCard(c2); igc.addCard(c3); igc.addCard(c4);
+
+    assert(p1 == igc.getFoldWinner(CardColor.SPADES, CardColor.SPADES));
+
+    c3.setOwner(p1); c1.setOwner(p3);
+
+    assert(p3 == igc.getFoldWinner(CardColor.SPADES, CardColor.SPADES));
+
+    igc.emptyDeck();
+    c1 = new Card(CardColor.CLUBS, CardValue.ACE); c2 = new Card(CardColor.HEARTS, CardValue.QUEEN); c4 = new Card(CardColor.HEARTS, CardValue.TEN);
+
+    c1.setOwner(p1); c2.setOwner(p2); c3.setOwner(p3); c4.setOwner(p4);
+    igc.addCard(c1); igc.addCard(c2); igc.addCard(c3); igc.addCard(c4);
+
+    assert(p2 == igc.getFoldWinner(CardColor.HEARTS, CardColor.DIAMONDS));
+    assert(p1 == igc.getFoldWinner(CardColor.CLUBS, CardColor.SPADES));
+
+  }
+
+  @Test
+  void roundTests() {
 
   }
 }

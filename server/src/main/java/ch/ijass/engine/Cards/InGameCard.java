@@ -18,14 +18,20 @@ public class InGameCard extends Deck {
     allPlayersPlayed();
 
     if (isCut(trump)) {
-      return getHighestByColor(trump).getOwner();
+      return getHighestByColor(trump, true).getOwner();
     } else {
-      return getHighestByColor(colorAsked).getOwner();
+      return getHighestByColor(colorAsked, false).getOwner();
     }
   }
 
-  public Card getHighestByColor(CardColor color) {
+  public Card getHighestByColor(CardColor color, boolean trump) {
     Card highestTrump = null;
+    if (trump) {
+      for (Card card : content) {
+        if (card.getValue() == CardValue.JACK || card.getValue() == CardValue.NINE)
+          return card;
+      }
+    }
     for (Card card : content) {
       if (card.getColor() == color) {
         if (highestTrump == null) {

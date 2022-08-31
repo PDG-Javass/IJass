@@ -13,6 +13,11 @@ public class GameManager {
     private Team team1, team2;
     int counterRound;
     int counterFold;
+
+    public void setTrump(CardColor trump) {
+        this.trump = trump;
+    }
+
     CardColor trump;
     InGameCard playMat;
     Deck playedCards;
@@ -23,34 +28,32 @@ public class GameManager {
     final int POINTS = 1000;
 
     GameManager() {
-        players = new Vector<>();
-        team1 = new Team();
-        team2 = new Team();
-
+        this(null);
         players.add(new BotPlayer("Lapinou ", team1));
         players.add(new BotPlayer("Chacha ", team2));
         players.add(new BotPlayer("Titi ", team1));
         players.add(new PersonPlayer("Toto ", team2));
 
+    }
+
+    GameManager(Vector<Player> players) {
+        this.players = new Vector<>(players);
         playMat = new InGameCard();
         firstForFold = players.firstElement();
         firstForRound = players.firstElement();
-
         counterRound = 1;
-
     }
 
     Vector<Player> getPlayers() { return players; }
+
+    public Player getWinner(CardColor colorAsked) {
+        return playMat.getFoldWinner(colorAsked, trump);
+    }
 
     public void initiateRound() {
         playMat = new InGameCard();
         playedCards = new Deck();
         initialDeck = new GameDeck();
-        counterFold = 1;
-        distribute();
-    }
-
-    public void initiateFold() {
         counterFold = 1;
     }
 
@@ -74,10 +77,10 @@ public class GameManager {
 
     public void doOneRound() {
         initiateRound();
+        distribute();
         updateFirstForRound(); // todo update le systeme de nexte player
         firstForFold = firstForRound;
         trump = firstForRound.chooseTrump();
-        initiateFold();
 
         // Déroulement de la manche
         while (counterRound < 10) {
@@ -104,16 +107,10 @@ public class GameManager {
     }
 
     public int getHighestScore(){
-        int highestScore = 0;
-        for(Player player : players) {
-            if(player.getTeam().getScore() > highestScore){
-                highestScore = player.getTeam().getScore();
-            }
-        }
-        return highestScore;
+        return Math.max(team1.getScore(), team2.getScore());
     }
 
-    public void setTrump(){
+    public void chooseTrump(){
         trump = firstForRound.chooseTrump();
     }
 
@@ -135,8 +132,8 @@ public class GameManager {
         for (int i = 0; i < 3; ++i) {
             playMat.addCard(players.get((startIndex + i) % 4).playCard(playMat, trump));
         }
-
         return colorAsked;
+
     }
 
 
@@ -146,8 +143,6 @@ public class GameManager {
         firstForFold = playMat.getFoldWinner(colorAsked, trump);
         firstForFold.getTeam().addPoints(playMat.countPoints(trump));
 
-        // todo : changé pour conserver les cartes jouées
-        // Vector<Card> playedCard = playMat.emptyDeck();
         playedCards.addCards(playMat.getContent());
         playMat.emptyDeck();
 
