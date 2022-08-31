@@ -1,6 +1,7 @@
 package ch.ijass.engine.Cards;
 
 public enum CardValue {
+
   SIX,
   SEVEN,
   EIGHT,
@@ -39,4 +40,7 @@ public enum CardValue {
   public int points() {
     return 0;
   }
+
+
+
 };

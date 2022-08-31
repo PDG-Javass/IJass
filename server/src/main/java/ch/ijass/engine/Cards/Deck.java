@@ -68,4 +68,8 @@ public class Deck {
     }
     throw new RuntimeException("Can not play a card not in the Deck");
   }
+
+
+  // todo add getHighestCard(Cardcolor color)
+  // doit marcher pour atout et non atout
 }

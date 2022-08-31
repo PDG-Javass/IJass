@@ -28,7 +28,12 @@ public class InGameCard extends Deck {
     Card highestTrump = null;
     if (trump) {
       for (Card card : content) {
-        if (card.getValue() == CardValue.JACK || card.getValue() == CardValue.NINE)
+        if(card.getColor() == color){
+          if(card.getValue() == CardValue.JACK){
+            return card;
+          }
+        }
+        if (card.getValue() == CardValue.JACK || card.getValue() == CardValue.NINE) // todo fix this
           return card;
       }
     }

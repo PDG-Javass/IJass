@@ -27,8 +27,10 @@ public class GameManager {
 
     final int POINTS = 1000;
 
+    /*
     GameManager() {
         this(null);
+        players = new Vector<Player>();
         players.add(new BotPlayer("Lapinou ", team1));
         players.add(new BotPlayer("Chacha ", team2));
         players.add(new BotPlayer("Titi ", team1));
@@ -38,6 +40,22 @@ public class GameManager {
 
     GameManager(Vector<Player> players) {
         this.players = new Vector<>(players);
+        playMat = new InGameCard();
+        firstForFold = players.firstElement();
+        firstForRound = players.firstElement();
+        counterRound = 1;
+    }
+     */
+
+    GameManager(){
+        team1 = new Team();
+        team2 = new Team();
+        players = new Vector<Player>();
+        players.add(new PersonPlayer("Toto ", team1));
+        players.add(new BotPlayer("Titi ", team2));
+        players.add(new BotPlayer("Lapinou ", team1));
+        players.add(new BotPlayer("Chacha ", team2));
+
         playMat = new InGameCard();
         firstForFold = players.firstElement();
         firstForRound = players.firstElement();
@@ -55,6 +73,7 @@ public class GameManager {
         playedCards = new Deck();
         initialDeck = new GameDeck();
         counterFold = 1;
+        counterRound++;
     }
 
     public void distribute() {
@@ -76,16 +95,19 @@ public class GameManager {
 
 
     public void doOneRound() {
+
         initiateRound();
         distribute();
         updateFirstForRound(); // todo update le systeme de nexte player
         firstForFold = firstForRound;
         trump = firstForRound.chooseTrump();
 
+        System.out.println( "\n\nRound " + counterRound);
+        System.out.println("Trump is " + trump);
+
         // Déroulement de la manche
-        while (counterRound < 10) {
+        while (counterFold < 10) {
             doOneFold();
-            counterRound++;
         }
 
 
@@ -138,6 +160,7 @@ public class GameManager {
 
 
     public void doOneFold(){
+        System.out.println("Fold " + counterFold);
         CardColor colorAsked = everybodyPlays();
         counterFold++;
         firstForFold = playMat.getFoldWinner(colorAsked, trump);
@@ -147,7 +170,9 @@ public class GameManager {
         playMat.emptyDeck();
 
         if(counterFold == 9) firstForFold.getTeam().addPoints(CINQDEDER);
-
+        System.out.println("the winner is :" + firstForFold.getName());
+        System.out.println("the bot score is :" + players.get(1).getTeam().getScore());
+        System.out.println("the person score is :" + players.get(0).getTeam().getScore());
     }
 
     void playing() {
