@@ -4,6 +4,9 @@ import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Cards.Card;
 import java.util.Random;
 import java.util.Vector;
+
+import ch.ijass.engine.Players.PersonPlayer;
+import ch.ijass.engine.Players.Player;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -100,5 +103,16 @@ public class GameTests {
 
     content = h1.getCardsOfColor(CardColor.DIAMONDS);
     for (Card ca : content) assert (ca.getColor() == CardColor.DIAMONDS);
+  }
+
+  @Test
+  void findFirstPersonForFirstRound() {
+    final int NTESTS = 1000;
+    for (int i = 0; i < NTESTS; i++) {
+      GameManager gm = new GameManager();
+      gm.initiateRound();
+      gm.distribute();
+      assert(gm.find7ofDiamonds().getHand().contains(new Card(CardColor.DIAMONDS, CardValue.SEVEN)));
+    }
   }
 }

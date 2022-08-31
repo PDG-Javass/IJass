@@ -10,7 +10,6 @@ public abstract class Player {
   private final String name;
   protected Hand hand;
   private Team team;
-  private Player next;
 
   private Player(String name, Collection<Card> hand) {
     this.name = name;
@@ -23,7 +22,7 @@ public abstract class Player {
     this.hand = new Hand();
   }
 
-  public Player(String name) {
+  public Player(String name, Team team) {
     this.name = name;
     this.team = team;
     hand = new Hand();
@@ -40,6 +39,14 @@ public abstract class Player {
   public void setHand(Collection<Card> content) {
     this.hand.emptyDeck();
     this.hand.initializeDeck(content);
+    for (Card card : content) {
+      card.setOwner(this);
+    }
+  }
+
+  public void addCard(Card card) {
+    hand.addCard(card);
+    card.setOwner(this);
   }
 
   public void emptyHand() {
@@ -50,7 +57,4 @@ public abstract class Player {
     return hand;
   }
 
-  public Player getNext(){
-    return next;
-  }
 }

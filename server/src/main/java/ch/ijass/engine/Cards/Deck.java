@@ -11,6 +11,9 @@ public class Deck {
   }
 
   public void emptyDeck() {
+    for (Card card : content) {
+      card.setOwner(null);
+    }
     content.removeAllElements();
   }
 

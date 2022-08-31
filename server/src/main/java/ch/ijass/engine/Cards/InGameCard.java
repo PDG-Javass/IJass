@@ -13,7 +13,7 @@ public class InGameCard extends Deck {
     return result;
   }
 
-  public Player getWinner(CardColor colorAsked, CardColor trump) {
+  public Player getFoldWinner(CardColor colorAsked, CardColor trump) {
     allPlayersPlayed();
 
     if (isCut(trump)) {

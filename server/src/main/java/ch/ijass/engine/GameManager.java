@@ -29,21 +29,27 @@ public class GameManager {
 
         players.add(new BotPlayer("Lapinou ", team1));
         players.add(new BotPlayer("Chacha ", team2));
-        players.add(new BotPlayer("Titi ", team2));
-        players.add(new PersonPlayer("Toto ", team1));
+        players.add(new BotPlayer("Titi ", team1));
+        players.add(new PersonPlayer("Toto ", team2));
 
         playMat = new InGameCard();
         firstForFold = players.firstElement();
         firstForRound = players.firstElement();
 
         counterRound = 1;
-        counterFold = 1;
+
     }
 
     public void initiateRound() {
         playMat = new InGameCard();
         playedCards = new Deck();
         initialDeck = new GameDeck();
+
+        counterFold = 1;
+    }
+
+    public void initiateFold() {
+        counterFold = 1;
     }
 
     public void distribute() {
@@ -58,14 +64,13 @@ public class GameManager {
         // Distribution des cartes
         while (initialDeck.numberOfCards() > 0) {
             for (Player player : players) {
-                player.getHand().addCard(initialDeck.pickCardRandomly());
+                player.addCard(initialDeck.pickCardRandomly());
             }
         }
     }
 
 
     public void doOneRound() {
-
         initiateRound();
         distribute();
         updateFirstForRound(); // todo update le systeme de nexte player
@@ -111,7 +116,7 @@ public class GameManager {
         if(counterRound == 1){
             firstForRound = find7ofDiamonds();
         } else {
-            firstForRound = firstForRound.getNext();
+            firstForRound = players.get((players.indexOf(firstForRound) + 1) % 4);
         }
     }
 
@@ -120,12 +125,12 @@ public class GameManager {
         Card firstCard = current.play(playMat, trump);
         playMat.addCard(firstCard);
         CardColor colorAsked = firstCard.getColor();
-        current = current.getNext();
 
-        while(current != firstForFold){
-            playMat.addCard(current.play(playMat, trump));
-            current = current.getNext();
+        int startIndex = players.indexOf(current) + 1;
+        for (int i = 0; i < 3; ++i) {
+            playMat.addCard(players.get(startIndex + i).play(playMat, trump));
         }
+
         return colorAsked;
     }
 
@@ -133,7 +138,7 @@ public class GameManager {
     public void doOneFold(){
         CardColor colorAsked = everybodyPlays();
         counterFold++;
-        firstForFold = playMat.getWinner(colorAsked, trump);
+        firstForFold = playMat.getFoldWinner(colorAsked, trump);
         firstForFold.getTeam().addPoints(playMat.countPoints(trump));
 
         // todo : changé pour conserver les cartes jouées
@@ -144,7 +149,7 @@ public class GameManager {
 
     }
 
-    void playing(){
+    void playing() {
         while(getHighestScore() < POINTS){
             doOneRound();
             updateFirstForRound();

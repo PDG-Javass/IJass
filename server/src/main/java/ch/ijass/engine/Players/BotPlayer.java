@@ -7,6 +7,7 @@ import java.util.Vector;
 
 public class BotPlayer extends Player {
 
+  public BotPlayer(String name, Team team) { super(name, team); }
   @Override
   public Card play(InGameCard playMat, CardColor trump) {
     Vector<Card> playableCards = hand.getPlayableCard(playMat, trump);
@@ -14,7 +15,7 @@ public class BotPlayer extends Player {
     return hand.getPlayableCard(playMat,trump).firstElement();
     // todo a modifier pour l'instant rend la 1er carte playable
 
-    // A ne pas oublié : doit enlever la carte joué de sa hand
+    // A ne pas oublier : doit enlever la carte jouée de sa hand
   }
 
   @Override
