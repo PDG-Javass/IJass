@@ -40,6 +40,9 @@ public abstract class Player {
     return team;
   }
 
+  public int numberOfCardsInHand() { return hand.numberOfCards(); }
+  public void setTeam(Team team) { this.team = team; }
+
   public abstract CardColor chooseTrump();
 
   public void setHand(Collection<Card> content) {
@@ -67,7 +70,4 @@ public abstract class Player {
         return name;
     }
 
-  public int numberOfCardsInHand() {
-    return hand.numberOfCards();
-  }
 }

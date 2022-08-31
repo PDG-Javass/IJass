@@ -24,7 +24,7 @@ public class InGameCard extends Deck {
   }
 
   public Card getHighestByColor(CardColor color, boolean trump) {
-    Card highestCard = content.firstElement();
+    Card highestCard = null;
 
     if (trump) {
       for (Card card : content) {

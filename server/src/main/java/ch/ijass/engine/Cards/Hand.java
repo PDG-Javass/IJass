@@ -43,13 +43,13 @@ public class Hand extends Deck {
     for (Card card : content) {
       switch (card.getColor()) {
         case HEARTS:
-          nbHearts++;
+          nbHearts++; break;
         case DIAMONDS:
-          nbDiamons++;
+          nbDiamons++; break;
         case SPADES:
-          nbSpades++;
+          nbSpades++; break;
         case CLUBS:
-          nbClubs++;
+          nbClubs++; break;
       }
     }
 
@@ -121,7 +121,7 @@ public class Hand extends Deck {
           // elevée
           for (Card card : content) {
             if (card.getColor() == trump) {
-              if (card.getValue().ordinal() > highestTrump.getValue().ordinal()) {
+              if (card.getValue().ordinalWithTrump() > highestTrump.getValue().ordinalWithTrump()) {
                 ret.add(card);
               }
             }

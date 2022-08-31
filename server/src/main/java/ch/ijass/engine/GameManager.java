@@ -27,18 +27,39 @@ public class GameManager {
 
     final int POINTS = 1000;
 
+    /*
     GameManager() {
-        players = new Vector<>();
-        team1 = new Team();
-        team2 = new Team();
+        this(null);
+        players = new Vector<Player>();
         players.add(new BotPlayer("Lapinou ", team1));
         players.add(new BotPlayer("Chacha ", team2));
         players.add(new BotPlayer("Titi ", team1));
-        players.add(new BotPlayer("Toto ", team2));
-        counterRound = 1;
+        players.add(new PersonPlayer("Toto ", team2));
 
+    }
+
+    GameManager(Vector<Player> players) {
+        this.players = new Vector<>(players);
+        playMat = new InGameCard();
+        firstForFold = players.firstElement();
         firstForRound = players.firstElement();
-        firstForFold = firstForRound;
+        counterRound = 1;
+    }
+     */
+
+    GameManager(){
+        team1 = new Team();
+        team2 = new Team();
+        players = new Vector<Player>();
+        players.add(new PersonPlayer("Toto ", team1));
+        players.add(new BotPlayer("Titi ", team2));
+        players.add(new BotPlayer("Lapinou ", team1));
+        players.add(new BotPlayer("Chacha ", team2));
+
+        playMat = new InGameCard();
+        firstForFold = players.firstElement();
+        firstForRound = players.firstElement();
+        counterRound = 1;
     }
 
     public void setPlayers(Vector<Player> players) { this.players = players; }
@@ -85,7 +106,7 @@ public class GameManager {
         System.out.println("Trump is " + trump);
 
         // Déroulement de la manche
-        while (counterFold < 10) {
+        while (counterFold < 10 && getHighestScore() < POINTS) {
             doOneFold();
         }
 
@@ -94,7 +115,7 @@ public class GameManager {
         for (Player player : players) {
             player.emptyHand();
         }
-
+        counterRound++;
         // Vide les cartes jouées pendant le round
         playedCards.emptyDeck();
     }
@@ -111,12 +132,8 @@ public class GameManager {
         return Math.max(team1.getScore(), team2.getScore());
     }
 
-    public void chooseTrump(){
-        trump = firstForRound.chooseTrump();
-    }
-
-    public void updateFirstForRound() {
-        if(counterRound == 1) {
+    public void updateFirstForRound(){
+        if(counterRound == 1){
             firstForRound = find7ofDiamonds();
         } else {
             firstForRound = players.get((players.indexOf(firstForRound) + 1) % 4);
@@ -155,9 +172,8 @@ public class GameManager {
     }
 
     void playing() {
-        while(getHighestScore() < POINTS){
+        while(getHighestScore() < POINTS){  // todo ajouter vérification de victoire à chaque plie
             doOneRound();
-            updateFirstForRound();
         }
     }
 
