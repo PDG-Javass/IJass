@@ -1,7 +1,11 @@
 <script lang="ts">
+    import { page } from "../stores";
+
     import homeCard from "../assets/homeCards.webp";
 
-    function handleStart() {}
+    function handleStart() {
+        page.update(value => value + 1);
+    }
 </script>
 
 <main>
