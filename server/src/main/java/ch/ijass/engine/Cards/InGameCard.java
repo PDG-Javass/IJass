@@ -4,7 +4,10 @@ import ch.ijass.engine.Players.Player;
 
 public class InGameCard extends Deck {
 
-  public InGameCard() { super(); }
+  public InGameCard() {
+    super();
+  }
+
   public int countPoints(CardColor trump) {
     allPlayersPlayed();
     int result = 0;
@@ -38,8 +41,7 @@ public class InGameCard extends Deck {
           }
         }
       }
-    }
-    else {
+    } else {
       for (Card card : content) {
         if (card.getColor() == color) {
           if (highestCard == null) {

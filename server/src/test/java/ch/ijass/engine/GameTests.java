@@ -2,11 +2,10 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Cards.Card;
-import java.util.Random;
-import java.util.Vector;
-
 import ch.ijass.engine.Players.PersonPlayer;
 import ch.ijass.engine.Players.Player;
+import java.util.Random;
+import java.util.Vector;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -111,7 +110,9 @@ public class GameTests {
     for (int i = 0; i < NTESTS; i++) {
       GameManager gm = new GameManager();
       gm.initiateRound();
-      assert(gm.find7ofDiamonds().getHand().contains(new Card(CardColor.DIAMONDS, CardValue.SEVEN)));
+      assert (gm.find7ofDiamonds()
+          .getHand()
+          .contains(new Card(CardColor.DIAMONDS, CardValue.SEVEN)));
     }
   }
 
@@ -124,47 +125,56 @@ public class GameTests {
     // Vérifie que les joueurs jouent bien une carte à chaque plie
     for (int i = 0; i < 9; i++) {
       for (Player player : gm.getPlayers()) {
-        assert(player.numberOfCardsInHand() == nCards);
+        assert (player.numberOfCardsInHand() == nCards);
       }
       gm.doOneFold();
       nCards--;
     }
-
   }
 
   @Test
   void getWinnerTests() {
 
-    PersonPlayer p1 = new PersonPlayer(), p2 = new PersonPlayer(), p3 = new PersonPlayer(), p4 = new PersonPlayer();
+    PersonPlayer p1 = new PersonPlayer(),
+        p2 = new PersonPlayer(),
+        p3 = new PersonPlayer(),
+        p4 = new PersonPlayer();
 
     InGameCard igc = new InGameCard();
-    Card c1 = new Card(CardColor.CLUBS, CardValue.SIX), c2 = new Card(CardColor.CLUBS, CardValue.EIGHT),
-    c3 = new Card(CardColor.DIAMONDS, CardValue.EIGHT), c4 = new Card(CardColor.DIAMONDS, CardValue.NINE);
+    Card c1 = new Card(CardColor.CLUBS, CardValue.SIX),
+        c2 = new Card(CardColor.CLUBS, CardValue.EIGHT),
+        c3 = new Card(CardColor.DIAMONDS, CardValue.EIGHT),
+        c4 = new Card(CardColor.DIAMONDS, CardValue.NINE);
 
-    c1.setOwner(p1); c2.setOwner(p2); c3.setOwner(p3); c4.setOwner(p4);
+    c1.setOwner(p1);
+    c2.setOwner(p2);
+    c3.setOwner(p3);
+    c4.setOwner(p4);
 
-    igc.addCard(c1); igc.addCard(c2); igc.addCard(c3); igc.addCard(c4);
+    igc.addCard(c1);
+    igc.addCard(c2);
+    igc.addCard(c3);
+    igc.addCard(c4);
 
-    assert(p2 == igc.getFoldWinner(CardColor.CLUBS, CardColor.CLUBS));
-/*
-    c3.setOwner(p1); c1.setOwner(p3);
+    assert (p2 == igc.getFoldWinner(CardColor.CLUBS, CardColor.CLUBS));
+    /*
+       c3.setOwner(p1); c1.setOwner(p3);
 
-    assert(p3 == igc.getFoldWinner(CardColor.SPADES, CardColor.SPADES));
+       assert(p3 == igc.getFoldWinner(CardColor.SPADES, CardColor.SPADES));
 
-    igc.emptyDeck();
-    c1 = new Card(CardColor.CLUBS, CardValue.ACE); c2 = new Card(CardColor.HEARTS, CardValue.QUEEN); c4 = new Card(CardColor.HEARTS, CardValue.TEN);
+       igc.emptyDeck();
+       c1 = new Card(CardColor.CLUBS, CardValue.ACE); c2 = new Card(CardColor.HEARTS, CardValue.QUEEN); c4 = new Card(CardColor.HEARTS, CardValue.TEN);
 
-    c1.setOwner(p1); c2.setOwner(p2); c3.setOwner(p3); c4.setOwner(p4);
-    igc.addCard(c1); igc.addCard(c2); igc.addCard(c3); igc.addCard(c4);
+       c1.setOwner(p1); c2.setOwner(p2); c3.setOwner(p3); c4.setOwner(p4);
+       igc.addCard(c1); igc.addCard(c2); igc.addCard(c3); igc.addCard(c4);
 
-    assert(p2 == igc.getFoldWinner(CardColor.HEARTS, CardColor.DIAMONDS));
-    assert(p1 == igc.getFoldWinner(CardColor.CLUBS, CardColor.SPADES));
- */
+       assert(p2 == igc.getFoldWinner(CardColor.HEARTS, CardColor.DIAMONDS));
+       assert(p1 == igc.getFoldWinner(CardColor.CLUBS, CardColor.SPADES));
+    */
   }
 
   @Test
   void roundTests() {
     GameManager gm = new GameManager();
-
   }
 }

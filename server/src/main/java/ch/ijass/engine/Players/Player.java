@@ -40,8 +40,13 @@ public abstract class Player {
     return team;
   }
 
-  public int numberOfCardsInHand() { return hand.numberOfCards(); }
-  public void setTeam(Team team) { this.team = team; }
+  public int numberOfCardsInHand() {
+    return hand.numberOfCards();
+  }
+
+  public void setTeam(Team team) {
+    this.team = team;
+  }
 
   public abstract CardColor chooseTrump();
 
@@ -62,12 +67,11 @@ public abstract class Player {
     hand.emptyDeck();
   }
 
-  public Hand getHand(){
+  public Hand getHand() {
     return hand;
   }
 
-    public String getName() {
-        return name;
-    }
-
+  public String getName() {
+    return name;
+  }
 }

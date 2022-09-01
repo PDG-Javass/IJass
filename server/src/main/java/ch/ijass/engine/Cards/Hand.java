@@ -4,7 +4,9 @@ import java.util.*;
 
 public class Hand extends Deck {
 
-  public Hand() { super(); }
+  public Hand() {
+    super();
+  }
 
   public void sort() {
     Collections.sort(content);
@@ -43,13 +45,17 @@ public class Hand extends Deck {
     for (Card card : content) {
       switch (card.getColor()) {
         case HEARTS:
-          nbHearts++; break;
+          nbHearts++;
+          break;
         case DIAMONDS:
-          nbDiamons++; break;
+          nbDiamons++;
+          break;
         case SPADES:
-          nbSpades++; break;
+          nbSpades++;
+          break;
         case CLUBS:
-          nbClubs++; break;
+          nbClubs++;
+          break;
       }
     }
 
@@ -68,7 +74,6 @@ public class Hand extends Deck {
         .getKey();
   }
 
-
   public void throwCard(Card card) {
     content.removeElement(card);
   }
@@ -81,7 +86,6 @@ public class Hand extends Deck {
     }
     return null;
   }
-
 
   public Vector<Card> getPlayableCard(InGameCard playMat, CardColor trump) {
 
@@ -96,7 +100,7 @@ public class Hand extends Deck {
       // si la couleur demandée est atout
       if (color == trump) {
         if (getNumberOfCardsByColor(trump) == 0
-                || (getNumberOfCardsByColor(trump) == 1 && findCard(trump, CardValue.JACK) != null)) {
+            || (getNumberOfCardsByColor(trump) == 1 && findCard(trump, CardValue.JACK) != null)) {
           return content;
         } else {
           return getAllCardOfColor(trump);
@@ -131,5 +135,4 @@ public class Hand extends Deck {
       }
     }
   }
-
 }

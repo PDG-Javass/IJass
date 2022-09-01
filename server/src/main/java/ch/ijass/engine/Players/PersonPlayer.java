@@ -6,13 +6,19 @@ import ch.ijass.engine.Cards.InGameCard;
 
 public class PersonPlayer extends Player {
 
-  public PersonPlayer(String name, Team team) { super(name, team); }
+  public PersonPlayer(String name, Team team) {
+    super(name, team);
+  }
 
-  public PersonPlayer() { this("No name", new Team()); }
+  public PersonPlayer() {
+    this("No name", new Team());
+  }
+
   @Override
   public Card play(InGameCard playMat, CardColor trump) {
     System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).firstElement());
-    return hand.getPlayableCard(playMat, trump).firstElement(); // todo a modifier pour l'instant rend la 1er carte de la main
+    return hand.getPlayableCard(playMat, trump)
+        .firstElement(); // todo a modifier pour l'instant rend la 1er carte de la main
 
     // A ne pas oublier : doit enlever la carte jouée de sa hand
 

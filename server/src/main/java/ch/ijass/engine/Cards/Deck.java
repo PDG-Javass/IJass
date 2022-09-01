@@ -6,7 +6,9 @@ import java.util.Vector;
 public class Deck {
   protected Vector<Card> content;
 
-  public Deck() { content = new Vector<>(); }
+  public Deck() {
+    content = new Vector<>();
+  }
 
   public void addCards(Collection<Card> content) {
     this.content.addAll(content);
@@ -68,7 +70,6 @@ public class Deck {
     }
     throw new RuntimeException("Can not play a card not in the Deck");
   }
-
 
   // todo add getHighestCard(Cardcolor color)
   // doit marcher pour atout et non atout
