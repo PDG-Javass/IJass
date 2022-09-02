@@ -53,9 +53,17 @@
 
   let card_board = "";
   let visible = false;
+  let visible_co = false;
+  let visible_op_1 = false;
+  let visible_op_2 = false;
+
 
   //play the selected card
   function moveCardToBoard(x: number) {
+    visible_co = true;
+    visible_op_1 = true;
+    visible_op_2 = true;
+
     deck[x].visible = false;
     visible = true;
     card_board = deck[x].name;
@@ -81,30 +89,45 @@
           <table class="tab_tapis">
             <tr>
               <td />
-              <td id="card_co" class="card-small"
-                ><img src="cards/card_0_0_160.png" alt="carte" /></td
-              >
+              {#if visible_co}
+              <td class="card-small"
+                ><img src="cards/card_2_7_160.png" alt="carte" /></td>
+              {:else}
+                <td class="card-transparent"
+                  ><img src="cards/card_transparent.png" alt="carte" /></td>
+              {/if}
               <td />
             </tr>
             <tr>
-              <td id="card_op_1" class="card-small"
-                ><img src="cards/card_1_8_160.png" alt="carte" /></td
-              >
+              {#if visible_op_1}
+              <td class="card-small"
+                ><img src="cards/card_2_8_160.png" alt="carte" /></td>
+              {:else}
+                <td class="card-transparent"
+                  ><img src="cards/card_transparent.png" alt="carte" /></td>
+              {/if}
+
               <td />
-              <td id="card_op_2" class="card-small"
-                ><img src="cards/card_2_7_160.png" alt="carte" /></td
-              >
+              {#if visible_op_2}
+              <td class="card-small"
+                ><img src="cards/card_2_3_160.png" alt="carte" /></td>
+              {:else}
+                <td  class="card-transparent"
+                  ><img src="cards/card_transparent.png" alt="carte" /></td>
+              {/if}
             </tr>
             <tr>
               <td />
 
               {#if visible}
                 <td id="card_me" class="card-small"
-                  ><img src={card_board} alt="carte" /></td
-                >
+                  ><img src={card_board} alt="carte" /></td>
+              {:else}
+              <td class="card-transparent"
+                  ><img src="cards/card_transparent.png" alt="carte" /></td>
               {/if}
 
-              <td />
+              <td/>
             </tr>
           </table>
         </div>
@@ -116,7 +139,7 @@
               <!-- each card is visible at the beginning. On click goes to board and dispear -->
               {#each deck as { name, visible }, i}
                 {#if visible}
-                  <td id="card_0"
+                  <td 
                     ><div class="card-small">
                       <img
                         src={name}
@@ -181,5 +204,13 @@
     margin-right: 5px;
     float: left;
     background-color: white;
+  }
+
+  .card-transparent{
+    border-radius: 10%;
+    height: 150px;
+    width: 105px;
+    margin-right: 5px;
+    float: left;
   }
 </style>
