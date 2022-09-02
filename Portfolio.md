@@ -159,3 +159,56 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 |En dehors de l'atout, l'as vaut 11 points, le roi 4 points, la dame 3 points, le valet 2 points, le dix 10 points et le reste des cartes 0 point|-|
 |En atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : valet/buur, neuf/nell, as, roi, dame, dix, huit, sept et six|-|
 |En atout, le valet/buur vaut 20 points, le neuf/nell 14 points, l'as 11 points, le roi 4 points, la dame 3 points, le dix 10 points et le reste des cartes 0 point|-|
+
+# Sprint 2
+
+## JSON de l'état partagé
+
+Voici la représentation JSON générée par le serveur pour réprésenter l'état de la partie.
+
+```json
+{
+  game: {
+    id: 0 // id du jeu [unique]
+    round : {
+      id: 0, // id de la manche [0-+infini]
+      trump: 0, // atout de la manche [0-3]
+      beginner: 0, // joueur qui commence [0-3]
+      fold: {
+        id: 0, // id de la manche [0-8]
+        winner: 0, // joueur qui commence [0-3]
+        score_ally: 0, // score de notre équipe [0-+infini]
+        score_ennemy: 0, // score de l'équipe adverse [0-+infini]
+        played : [
+          {
+            name: "bot1", // nom du bot
+            card: {
+              familly: 0, // famille de la carte [0-3]
+              value: 0 // valeur de la carte [0-8]
+            }
+          },
+          {
+            name: "bot2",
+            card: {
+              family: 0,
+              value: 0
+            }
+          },
+          {
+            name: "bot3",
+            card: {} // si vide, n'a pas encore joué
+          },
+          {
+            name: "me",
+            card: {
+              familly: 0,
+              value: 0
+            }
+          }
+        ]
+      }
+    } 
+  }
+}
+```
+
