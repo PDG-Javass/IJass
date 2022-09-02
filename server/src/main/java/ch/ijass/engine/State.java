@@ -1,8 +1,13 @@
 package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.BoardDeck;
+import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
+import ch.ijass.engine.Cards.HandDeck;
 import lombok.Data;
+
+import java.util.List;
+import java.util.Vector;
 
 @Data
 public class State {
@@ -19,6 +24,8 @@ public class State {
 
     public int scorePerson;
     public int scoreBot;
+    public Vector<Card> hand;
+    public Vector<Card> playableCards;
 
     State(){
         board = new BoardDeck();

@@ -21,8 +21,9 @@ public class PersonPlayer extends Player {
         .firstElement(); // todo a modifier pour l'instant rend la 1er carte de la main
 
     // A ne pas oublier : doit enlever la carte jouée de sa hand
-
   }
+
+
 
   public CardColor chooseTrump() {
     return hand.getColorMostPresent();

@@ -1,12 +1,13 @@
 package ch.ijass.engine.Cards;
 
 import ch.ijass.engine.Players.Player;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Vector;
 
 public class Card implements Comparable {
   private final CardColor color;
   private final CardValue value;
-
   private int playerId;
 
   /**
