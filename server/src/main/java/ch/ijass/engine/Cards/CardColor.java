@@ -1,8 +1,14 @@
 package ch.ijass.engine.Cards;
 
 public enum CardColor {
+  DIAMONDS,
   SPADES,
-  CLUBS,
   HEARTS,
-  DIAMONDS
+  CLUBS;
+
+  private boolean trump;
+
+  public void setTrump(boolean trump) {
+    this.trump = trump;
+  }
 }

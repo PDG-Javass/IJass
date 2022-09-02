@@ -6,6 +6,7 @@ public class GameDeck extends Deck {
 
   /** Constructeur sans paramètre du deck de Jass */
   public GameDeck() {
+    super();
     initializeDeck();
   }
 

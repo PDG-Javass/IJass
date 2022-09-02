@@ -22,9 +22,16 @@ public abstract class Player {
     this.hand = new Hand();
   }
 
-  public Player(String name) {
+  public Player(String name, Team team) {
     this.name = name;
+    this.team = team;
     hand = new Hand();
+  }
+
+  public Card playCard(InGameCard playMat, CardColor trump) {
+    Card cardToPlay = play(playMat, trump);
+    hand.play(cardToPlay);
+    return cardToPlay;
   }
 
   public abstract Card play(InGameCard playMat, CardColor trump);
@@ -33,14 +40,38 @@ public abstract class Player {
     return team;
   }
 
-  abstract CardColor chooseTrump();
+  public int numberOfCardsInHand() {
+    return hand.numberOfCards();
+  }
+
+  public void setTeam(Team team) {
+    this.team = team;
+  }
+
+  public abstract CardColor chooseTrump();
 
   public void setHand(Collection<Card> content) {
     this.hand.emptyDeck();
-    this.hand.initializeDeck(content);
+    this.hand.addCards(content);
+    for (Card card : content) {
+      card.setOwner(this);
+    }
+  }
+
+  public void addCard(Card card) {
+    hand.addCard(card);
+    card.setOwner(this);
   }
 
   public void emptyHand() {
     hand.emptyDeck();
+  }
+
+  public Hand getHand() {
+    return hand;
+  }
+
+  public String getName() {
+    return name;
   }
 }

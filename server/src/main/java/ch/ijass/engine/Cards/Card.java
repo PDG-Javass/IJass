@@ -15,7 +15,7 @@ public class Card implements Comparable {
    * @param c la couleur souhaitée de la carte
    * @param v la valeur souhaitée de la carte
    */
-  private Card(CardColor c, CardValue v) {
+  public Card(CardColor c, CardValue v) {
     color = c;
     value = v;
   }
@@ -77,33 +77,46 @@ public class Card implements Comparable {
     switch (value) {
       case SIX:
         sb.append("Six");
+        break;
       case SEVEN:
         sb.append("Seven");
+        break;
       case EIGHT:
         sb.append("Eight");
+        break;
       case NINE:
         sb.append("Nine");
+        break;
       case TEN:
         sb.append("Ten");
+        break;
       case JACK:
         sb.append("Jack");
+        break;
       case QUEEN:
         sb.append("Queen");
+        break;
       case KING:
         sb.append("King");
+        break;
       case ACE:
         sb.append("Ace");
+        break;
     }
     sb.append(" of ");
     switch (color) {
       case CLUBS:
         sb.append("Clubs");
+        break;
       case SPADES:
         sb.append("Spades");
+        break;
       case HEARTS:
         sb.append("Hearts");
+        break;
       case DIAMONDS:
         sb.append("Diamonds");
+        break;
     }
     return sb.toString();
   }

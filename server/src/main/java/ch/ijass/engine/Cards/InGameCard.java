@@ -4,6 +4,10 @@ import ch.ijass.engine.Players.Player;
 
 public class InGameCard extends Deck {
 
+  public InGameCard() {
+    super();
+  }
+
   public int countPoints(CardColor trump) {
     allPlayersPlayed();
     int result = 0;
@@ -13,30 +17,44 @@ public class InGameCard extends Deck {
     return result;
   }
 
-  public Player getWinner(CardColor colorAsked, CardColor trump) {
+  public Player getFoldWinner(CardColor colorAsked, CardColor trump) {
     allPlayersPlayed();
-
     if (isCut(trump)) {
-      return getHighestByColor(trump).getOwner();
+      return getHighestByColor(trump, true).getOwner();
     } else {
-      return getHighestByColor(colorAsked).getOwner();
+      return getHighestByColor(colorAsked, colorAsked == trump).getOwner();
     }
   }
 
-  public Card getHighestByColor(CardColor color) {
-    Card highestTrump = null;
-    for (Card card : content) {
-      if (card.getColor() == color) {
-        if (highestTrump == null) {
-          highestTrump = card;
-        } else {
-          if (card.getValue().ordinal() > highestTrump.getValue().ordinal()) {
-            highestTrump = card;
+  public Card getHighestByColor(CardColor color, boolean trump) {
+    Card highestCard = null;
+
+    if (trump) {
+      for (Card card : content) {
+        if (card.getColor() == color) {
+          if (highestCard == null) {
+            highestCard = card;
+          } else {
+            if (card.getValue().ordinalWithTrump() > highestCard.getValue().ordinalWithTrump()) {
+              highestCard = card;
+            }
+          }
+        }
+      }
+    } else {
+      for (Card card : content) {
+        if (card.getColor() == color) {
+          if (highestCard == null) {
+            highestCard = card;
+          } else {
+            if (card.getValue().ordinal() > highestCard.getValue().ordinal()) {
+              highestCard = card;
+            }
           }
         }
       }
     }
-    return highestTrump;
+    return highestCard;
   }
 
   private void allPlayersPlayed() {

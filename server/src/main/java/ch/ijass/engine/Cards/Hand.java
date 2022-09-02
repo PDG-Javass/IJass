@@ -5,7 +5,7 @@ import java.util.*;
 public class Hand extends Deck {
 
   public Hand() {
-    content = new Vector<>();
+    super();
   }
 
   public void sort() {
@@ -46,12 +46,16 @@ public class Hand extends Deck {
       switch (card.getColor()) {
         case HEARTS:
           nbHearts++;
+          break;
         case DIAMONDS:
           nbDiamons++;
+          break;
         case SPADES:
           nbSpades++;
+          break;
         case CLUBS:
           nbClubs++;
+          break;
       }
     }
 
@@ -68,6 +72,19 @@ public class Hand extends Deck {
     return Collections.max(
             map.entrySet(), (entry1, entry2) -> entry1.getValue() - entry2.getValue())
         .getKey();
+  }
+
+  public void throwCard(Card card) {
+    content.removeElement(card);
+  }
+
+  public Card findCard(CardColor color, CardValue value) {
+    for (Card card : content) {
+      if (card.getColor() == color && card.getValue() == value) {
+        return card;
+      }
+    }
+    return null;
   }
 
   public Vector<Card> getPlayableCard(InGameCard playMat, CardColor trump) {
@@ -103,12 +120,12 @@ public class Hand extends Deck {
         } else {
 
           // trouver la carte atout la plus elevée sur le tapis
-          Card highestTrump = playMat.getHighestByColor(trump);
+          Card highestTrump = playMat.getHighestByColor(trump, true);
           // construire un vecteur avec les cartes atouts plus elevées que la carte atout la plus
           // elevée
           for (Card card : content) {
             if (card.getColor() == trump) {
-              if (card.getValue().ordinal() > highestTrump.getValue().ordinal()) {
+              if (card.getValue().ordinalWithTrump() > highestTrump.getValue().ordinalWithTrump()) {
                 ret.add(card);
               }
             }
@@ -117,18 +134,5 @@ public class Hand extends Deck {
         return ret.isEmpty() ? content : ret;
       }
     }
-  }
-
-  public void throwCard(Card card) {
-    content.removeElement(card);
-  }
-
-  Card findCard(CardColor color, CardValue value) {
-    for (Card card : content) {
-      if (card.getColor() == color && card.getValue() == value) {
-        return card;
-      }
-    }
-    return null;
   }
 }
