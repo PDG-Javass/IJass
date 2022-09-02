@@ -57,16 +57,41 @@
   let visible_op_1 = false;
   let visible_op_2 = false;
 
+  function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+   async function showCard(begin){
+    for(let i = 0; i < 4; ++i){
+      await sleep(2000);
+      switch(begin){
+        case 0:
+          visible_op_1 = true;
+          break;
+        case 1:
+          visible_co = true;
+          break;
+        case 2:
+          visible_op_2 = true;
+          break;
+        case 3:
+          break;
+      }
+      ++begin;
+      
+  }
+
+  }
 
   //play the selected card
   function moveCardToBoard(x: number) {
-    visible_co = true;
-    visible_op_1 = true;
-    visible_op_2 = true;
-
+ 
     deck[x].visible = false;
     visible = true;
     card_board = deck[x].name;
+
+    showCard(0);
+
   }
 
   function setDeck(cardState) {
@@ -77,11 +102,11 @@
   }
 
   setDeck(data);
+  
 </script>
 
 <body>
   <!-- board with cards -->
-  <div class="main">
     <div class="table">
       <div class="board">
         <!-- fold cards -->
@@ -155,7 +180,7 @@
         </div>
       </div>
     </div>
-  </div>
+
 </body>
 
 <style>
@@ -176,17 +201,13 @@
     border-radius: 15px;
   }
 
-  .main {
-    width: 1000px;
-    margin: auto;
-    padding: 10px;
-  }
 
   .table {
     background-color: green;
     height: 800px;
-    width: 120%;
-    margin: 0 auto;
+    width: 1200px;
+    margin: auto;
+    padding: 10px;
     border: 1em solid black;
   }
 
