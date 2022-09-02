@@ -1,6 +1,5 @@
 package ch.ijass.engine.Cards;
 
-import ch.ijass.engine.Players.Player;
 
 public class BoardDeck extends Deck {
 

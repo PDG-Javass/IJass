@@ -1,8 +1,6 @@
 package ch.ijass.engine.Cards;
 
 import ch.ijass.engine.Players.Player;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Vector;
 
 public class Card implements Comparable {
@@ -20,9 +18,6 @@ public class Card implements Comparable {
     color = c;
     value = v;
   }
-
-
-
 
   /**
    * Construit un deck initial pour le jeu de Jass
@@ -42,7 +37,6 @@ public class Card implements Comparable {
   public CardValue getValue() {
     return value;
   }
-
 
   public void setPlayerId(Player owner) {
     this.playerId = owner.getId();

@@ -1,4 +1,3 @@
 package ch.ijass.engine.Cards;
 
-public class DiscardDeck {
-}
+public class DiscardDeck {}

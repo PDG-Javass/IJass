@@ -1,8 +1,8 @@
 package ch.ijass.engine.Players;
 
+import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
-import ch.ijass.engine.Cards.BoardDeck;
 import java.util.Vector;
 
 public class BotPlayer extends Player {

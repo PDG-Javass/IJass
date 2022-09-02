@@ -1,9 +1,9 @@
 package ch.ijass.engine.Players;
 
+import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
 import ch.ijass.engine.Cards.HandDeck;
-import ch.ijass.engine.Cards.BoardDeck;
 import java.util.Collection;
 
 public abstract class Player {

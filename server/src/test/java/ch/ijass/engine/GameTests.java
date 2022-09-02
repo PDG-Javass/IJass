@@ -2,11 +2,6 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Cards.Card;
-import ch.ijass.engine.Players.PersonPlayer;
-import ch.ijass.engine.Players.Player;
-import java.util.Random;
-import java.util.Vector;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = {Card.class, Deck.class, StartingDeck.class, HandDeck.class})
