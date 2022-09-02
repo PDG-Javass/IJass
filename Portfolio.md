@@ -166,6 +166,8 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 
 Voici la représentation JSON générée par le serveur pour réprésenter l'état de la partie.
 
+
+
 ```json
 {
   "game":{
@@ -174,6 +176,44 @@ Voici la représentation JSON générée par le serveur pour réprésenter l'ét
          "id":0,
          "trump":0,
          "beginner":0,
+         "cards" : [
+            {
+                     "family":0,
+                     "value":0
+            },
+            {
+                     "family":0,
+                     "value":1
+            },
+            {
+                     "family":0,
+                     "value":2
+            },
+            {
+                     "family":0,
+                     "value":3
+            },
+            {
+                     "family":0,
+                     "value":4
+            },
+            {
+                     "family":0,
+                     "value":5
+            },
+            {
+                     "family":0,
+                     "value":6
+            },
+            {
+                     "family":0,
+                     "value":7
+            },
+            {
+                     "family":0,
+                     "value":8
+            },
+         ],
          "fold":{
             "id":0,
             "winner":0,
@@ -183,7 +223,7 @@ Voici la représentation JSON générée par le serveur pour réprésenter l'ét
                {
                   "name":"bot1",
                   "card":{
-                     "familly":0,
+                     "family":0,
                      "value":0
                   }
                },
@@ -203,7 +243,7 @@ Voici la représentation JSON générée par le serveur pour réprésenter l'ét
                {
                   "name":"me",
                   "card":{
-                     "familly":0,
+                     "family":0,
                      "value":0
                   }
                }
