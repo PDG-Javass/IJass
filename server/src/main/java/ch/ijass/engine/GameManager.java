@@ -179,6 +179,6 @@ public class GameManager {
   public static void main(String[] args) {
     GameManager game = new GameManager();
     game.playing();
-    System.out.println("Helllo");
+    System.out.println("Hello");
   }
 }

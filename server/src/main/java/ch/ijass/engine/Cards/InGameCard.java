@@ -68,7 +68,7 @@ public class InGameCard extends Deck {
   }
 
   public CardColor colorAsked() {
-    return content.firstElement().getColor();
+    return content.get(0).getColor();
   }
 
   public boolean isCut(CardColor trump) {

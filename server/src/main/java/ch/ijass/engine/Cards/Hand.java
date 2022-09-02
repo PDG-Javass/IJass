@@ -20,8 +20,8 @@ public class Hand extends Deck {
     return ret;
   }
 
-  public Vector<Card> getAllCardOfColor(CardColor color) {
-    Vector<Card> ret = new Vector<>();
+  public ArrayList<Card> getAllCardOfColor(CardColor color) {
+    ArrayList<Card> ret = new ArrayList<>();
     for (Card card : content) {
       if (card.getColor() == color) ret.add(card);
     }
@@ -75,7 +75,7 @@ public class Hand extends Deck {
   }
 
   public void throwCard(Card card) {
-    content.removeElement(card);
+    content.remove(card);
   }
 
   public Card findCard(CardColor color, CardValue value) {
@@ -87,7 +87,7 @@ public class Hand extends Deck {
     return null;
   }
 
-  public Vector<Card> getPlayableCard(InGameCard playMat, CardColor trump) {
+  public ArrayList<Card> getPlayableCard(InGameCard playMat, CardColor trump) {
 
     // 1er joue nimporte quoi
     if (playMat.size() == 0) {
@@ -110,7 +110,7 @@ public class Hand extends Deck {
       // si la couleur demandée n'est pas atout
       else {
 
-        Vector<Card> ret = new Vector<>();
+        ArrayList<Card> ret = new ArrayList<>();
         ret.addAll(getAllCardOfColor(color));
 
         // si personne n'a coupé

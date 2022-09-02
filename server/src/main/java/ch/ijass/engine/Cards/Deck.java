@@ -1,13 +1,14 @@
 package ch.ijass.engine.Cards;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
 
 public class Deck {
-  protected Vector<Card> content;
+  protected ArrayList<Card> content;
 
   public Deck() {
-    content = new Vector<>();
+    content = new ArrayList<>();
   }
 
   public void addCards(Collection<Card> content) {
@@ -18,7 +19,7 @@ public class Deck {
     for (Card card : content) {
       card.setOwner(null);
     }
-    content.removeAllElements();
+    content.clear();
   }
 
   public void addCard(Card card) {
@@ -28,7 +29,7 @@ public class Deck {
 
   public void copyDeck(Collection<? extends Card> deck) {
     if (deck == null) throw new RuntimeException("Copy of a null card collection");
-    content.removeAllElements();
+    emptyDeck();
     content.addAll(deck);
   }
 
