@@ -1,37 +1,26 @@
 <script lang="ts">
+    import { nextPage, page } from "../stores";
     const ruleUrl =
         "https://www.swisslos.ch/fr/jass/informations/les-regles-du-jass/bases-du-jass.html";
+
+    function handleNext() {
+        nextPage(page);
+    }
 </script>
 
 <main>
     <p>Si tu souhaites relire les règles du jeu:</p>
     <a href={ruleUrl}>➡Clique sur ce lien⬅</a>
     <br />
-    <button>Continuer</button>
+    <button on:click={handleNext}>Continuer</button>
 </main>
 
 <style>
     p {
         font-size: 3em;
+        font-style: italic;
         font-weight: 700;
         line-height: 1em;
-    }
-
-    button {
-        border-radius: 1em;
-        padding: 2rem;
-        background-color: lightsalmon;
-        font-weight: bold;
-        margin-top: 1em;
-        margin-bottom: 1em;
-        max-width: 80%;
-        font-size: 3em;
-        text-align: center;
-    }
-
-    button:hover {
-        background-color: lightcoral;
-        transition: background-color 0.5s ease;
     }
 
     a {

@@ -1,5 +1,4 @@
 <script lang="ts">
-  export let selected;
   //player's deck
   let deck = [
     { name: "cards/card_0_0_160.png", visible: true },
@@ -17,7 +16,7 @@
   let visible = false;
 
   //play the selected card
-  function moveCardToBoard(x) {
+  function moveCardToBoard(x: number) {
     deck[x].visible = false;
     visible = true;
     card_board = deck[x].name;
@@ -104,10 +103,6 @@
     object-fit: cover;
     aspect-ratio: 1 / 1.5;
     border-radius: 15px;
-  }
-
-  .center {
-    text-align: center;
   }
 
   .main {

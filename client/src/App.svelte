@@ -5,7 +5,7 @@
   import Home from "./lib/Home.svelte";
   import Rules from "./lib/Rules.svelte";
 
-  let pageStatus;
+  let pageStatus: number;
 
   page.subscribe((value) => {
     pageStatus = value;
