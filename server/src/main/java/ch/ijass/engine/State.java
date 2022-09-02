@@ -32,6 +32,8 @@ public class State {
         idGame = counterIdGame++;
     }
 
+    // todo : vector the playable card en liste d'index de par rapport a hand
+
 
 
 }
