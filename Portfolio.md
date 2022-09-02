@@ -168,47 +168,48 @@ Voici la représentation JSON générée par le serveur pour réprésenter l'ét
 
 ```json
 {
-  game: {
-    id: 0 // id du jeu [unique]
-    round : {
-      id: 0, // id de la manche [0-+infini]
-      trump: 0, // atout de la manche [0-3]
-      beginner: 0, // joueur qui commence [0-3]
-      fold: {
-        id: 0, // id de la manche [0-8]
-        winner: 0, // joueur qui commence [0-3]
-        score_ally: 0, // score de notre équipe [0-+infini]
-        score_ennemy: 0, // score de l'équipe adverse [0-+infini]
-        played : [
-          {
-            name: "bot1", // nom du bot
-            card: {
-              familly: 0, // famille de la carte [0-3]
-              value: 0 // valeur de la carte [0-8]
-            }
-          },
-          {
-            name: "bot2",
-            card: {
-              family: 0,
-              value: 0
-            }
-          },
-          {
-            name: "bot3",
-            card: {} // si vide, n'a pas encore joué
-          },
-          {
-            name: "me",
-            card: {
-              familly: 0,
-              value: 0
-            }
-          }
-        ]
+  "game":{
+      "id":0,
+      "round":{
+         "id":0,
+         "trump":0,
+         "beginner":0,
+         "fold":{
+            "id":0,
+            "winner":0,
+            "score_ally":0,
+            "score_ennemy":0,
+            "played":[
+               {
+                  "name":"bot1",
+                  "card":{
+                     "familly":0,
+                     "value":0
+                  }
+               },
+               {
+                  "name":"bot2",
+                  "card":{
+                     "family":0,
+                     "value":0
+                  }
+               },
+               {
+                  "name":"bot3",
+                  "card":{
+                     
+                  }
+               },
+               {
+                  "name":"me",
+                  "card":{
+                     "familly":0,
+                     "value":0
+                  }
+               }
+            ]
+         }
       }
-    } 
-  }
+   }
 }
 ```
-
