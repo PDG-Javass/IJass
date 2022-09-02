@@ -2,9 +2,9 @@ package ch.ijass.engine.Cards;
 
 import ch.ijass.engine.Players.Player;
 
-public class InGameCard extends Deck {
+public class BoardDeck extends Deck {
 
-  public InGameCard() {
+  public BoardDeck() {
     super();
   }
 
@@ -17,12 +17,12 @@ public class InGameCard extends Deck {
     return result;
   }
 
-  public Player getFoldWinner(CardColor colorAsked, CardColor trump) {
+  public int getFoldWinner(CardColor colorAsked, CardColor trump) {
     allPlayersPlayed();
     if (isCut(trump)) {
-      return getHighestByColor(trump, true).getOwner();
+      return getHighestByColor(trump, true).getPlayerId();
     } else {
-      return getHighestByColor(colorAsked, colorAsked == trump).getOwner();
+      return getHighestByColor(colorAsked, colorAsked == trump).getPlayerId();
     }
   }
 

@@ -16,4 +16,5 @@ public class Mappings {
   public String hello() {
     return "salam";
   }
+
 }

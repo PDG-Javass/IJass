@@ -2,7 +2,7 @@ package ch.ijass.engine.Players;
 
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
-import ch.ijass.engine.Cards.InGameCard;
+import ch.ijass.engine.Cards.BoardDeck;
 
 public class PersonPlayer extends Player {
 
@@ -15,7 +15,7 @@ public class PersonPlayer extends Player {
   }
 
   @Override
-  public Card play(InGameCard playMat, CardColor trump) {
+  public Card play(BoardDeck playMat, CardColor trump) {
     System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).firstElement());
     return hand.getPlayableCard(playMat, trump)
         .firstElement(); // todo a modifier pour l'instant rend la 1er carte de la main
