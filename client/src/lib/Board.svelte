@@ -1,15 +1,54 @@
 <script lang="ts">
+  const data = [
+    {
+      family: 1,
+      value: 0
+    },
+    {
+      family: 0,
+      value: 1,
+    },
+    {
+      family: 3,
+      value: 4
+    },
+    {
+      family: 0,
+      value: 3
+    },
+    {
+      family: 1,
+      value: 8
+    },
+    {
+      family: 0,
+      value: 5
+    },
+    {
+      family: 0,
+      value: 6
+    },
+    {
+      family: 0,
+      value: 7
+    },
+    {
+      family: 0,
+      value: 8
+    },
+  ]
+
   //player's deck
   let deck = [
-    { name: "cards/card_0_0_160.png", visible: true },
-    { name: "cards/card_0_1_160.png", visible: true },
-    { name: "cards/card_0_2_160.png", visible: true },
-    { name: "cards/card_0_3_160.png", visible: true },
-    { name: "cards/card_0_4_160.png", visible: true },
-    { name: "cards/card_0_5_160.png", visible: true },
-    { name: "cards/card_0_6_160.png", visible: true },
-    { name: "cards/card_0_7_160.png", visible: true },
-    { name: "cards/card_0_8_160.png", visible: true },
+    { name: "", visible: true },
+    { name: "", visible: true },
+    { name: "", visible: true },
+    { name: "", visible: true },
+    { name: "", visible: true },
+    { name: "", visible: true },
+    { name: "", visible: true },
+    { name: "", visible: true },
+    { name: "", visible: true },
   ];
 
   let card_board = "";
@@ -21,6 +60,15 @@
     visible = true;
     card_board = deck[x].name;
   }
+
+  function setDeck(cardState) {
+    for (let i = 0; i < deck.length; ++i) {
+      deck[i].name = `cards/card_${cardState[i].family}_${cardState[i].value}_160.png`;
+      console.log(`cards/card_${cardState[i].family}_${cardState[i].value}_160.png`);
+    }
+  }
+
+  setDeck(data);
 </script>
 
 <body>
