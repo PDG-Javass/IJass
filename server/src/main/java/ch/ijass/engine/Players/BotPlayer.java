@@ -2,7 +2,7 @@ package ch.ijass.engine.Players;
 
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
-import ch.ijass.engine.Cards.InGameCard;
+import ch.ijass.engine.Cards.BoardDeck;
 import java.util.Vector;
 
 public class BotPlayer extends Player {
@@ -12,7 +12,7 @@ public class BotPlayer extends Player {
   }
 
   @Override
-  public Card play(InGameCard playMat, CardColor trump) {
+  public Card play(BoardDeck playMat, CardColor trump) {
     Vector<Card> playableCards = hand.getPlayableCard(playMat, trump);
     System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).firstElement());
     return hand.getPlayableCard(playMat, trump).firstElement();

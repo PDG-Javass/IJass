@@ -9,12 +9,12 @@ import java.util.Vector;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = {Card.class, Deck.class, GameDeck.class, Hand.class})
+@SpringBootTest(classes = {Card.class, Deck.class, StartingDeck.class, HandDeck.class})
 public class GameTests {
   @Test
   void creatingGameDeck() {
-    GameDeck d1 = new GameDeck();
-    GameDeck d2 = new GameDeck();
+    StartingDeck d1 = new StartingDeck();
+    StartingDeck d2 = new StartingDeck();
 
     Vector<Card> content = d1.getContent();
     Card c1 = content.get(0);
@@ -34,7 +34,7 @@ public class GameTests {
     int ESSAIS = 1000;
     int essaisReussis = 0;
     for (int i = 0; i < ESSAIS; i++) {
-      GameDeck d = new GameDeck();
+      StartingDeck d = new StartingDeck();
       Vector<Card> cards = d.getContent();
       d.shuffle();
       Vector<Card> cardsShuffled = d.getContent();
@@ -48,8 +48,8 @@ public class GameTests {
 
   @Test
   void cardsDistribution() {
-    GameDeck gd = new GameDeck();
-    Hand h1 = new Hand(), h2 = new Hand(), h3 = new Hand(), h4 = new Hand();
+    StartingDeck gd = new StartingDeck();
+    HandDeck h1 = new HandDeck(), h2 = new HandDeck(), h3 = new HandDeck(), h4 = new HandDeck();
 
     while (gd.numberOfCards() > 0) {
       h1.addCard(gd.pickCardRandomly());
@@ -82,8 +82,8 @@ public class GameTests {
 
   @Test
   void CardsManipulations() {
-    Hand h1 = new Hand();
-    GameDeck gd = new GameDeck();
+    HandDeck h1 = new HandDeck();
+    StartingDeck gd = new StartingDeck();
 
     for (int i = 0; i < 10; i++) {
       h1.addCard(gd.pickCardRandomly());
@@ -140,7 +140,7 @@ public class GameTests {
         p3 = new PersonPlayer(),
         p4 = new PersonPlayer();
 
-    InGameCard igc = new InGameCard();
+    BoardDeck igc = new BoardDeck();
     Card c1 = new Card(CardColor.CLUBS, CardValue.SIX),
         c2 = new Card(CardColor.CLUBS, CardValue.EIGHT),
         c3 = new Card(CardColor.DIAMONDS, CardValue.EIGHT),

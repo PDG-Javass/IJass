@@ -2,39 +2,39 @@ package ch.ijass.engine.Players;
 
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
-import ch.ijass.engine.Cards.Hand;
-import ch.ijass.engine.Cards.InGameCard;
+import ch.ijass.engine.Cards.HandDeck;
+import ch.ijass.engine.Cards.BoardDeck;
 import java.util.Collection;
 
 public abstract class Player {
   private final String name;
-  protected Hand hand;
+  protected HandDeck hand;
   private Team team;
 
   private Player(String name, Collection<Card> hand) {
     this.name = name;
-    this.hand = new Hand();
+    this.hand = new HandDeck();
     this.hand.copyDeck(hand);
   }
 
   public Player() {
     this.name = "Unnamed";
-    this.hand = new Hand();
+    this.hand = new HandDeck();
   }
 
   public Player(String name, Team team) {
     this.name = name;
     this.team = team;
-    hand = new Hand();
+    hand = new HandDeck();
   }
 
-  public Card playCard(InGameCard playMat, CardColor trump) {
+  public Card playCard(BoardDeck playMat, CardColor trump) {
     Card cardToPlay = play(playMat, trump);
     hand.play(cardToPlay);
     return cardToPlay;
   }
 
-  public abstract Card play(InGameCard playMat, CardColor trump);
+  public abstract Card play(BoardDeck playMat, CardColor trump);
 
   public Team getTeam() {
     return team;
@@ -67,7 +67,7 @@ public abstract class Player {
     hand.emptyDeck();
   }
 
-  public Hand getHand() {
+  public HandDeck getHand() {
     return hand;
   }
 

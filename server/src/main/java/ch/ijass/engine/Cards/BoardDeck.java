@@ -2,9 +2,9 @@ package ch.ijass.engine.Cards;
 
 import ch.ijass.engine.Players.Player;
 
-public class InGameCard extends Deck {
+public class BoardDeck extends Deck {
 
-  public InGameCard() {
+  public BoardDeck() {
     super();
   }
 
