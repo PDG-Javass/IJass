@@ -17,13 +17,13 @@ public class BoardDeck extends Deck {
     return result;
   }
 
-  public Player getFoldWinner(CardColor colorAsked, CardColor trump) {
-    allPlayersPlayed();
-    if (isCut(trump)) {
-      return getHighestByColor(trump, true).getOwner();
-    } else {
-      return getHighestByColor(colorAsked, colorAsked == trump).getOwner();
+  public Card getHighestCard() {
+    Card ret = content.get(0);
+    for (Card card : content) {
+      if (card.isStronger(ret))
+        ret = card;
     }
+    return ret;
   }
 
   public Card getHighestByColor(CardColor color, boolean trump) {

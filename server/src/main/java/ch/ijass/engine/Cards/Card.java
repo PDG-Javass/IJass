@@ -9,8 +9,6 @@ public class Card implements Comparable {
   private final CardColor color;
   private final CardValue value;
 
-  private Player owner;
-
   /**
    * Constructeur privé de carte
    *
@@ -30,7 +28,6 @@ public class Card implements Comparable {
   public Card(Card other) {
     color = other.color;
     value = other.value;
-    owner = other.owner;
   }
 
   /**
@@ -50,14 +47,6 @@ public class Card implements Comparable {
 
   public CardValue getValue() {
     return value;
-  }
-
-  public Player getOwner() {
-    return owner;
-  }
-
-  public void setOwner(Player owner) {
-    this.owner = owner;
   }
 
   /**

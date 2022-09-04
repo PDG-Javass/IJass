@@ -15,10 +15,7 @@ public class Deck {
     this.content.addAll(content);
   }
 
-  public void emptyDeck() {
-    for (Card card : content) {
-      card.setOwner(null);
-    }
+  public void clear() {
     content.clear();
   }
 
@@ -29,7 +26,7 @@ public class Deck {
 
   public void copyDeck(Collection<? extends Card> deck) {
     if (deck == null) throw new RuntimeException("Copy of a null card collection");
-    emptyDeck();
+    clear();
     content.addAll(deck);
   }
 
@@ -54,15 +51,6 @@ public class Deck {
       if (!other.contains(c)) return false;
     }
     return true;
-  }
-
-  public Card getHighestCard() {
-    Card ret = content.get(0);
-    for (Card card : content) {
-      if (card.isStronger(ret))
-        ret = card;
-    }
-    return ret;
   }
 
   public Vector<Card> getCardsOfColor(CardColor color) {

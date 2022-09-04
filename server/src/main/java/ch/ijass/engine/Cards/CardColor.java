@@ -13,4 +13,6 @@ public enum CardColor {
   }
 
   public boolean isTrump() { return this == trump; }
+
+  public static CardColor getTrump() { return trump; }
 }

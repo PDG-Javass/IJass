@@ -52,20 +52,16 @@ public abstract class Player {
   public abstract CardColor chooseTrump();
 
   public void setHand(Collection<Card> content) {
-    this.hand.emptyDeck();
+    this.hand.clear();
     this.hand.addCards(content);
-    for (Card card : content) {
-      card.setOwner(this);
-    }
   }
 
   public void addCard(Card card) {
     hand.addCard(card);
-    card.setOwner(this);
   }
 
   public void emptyHand() {
-    hand.emptyDeck();
+    hand.clear();
   }
 
   public HandDeck getHand() {

@@ -3,21 +3,25 @@ package ch.ijass.engine;
 import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Players.*;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 public class GameManager {
   private Player firstForRound;
   private Player firstForFold;
   private Vector<Player> players;
+
+  private HashMap<Player, Card> ownership;
   private Team team1, team2;
   int counterRound;
   int counterFold;
 
   public void setTrump(CardColor trump) {
-    this.trump = trump;
+    CardColor.setTrump(trump);
   }
 
-  CardColor trump;
   BoardDeck playMat;
   Deck playedCards;
   StartingDeck initialDeck;
@@ -50,6 +54,7 @@ public class GameManager {
     team1 = new Team();
     team2 = new Team();
     players = new Vector<Player>();
+    ownership = new HashMap<>();
     players.add(new PersonPlayer("Toto ", team1));
     players.add(new BotPlayer("Titi ", team2));
     players.add(new BotPlayer("Lapinou ", team1));
@@ -67,10 +72,6 @@ public class GameManager {
 
   Vector<Player> getPlayers() {
     return players;
-  }
-
-  public Player getWinner(CardColor colorAsked) {
-    return playMat.getFoldWinner(colorAsked, trump);
   }
 
   public void initiateRound() {
@@ -102,10 +103,10 @@ public class GameManager {
     initiateRound();
     updateFirstForRound(); // todo update le systeme de nexte player
     firstForFold = firstForRound;
-    trump = firstForRound.chooseTrump();
+    CardColor.setTrump(firstForRound.chooseTrump());
 
     System.out.println("\n\nRound " + counterRound);
-    System.out.println("Trump is " + trump);
+    System.out.println("Trump is " + CardColor.getTrump());
 
     // Déroulement de la manche
     while (counterFold < 10 && getHighestScore() < POINTS) {
@@ -118,13 +119,13 @@ public class GameManager {
     }
     counterRound++;
     // Vide les cartes jouées pendant le round
-    playedCards.emptyDeck();
+    playedCards.clear();
   }
 
   public Player find7ofDiamonds() {
     for (Player player : players) {
-      Card card = player.getHand().findCard(CardColor.DIAMONDS, CardValue.SEVEN);
-      if (card != null) return card.getOwner();
+      if (player.getHand().contains(new Card(CardColor.DIAMONDS, CardValue.SEVEN)))
+        return player;
     }
     return null;
   }
@@ -141,28 +142,30 @@ public class GameManager {
     }
   }
 
-  private CardColor everybodyPlays() { // 🎵🎵🎵
-    Player current = firstForFold;
-    Card firstCard = current.playCard(playMat, trump);
-    playMat.addCard(firstCard);
-    CardColor colorAsked = firstCard.getColor();
-
-    int startIndex = players.indexOf(current) + 1;
-    for (int i = 0; i < 3; ++i) {
-      playMat.addCard(players.get((startIndex + i) % 4).playCard(playMat, trump));
+  private void playersPlay() {
+    ownership.clear();
+    int startIndex = players.indexOf(firstForFold);
+    for (int i = 0; i < 4; ++i) {
+      Player current = players.get((startIndex + i) % 4);
+      Card play = current.playCard(playMat, CardColor.getTrump());
+      playMat.addCard(play);
+      ownership.put(current, play);
     }
-    return colorAsked;
   }
 
   public void doOneFold() {
     System.out.println("Fold " + counterFold);
-    CardColor colorAsked = everybodyPlays();
+    playersPlay();
+    Card winning = playMat.getHighestCard();
     counterFold++;
-    firstForFold = playMat.getFoldWinner(colorAsked, trump);
-    firstForFold.getTeam().addPoints(playMat.countPoints(trump));
+    for(Map.Entry<Player, Card> os : ownership.entrySet()) {
+      if (os.getValue() == winning)
+        firstForFold = os.getKey();
+    }
+    firstForFold.getTeam().addPoints(playMat.countPoints(CardColor.getTrump()));
 
     playedCards.addCards(playMat.getContent());
-    playMat.emptyDeck();
+    playMat.clear();
 
     if (counterFold == 9) firstForFold.getTeam().addPoints(CINQDEDER);
     System.out.println("the winner is :" + firstForFold.getName());

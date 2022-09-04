@@ -19,7 +19,7 @@ public class BotPlayer extends Player {
     return hand.getPlayableCard(playMat, trump).get(0);
     // todo a modifier pour l'instant rend la 1er carte playable
 
-    // A ne pas oublier : doit enlever la carte jouée de sa hand
+    // Ne pas oublier : doit enlever la carte jouée de sa hand
   }
 
   @Override
