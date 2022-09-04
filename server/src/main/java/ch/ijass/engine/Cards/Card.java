@@ -39,7 +39,7 @@ public class Card implements Comparable {
    * @return un nouveau vecteur de cartes contenant toutes les cartes du jeu
    */
   public static ArrayList<Card> getInitialDeck() {
-    ArrayList<Card> ret = new Vector<>();
+    ArrayList<Card> ret = new ArrayList<>();
     for (int i = 0; i < CardColor.values().length; i++) {
       for (int j = 0; j < CardValue.values().length; j++) {
         ret.add(new Card(CardColor.values()[i], CardValue.values()[j]));
@@ -134,6 +134,19 @@ public class Card implements Comparable {
       if (colorDiff != 0) return colorDiff;
       else return valueDiff;
     }
+  }
+
+  public boolean isStronger(Card other) {
+    if (color.isTrump()) {
+      if (other.color.isTrump())
+        return value == CardValue.JACK
+        || (value == CardValue.NINE && other.value != CardValue.JACK)
+        || (other.value != CardValue.JACK && other.value != CardValue.NINE
+        && value.ordinal() > other.value.ordinal());
+      else
+        return true;
+    } else
+        return color == other.color && value.ordinal() > other.value.ordinal();
   }
 
   public boolean isEqual(Card other) {

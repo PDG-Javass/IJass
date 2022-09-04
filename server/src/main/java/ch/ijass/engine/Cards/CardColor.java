@@ -6,9 +6,11 @@ public enum CardColor {
   HEARTS,
   CLUBS;
 
-  private boolean trump;
+  private static CardColor trump;
 
-  public void setTrump(boolean trump) {
-    this.trump = trump;
+  public static void setTrump(CardColor trump) {
+    CardColor.trump = trump;
   }
+
+  public boolean isTrump() { return this == trump; }
 }

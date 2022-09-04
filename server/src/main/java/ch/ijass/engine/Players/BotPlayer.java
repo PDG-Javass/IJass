@@ -2,7 +2,7 @@ package ch.ijass.engine.Players;
 
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
-import ch.ijass.engine.Cards.InGameCard;
+import ch.ijass.engine.Cards.BoardDeck;
 
 import java.util.ArrayList;
 
@@ -13,10 +13,10 @@ public class BotPlayer extends Player {
   }
 
   @Override
-  public Card play(InGameCard playMat, CardColor trump) {
+  public Card play(BoardDeck playMat, CardColor trump) {
     ArrayList<Card> playableCards = hand.getPlayableCard(playMat, trump);
-    System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).firstElement());
-    return hand.getPlayableCard(playMat, trump).firstElement();
+    System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).get(0));
+    return hand.getPlayableCard(playMat, trump).get(0);
     // todo a modifier pour l'instant rend la 1er carte playable
 
     // A ne pas oublier : doit enlever la carte jouée de sa hand

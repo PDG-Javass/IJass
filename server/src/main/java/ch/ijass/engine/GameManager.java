@@ -1,7 +1,7 @@
 package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.*;
-import ch.ijass.engine.Cards.InGameCard;
+import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Players.*;
 import java.util.Vector;
 
@@ -18,9 +18,9 @@ public class GameManager {
   }
 
   CardColor trump;
-  InGameCard playMat;
+  BoardDeck playMat;
   Deck playedCards;
-  GameDeck initialDeck;
+  StartingDeck initialDeck;
 
   final int CINQDEDER = 5;
 
@@ -39,7 +39,7 @@ public class GameManager {
 
   GameManager(Vector<Player> players) {
       this.players = new Vector<>(players);
-      playMat = new InGameCard();
+      playMat = new BoardDeck();
       firstForFold = players.firstElement();
       firstForRound = players.firstElement();
       counterRound = 1;
@@ -55,7 +55,7 @@ public class GameManager {
     players.add(new BotPlayer("Lapinou ", team1));
     players.add(new BotPlayer("Chacha ", team2));
 
-    playMat = new InGameCard();
+    playMat = new BoardDeck();
     firstForFold = players.firstElement();
     firstForRound = players.firstElement();
     counterRound = 1;
@@ -74,9 +74,9 @@ public class GameManager {
   }
 
   public void initiateRound() {
-    playMat = new InGameCard();
+    playMat = new BoardDeck();
     playedCards = new Deck();
-    initialDeck = new GameDeck();
+    initialDeck = new StartingDeck();
     counterFold = 1;
     distribute();
   }

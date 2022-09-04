@@ -4,17 +4,37 @@ import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Players.PersonPlayer;
 import ch.ijass.engine.Players.Player;
+
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
+
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = {Card.class, Deck.class, GameDeck.class, Hand.class})
+@SpringBootTest(classes = {Card.class, Deck.class, StartingDeck.class, HandDeck.class})
 public class GameTests {
+
+  @Test
+  public void cardColorTrump() {
+    CardColor diamonds = CardColor.DIAMONDS;
+    CardColor clubs = CardColor.CLUBS;
+    CardColor spades = CardColor.SPADES;
+    CardColor hearts = CardColor.HEARTS;
+
+    CardColor.setTrump(CardColor.DIAMONDS);
+
+    assert(diamonds.isTrump() && !clubs.isTrump() && !spades.isTrump() && !hearts.isTrump());
+
+    CardColor.setTrump(CardColor.CLUBS);
+
+    assert(!diamonds.isTrump() && clubs.isTrump() && !spades.isTrump() && !hearts.isTrump());
+  }
   @Test
   void creatingGameDeck() {
-    GameDeck d1 = new GameDeck();
-    GameDeck d2 = new GameDeck();
+    StartingDeck d1 = new StartingDeck();
+    StartingDeck d2 = new StartingDeck();
 
     Vector<Card> content = d1.getContent();
     Card c1 = content.get(0);
@@ -34,7 +54,7 @@ public class GameTests {
     int ESSAIS = 1000;
     int essaisReussis = 0;
     for (int i = 0; i < ESSAIS; i++) {
-      GameDeck d = new GameDeck();
+      StartingDeck d = new StartingDeck();
       Vector<Card> cards = d.getContent();
       d.shuffle();
       Vector<Card> cardsShuffled = d.getContent();
@@ -47,9 +67,27 @@ public class GameTests {
   }
 
   @Test
+  public void cardOrder() {
+    BoardDeck bd = new BoardDeck();
+    bd.addCard(new Card(CardColor.HEARTS, CardValue.TEN));
+    assert(bd.getHighestCard().isEqual(new Card(CardColor.HEARTS, CardValue.TEN)));
+    bd.addCard(new Card(CardColor.SPADES, CardValue.TEN));
+    assert(bd.getHighestCard().isEqual(new Card(CardColor.HEARTS, CardValue.TEN)));
+    CardColor.setTrump(CardColor.SPADES);
+    assert(bd.getHighestCard().isEqual(new Card(CardColor.SPADES, CardValue.TEN)));
+    bd.addCard(new Card(CardColor.SPADES, CardValue.NINE));
+    assert(bd.getHighestCard().isEqual(new Card(CardColor.SPADES, CardValue.NINE)));
+    bd.addCard(new Card(CardColor.SPADES, CardValue.JACK));
+    bd.addCard(new Card(CardColor.SPADES, CardValue.ACE));
+    assert(bd.getHighestCard().isEqual(new Card(CardColor.SPADES, CardValue.JACK)));
+    CardColor.setTrump(CardColor.CLUBS);
+    assert(bd.getHighestCard().isEqual(new Card(CardColor.HEARTS, CardValue.TEN)));
+  }
+
+  @Test
   void cardsDistribution() {
-    GameDeck gd = new GameDeck();
-    Hand h1 = new Hand(), h2 = new Hand(), h3 = new Hand(), h4 = new Hand();
+    StartingDeck gd = new StartingDeck();
+    HandDeck h1 = new HandDeck(), h2 = new HandDeck(), h3 = new HandDeck(), h4 = new HandDeck();
 
     while (gd.numberOfCards() > 0) {
       h1.addCard(gd.pickCardRandomly());
@@ -82,8 +120,8 @@ public class GameTests {
 
   @Test
   void CardsManipulations() {
-    Hand h1 = new Hand();
-    GameDeck gd = new GameDeck();
+    HandDeck h1 = new HandDeck();
+    StartingDeck gd = new StartingDeck();
 
     for (int i = 0; i < 10; i++) {
       h1.addCard(gd.pickCardRandomly());
@@ -102,6 +140,18 @@ public class GameTests {
 
     content = h1.getCardsOfColor(CardColor.DIAMONDS);
     for (Card ca : content) assert (ca.getColor() == CardColor.DIAMONDS);
+  }
+
+  @Test
+  public void getHighestCard() {
+    HandDeck hd = new HandDeck();
+    ArrayList<Card> content = new ArrayList<>();
+    content.add(new Card(CardColor.SPADES, CardValue.TEN));
+    content.add(new Card(CardColor.HEARTS, CardValue.JACK));
+    content.add(new Card(CardColor.HEARTS, CardValue.QUEEN));
+    content.add(new Card(CardColor.HEARTS, CardValue.SIX));
+    content.add(new Card(CardColor.CLUBS, CardValue.NINE));
+    content.add(new Card(CardColor.HEARTS, CardValue.JACK));
   }
 
   @Test
@@ -140,7 +190,7 @@ public class GameTests {
         p3 = new PersonPlayer(),
         p4 = new PersonPlayer();
 
-    InGameCard igc = new InGameCard();
+    BoardDeck igc = new BoardDeck();
     Card c1 = new Card(CardColor.CLUBS, CardValue.SIX),
         c2 = new Card(CardColor.CLUBS, CardValue.EIGHT),
         c3 = new Card(CardColor.DIAMONDS, CardValue.EIGHT),

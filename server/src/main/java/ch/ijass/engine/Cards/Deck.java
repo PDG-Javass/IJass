@@ -56,6 +56,15 @@ public class Deck {
     return true;
   }
 
+  public Card getHighestCard() {
+    Card ret = content.get(0);
+    for (Card card : content) {
+      if (card.isStronger(ret))
+        ret = card;
+    }
+    return ret;
+  }
+
   public Vector<Card> getCardsOfColor(CardColor color) {
     Vector<Card> ret = new Vector<>();
     for (Card c : content) {

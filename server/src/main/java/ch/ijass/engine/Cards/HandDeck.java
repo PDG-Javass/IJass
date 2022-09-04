@@ -2,9 +2,9 @@ package ch.ijass.engine.Cards;
 
 import java.util.*;
 
-public class Hand extends Deck {
+public class HandDeck extends Deck {
 
-  public Hand() {
+  public HandDeck() {
     super();
   }
 
@@ -87,7 +87,7 @@ public class Hand extends Deck {
     return null;
   }
 
-  public ArrayList<Card> getPlayableCard(InGameCard playMat, CardColor trump) {
+  public ArrayList<Card> getPlayableCard(BoardDeck playMat, CardColor trump) {
 
     // 1er joue nimporte quoi
     if (playMat.size() == 0) {
