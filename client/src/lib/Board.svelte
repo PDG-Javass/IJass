@@ -40,15 +40,15 @@
 
   //player's deck
   let deck = [
-    { name: "", visible: true },
-    { name: "", visible: true },
-    { name: "", visible: true },
-    { name: "", visible: true },
-    { name: "", visible: true },
-    { name: "", visible: true },
-    { name: "", visible: true },
-    { name: "", visible: true },
-    { name: "", visible: true },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
   ];
 
   let card_board = "";
@@ -79,7 +79,7 @@
           break;
         case 3:
           {for(let i = 0; i < 9; ++i){
-      (document.getElementById(deck[i].name) as HTMLButtonElement).disabled = false;
+          deck[i].playable = true;
     }}
           break;
       }
@@ -92,6 +92,10 @@
   function setTrump(id){
     trump_me = false;
     trump_current = "trump_" + id + ".png"
+
+    for(let i = 0; i < 9; ++i){
+          deck[i].playable = true;
+    }
   }
 
   //play the selected card
@@ -102,7 +106,7 @@
     card_board = deck[x].name;
 
     for(let i = 0; i < 9; ++i){
-      (document.getElementById(deck[i].name) as HTMLButtonElement).disabled = true;
+      deck[i].playable = false;
     }
     
     showCard(0);
@@ -161,7 +165,8 @@
                 ><img src="cards/card_transparent.png" alt="carte" /></td>
             {/if}
 
-            <td />
+            <td/>
+
             {#if visible_op_2}
             <td class="card-small"
               ><img src="cards/card_2_3_160.png" alt="carte" /></td>
@@ -192,6 +197,7 @@
             <td/>
             {/if}
           </tr>
+
         </table>
       </div>
 
@@ -200,14 +206,17 @@
         <table class="tab_tapis">
           <tr>
             <!-- each card is visible at the beginning. On click goes to board and dispear -->
-            {#each deck as { name, visible }, i}
+            {#each deck as { name, visible, playable }, i}
               {#if visible}
-                <td><div class="card-small">
-                    <img id={name}
-                      src={name}
-                      alt="carte"
-                      on:click={() => moveCardToBoard(i)}/>
-                  </div></td>
+              <td>
+                <div class="card-small">
+                      <img id={name}
+                        src={name}
+                        class="{playable ? '' : 'noclick'}"
+                        alt="carte"
+                        on:click={() => moveCardToBoard(i)}/>
+                    </div>
+                </td>
               {/if}
             {/each}
           </tr>
@@ -233,8 +242,6 @@
     top: 10px;
     right: 10px;
   }
-
-
 
   .tapis {
     margin-bottom: 10%;
@@ -266,6 +273,11 @@
   .board {
     top: 40%;
     left: 20%;
+  }
+
+  .noclick{
+    pointer-events: none
+    
   }
 
   .card-small {
