@@ -6,8 +6,7 @@ import java.util.Vector;
 public class Card implements Comparable {
   private final CardColor color;
   private final CardValue value;
-
-  private Player owner;
+  private int playerId;
 
   /**
    * Constructeur privé de carte
@@ -18,17 +17,6 @@ public class Card implements Comparable {
   public Card(CardColor c, CardValue v) {
     color = c;
     value = v;
-  }
-
-  public Card() {
-    color = CardColor.SPADES;
-    value = CardValue.ACE;
-  }
-
-  public Card(Card other) {
-    color = other.color;
-    value = other.value;
-    owner = other.owner;
   }
 
   /**
@@ -50,12 +38,12 @@ public class Card implements Comparable {
     return value;
   }
 
-  public Player getOwner() {
-    return owner;
+  public void setPlayerId(Player owner) {
+    this.playerId = owner.getId();
   }
 
-  public void setOwner(Player owner) {
-    this.owner = owner;
+  public int getPlayerId() {
+    return playerId;
   }
 
   /**

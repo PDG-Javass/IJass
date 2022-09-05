@@ -159,3 +159,105 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 |En dehors de l'atout, l'as vaut 11 points, le roi 4 points, la dame 3 points, le valet 2 points, le dix 10 points et le reste des cartes 0 point|-|
 |En atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : valet/buur, neuf/nell, as, roi, dame, dix, huit, sept et six|-|
 |En atout, le valet/buur vaut 20 points, le neuf/nell 14 points, l'as 11 points, le roi 4 points, la dame 3 points, le dix 10 points et le reste des cartes 0 point|-|
+
+# Sprint 2
+
+## JSON de l'état partagé
+
+Voici la représentation JSON générée par le serveur pour réprésenter l'état de la partie.
+
+
+
+```json
+{
+  "game":{
+      "id":0,
+      "round":{
+         "id":0,
+         "trump":0,
+         "beginner":0,
+         "cards" : [
+            {
+                  "family":0,
+                  "value":0
+            },
+            {
+                  "family":0,
+                  "value":1
+            },
+            {
+                  "family":0,
+                  "value":2
+            },
+            {
+                  "family":0,
+                  "value":3
+            },
+            {
+                  "family":0,
+                  "value":4
+            },
+            {
+                  "family":0,
+                  "value":5
+            },
+            {
+                  "family":0,
+                  "value":6
+            },
+            {
+                  "family":0,
+                  "value":7
+            },
+            {
+                  "family":0,
+                  "value":8
+            },
+         ],
+         "fold":{
+            "id":0,
+            "winner":0,
+            "score_ally":0,
+            "score_ennemy":0,
+            "played":[
+               {
+                  "name":"bot1",
+                  "card":{
+                     "family":0,
+                     "value":0
+                  }
+               },
+               {
+                  "name":"bot2",
+                  "card":{
+                     "family":0,
+                     "value":0
+                  }
+               },
+               {
+             Joueur        "family":0,
+                     "value":0
+                  }
+               }
+            ]
+         }
+      }
+   }
+}
+```
+
+## Numérotation
+
+### Joueurs
+
+- 0: joueur réel
+- 1: bot opposant
+- 2: bot allié
+- 3: bot opposant
+
+### Famille
+
+- 0: pique
+- 1: tréfle
+- 2: coeur
+- 3: carreaux
