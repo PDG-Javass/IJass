@@ -49,9 +49,7 @@ public class HandDeck extends Deck {
             nbSpades,
             CardColor.CLUBS,
             nbClubs);
-    return Collections.max(
-            map.entrySet(), Comparator.comparingInt(Map.Entry::getValue))
-        .getKey();
+    return Collections.max(map.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
   }
 
   public Card findCard(CardColor color, CardValue value) {
@@ -76,7 +74,8 @@ public class HandDeck extends Deck {
       // si la couleur demandée est atout
       if (color == trump) {
         if (getNumberOfCardsByColor(content, trump) == 0
-            || (getNumberOfCardsByColor(content, trump) == 1 && findCard(trump, CardValue.JACK) != null)) {
+            || (getNumberOfCardsByColor(content, trump) == 1
+                && findCard(trump, CardValue.JACK) != null)) {
           return content;
         } else {
           return getAllCardsOfColor(content, trump);
@@ -112,7 +111,6 @@ public class HandDeck extends Deck {
     }
   }
 
-
   public Card findAce(CardColor trump) {
     for (Card card : content) {
       if (card.getColor() != trump && card.getValue() == CardValue.ACE) {
@@ -122,22 +120,17 @@ public class HandDeck extends Deck {
     return null;
   }
 
-  public Card getAdvantageWithoutTrump(BoardDeck board, CardColor trump){
-    if ((board.isCut(trump)) || getNumberOfCardsByColor(content, board.colorAsked()) == 0){
+  public Card getAdvantageWithoutTrump(BoardDeck board, CardColor trump) {
+    if ((board.isCut(trump)) || getNumberOfCardsByColor(content, board.colorAsked()) == 0) {
       return null;
-    }
-    else{
+    } else {
       Card highestCardOnBoard = board.getHighestByColor(board.content, board.colorAsked(), false);
       Card highestCardInHand = getHighestByColor(content, board.colorAsked(), false);
-      if (highestCardInHand.getValue().ordinal() > highestCardOnBoard.getValue().ordinal()){
-          return highestCardInHand;
-      }
-      else{
-          return null;
+      if (highestCardInHand.getValue().ordinal() > highestCardOnBoard.getValue().ordinal()) {
+        return highestCardInHand;
+      } else {
+        return null;
       }
     }
   }
-
-
-
 }

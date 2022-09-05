@@ -1,6 +1,5 @@
 package ch.ijass.engine.Cards;
 
-
 public class BoardDeck extends Deck {
 
   public BoardDeck() {
@@ -24,10 +23,7 @@ public class BoardDeck extends Deck {
     }
   }
 
-
-
-
-    private void allPlayersPlayed() {
+  private void allPlayersPlayed() {
     if (content.size() != 4) {
       throw new RuntimeException("Not all players played");
     }

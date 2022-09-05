@@ -1,7 +1,6 @@
 package ch.ijass.engine.Players;
 
 import ch.ijass.engine.Cards.*;
-
 import java.util.Collection;
 
 public abstract class Player {
@@ -23,7 +22,7 @@ public abstract class Player {
   }
 
   public Card playCard(BoardDeck playMat, DiscardDeck playedCards, CardColor trump) {
-    Card cardToPlay = play(playMat, playedCards,  trump);
+    Card cardToPlay = play(playMat, playedCards, trump);
     hand.play(cardToPlay);
     return cardToPlay;
   }

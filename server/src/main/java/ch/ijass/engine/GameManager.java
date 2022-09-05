@@ -128,11 +128,13 @@ public class GameManager {
     setHand();
     setPlayable();
 
-
     int startIndex = players.indexOf(current) + 1;
     for (int i = 0; i < 3; ++i) {
 
-      state.getBoard().addCard(players.get((startIndex + i) % 4).playCard(state.getBoard(), playedCards, trump));
+      state
+          .getBoard()
+          .addCard(
+              players.get((startIndex + i) % 4).playCard(state.getBoard(), playedCards, trump));
       setHand();
       setPlayable();
       try {
@@ -182,19 +184,17 @@ public class GameManager {
   }
 
   // fonction qui permet de trouver a quel indice se trouve les cartes jouables au sain de la hand
-  private void setPlayable(){
+  private void setPlayable() {
     Vector<Integer> indexPlayable = new Vector<>();
     int index = 0;
-    for(Card card : state.getHand()){
-      if(players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)){
+    for (Card card : state.getHand()) {
+      if (players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)) {
         indexPlayable.add(index);
       }
       index++;
     }
     state.setPlayableCards(indexPlayable);
   }
-
-
 
   public static void main(String[] args) {
     GameManager game = new GameManager();

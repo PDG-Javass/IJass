@@ -25,9 +25,6 @@ public class Deck {
     content.removeAllElements();
   }
 
-
-
-
   public int numberOfCards() {
     if (content == null) throw new RuntimeException("Uninitialized deck content");
     return content.size();
@@ -36,7 +33,6 @@ public class Deck {
   public Vector<Card> getContent() {
     return content;
   }
-
 
   public Card play(Card card) {
     if (content.contains(card)) {
@@ -54,8 +50,6 @@ public class Deck {
     return ret;
   }
 
-
-
   public Card getHighestByColor(Vector<Card> cards, CardColor color, boolean trump) {
     Vector<Card> res = getAllCardsOfColor(cards, color);
     if (trump) {
@@ -65,7 +59,7 @@ public class Deck {
     }
   }
 
-  public Card getLowestByColor(Vector<Card> cards,CardColor color, boolean trump) {
+  public Card getLowestByColor(Vector<Card> cards, CardColor color, boolean trump) {
     Vector<Card> res = getAllCardsOfColor(cards, color);
     if (trump) {
       return Collections.min(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
@@ -83,6 +77,4 @@ public class Deck {
     }
     return ret;
   }
-
-
 }
