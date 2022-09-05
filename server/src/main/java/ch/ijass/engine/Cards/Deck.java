@@ -61,7 +61,7 @@ public class Deck {
   }
 
   public Card play(Card card) {
-    if (content.contains(card)) {
+    if (card != null && content.contains(card)) {
       content.remove(card);
       return card;
     }

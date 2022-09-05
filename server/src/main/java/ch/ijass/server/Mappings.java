@@ -41,7 +41,7 @@ public class Mappings {
         }
         else if (playerId != null && cardPlayed != null) {
 
-            State newState = concerned.compute(playerId, cardPlayed);
+            State newState = concerned.doOneRound(playerId, cardPlayed);
             try {
                 return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(newState);
             } catch(Exception e) {

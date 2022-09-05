@@ -13,6 +13,8 @@ public class GameManager {
   private Vector<Player> players;
   private CardColor trump;
 
+  private boolean inProgress;
+
   private State state;
   private StartingDeck initialDeck;
   private final int CINQDEDER = 5;
@@ -23,6 +25,7 @@ public class GameManager {
     Team team1 = new Team();
     Team team2 = new Team();
     players = new Vector<>();
+    inProgress = false;
     players.add(new PersonPlayer("Toto ", team1));
     players.add(new BotPlayer("Titi ", team2));
     players.add(new BotPlayer("Lapinou ", team1));
@@ -51,10 +54,16 @@ public class GameManager {
   public void initiateRound() {
     initialDeck = new StartingDeck();
     state.setCounterFold(1);
+    clearHands();
     distribute();
     updateFirstForRound();
     firstForFold = firstForRound;
     current = firstForFold;
+  }
+
+  public void clearHands() {
+    for (Player player : players)
+      player.emptyHand();
   }
 
   public void distribute() {
@@ -75,29 +84,20 @@ public class GameManager {
     }
   }
 
-  public void doOneRound() {
-    initiateRound();
-    updateFirstForRound(); // todo update le systeme de next player
-    firstForFold = firstForRound;
-    state.setIdFirstForFold(firstForFold.getId());
-    trump = firstForRound.chooseTrump();
-    state.setTrump(trump.ordinal());
+  public State doOneRound(int playerId, int cardChoice) {
+    if (!inProgress) {
+      initiateRound();
+      state.setIdFirstForFold(firstForFold.getId());
+      trump = firstForRound.chooseTrump();
+      state.setTrump(trump.ordinal());
+    }
+
 
     System.out.println("\n\nRound " + state.getCounterRound());
     System.out.println("Trump is " + trump);
 
     // Déroulement de la manche
-    while (state.getCounterFold() < 10 && getHighestScore() < POINTS) {
-      doOneFold();
-    }
-
-    // Vide les mains des joueurs TODO: retirer si le joueur retire la ref dans play
-    for (Player player : players) {
-      player.emptyHand();
-    }
-    state.setCounterRound(state.getCounterRound() + 1);
-    // Vide les cartes jouées pendant le round
-    state.clearPlayedCards();
+    return doOneFold(playerId, cardChoice);
   }
 
   public Player getPlayerById(int id) {
@@ -129,8 +129,91 @@ public class GameManager {
       firstForRound = players.get((players.indexOf(firstForRound) + 1) % 4);
     }
   }
+  public void nextPlayer() {
+    current = players.get((players.indexOf(current) + 1) % 4);
+  }
 
-  private CardColor everybodyPlays() {
+  public void playUntilNextPersonPlayer() {
+    Card choice = current.playChoice(current.chooseCard(state.board, trump));
+    while (choice != null && state.board.size() < 4) {
+      state.addPlayedCard(choice);
+      state.board.addCard(choice);
+      nextPlayer();
+      choice = current.chooseCard(state.board, trump);
+    }
+  }
+
+  private void updateState() {
+
+  }
+  public State doOneFold(int playerId, int cardChoice) {
+    // On commence le tour
+    playUntilNextPersonPlayer();
+    inProgress = !inProgress;
+    if (current.getId() != playerId)
+      return state;
+    Card choice = current.playChoice(cardChoice);
+    state.board.addCard(choice);
+    state.playedCards.add(choice);
+
+    if (state.board.numberOfCards() == 4) {
+      state.setIdFirstForFold(firstForFold.getId());
+      // On set les variables de l'état
+      state.setIdWinner(firstForFold.getId());
+      state.setScoreBot(players.get(1).getTeam().getScore());
+      state.setScorePerson(players.get(0).getTeam().getScore());
+      setPlayable();
+      state.setCounterFold(state.getCounterFold() + 1);
+
+      // On calcul qui gagne la plie et on attribut les points
+      firstForFold = getPlayerById(state.getBoard().getFoldWinner(trump));
+      state.setIdFirstForFold(firstForFold.getId());
+      firstForFold.getTeam().addPoints(state.getBoard().countPoints(trump));
+
+      if (state.getCounterFold() == 9) {
+        firstForFold.getTeam().addPoints(CINQDEDER);
+        state.counterRound++;
+      }
+    }
+    return state;
+  }
+
+  public State playing(int playerId, int cardChoice) {
+      return doOneRound(playerId, cardChoice);
+  }
+
+  public void setHand() {
+    if (current != null)
+      state.setHand(current.getHand().getContent());
+  }
+
+  public boolean endGame() {
+    return getHighestScore() > POINTS;
+  }
+
+  // fonction qui permet de trouver a quel indice se trouve les cartes jouables au sain de la hand
+  private void setPlayable(){
+    Vector<Integer> indexPlayable = new Vector<>();
+    int index = 0;
+    for(Card card : state.getHand()){
+      if(players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)){
+        indexPlayable.add(index);
+      }
+      index++;
+    }
+    state.setPlayableCards(indexPlayable);
+  }
+
+  public static void main(String[] args) {
+    GameManager game = new GameManager();
+    game.playing(0,0);
+    System.out.println("Helllo");
+  }
+}
+
+/*
+
+private CardColor everybodyPlays() {
     Player current = firstForFold;
     Card firstCard = current.playCard(state.getBoard(), trump);
     state.getBoard().addCard(firstCard);
@@ -155,22 +238,8 @@ public class GameManager {
     return colorAsked;
   }
 
-  public void playUntilNextPersonPlayer() {
-    //Player curr = current;
-    Card choice = current.playChoice(current.chooseCard(state.board, trump));
-    while (choice != null && state.board.size() < 4) {
-      state.addPlayedCard(choice);
-      state.board.addCard(choice);
-      nextPlayer();
-      choice = current.chooseCard(state.board, trump);
-    }
-  }
 
-  public void nextPlayer() {
-    current = players.get((players.indexOf(current) + 1) % 4);
-  }
-
-  public State compute(int playerId, int cardChoice) {
+    public State compute(int playerId, int cardChoice) {
     if (current == null || playerId != current.getId())
       throw new RuntimeException("Invalid player id");
     if (trump == null)
@@ -214,65 +283,4 @@ public class GameManager {
     setPlayable();
     setHand();
     return state;
-  }
-
-  public void doOneFold() {
-    // On commence le tour
-    System.out.println("Fold " + state.getCounterFold());
-    setPlayable();
-    CardColor colorAsked = everybodyPlays();
-    state.setCounterFold(state.getCounterFold() + 1);
-
-    // On calcul qui gagne la plie et on attribut les points
-    firstForFold = getPlayerById(state.getBoard().getFoldWinner(trump));
-    state.setIdFirstForFold(firstForFold.getId());
-    firstForFold.getTeam().addPoints(state.getBoard().countPoints(trump));
-
-    // On set les variables de l'état
-    state.setIdWinner(firstForFold.getId());
-    state.setScoreBot(players.get(1).getTeam().getScore());
-    state.setScorePerson(players.get(0).getTeam().getScore());
-
-    // On deplace les cartes jouées du board vers le discardDeck
-    state.getBoard().emptyDeck();
-
-    if (state.getCounterFold() == 9) firstForFold.getTeam().addPoints(CINQDEDER);
-    System.out.println("the winner is :" + firstForFold.getName());
-    System.out.println("the bot score is :" + players.get(1).getTeam().getScore());
-    System.out.println("the person score is :" + players.get(0).getTeam().getScore());
-  }
-
-  public void playing() {
-    while (getHighestScore() < POINTS) { // todo ajouter vérification de victoire à chaque plie
-      doOneRound();
-    }
-  }
-
-  public void setHand() {
-    if (current != null)
-      state.setHand(current.getHand().getContent());
-  }
-
-  public boolean endGame() {
-    return getHighestScore() > POINTS;
-  }
-
-  // fonction qui permet de trouver a quel indice se trouve les cartes jouables au sain de la hand
-  private void setPlayable(){
-    Vector<Integer> indexPlayable = new Vector<>();
-    int index = 0;
-    for(Card card : state.getHand()){
-      if(players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)){
-        indexPlayable.add(index);
-      }
-      index++;
-    }
-    state.setPlayableCards(indexPlayable);
-  }
-
-  public static void main(String[] args) {
-    GameManager game = new GameManager();
-    game.playing();
-    System.out.println("Helllo");
-  }
-}
+  }*/
