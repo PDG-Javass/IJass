@@ -120,8 +120,8 @@ public class HandDeck extends Deck {
     return null;
   }
 
-  public Card getAdvantageWithoutTrump(BoardDeck board, CardColor trump) {
-    if ((board.isCut(trump)) || getNumberOfCardsByColor(content, board.colorAsked()) == 0) {
+  public Card getAdvantageWithoutCut(BoardDeck board, CardColor trump) {
+    if ((board.isCut(trump) && board.colorAsked() != trump) || getNumberOfCardsByColor(content, board.colorAsked()) == 0) {
       return null;
     } else {
       Card highestCardOnBoard = board.getHighestByColor(board.content, board.colorAsked(), false);

@@ -4,6 +4,7 @@ import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
 import ch.ijass.engine.Cards.DiscardDeck;
+
 import java.util.Vector;
 
 public class BotPlayer extends Player {
@@ -11,9 +12,11 @@ public class BotPlayer extends Player {
   public BotPlayer(String name, Team team) {
     super(name, team);
   }
-
   @Override
   public Card play(BoardDeck board, DiscardDeck playedCards, CardColor trump) {
+    //if(Objects.equals(getName(), "Chacha "))
+      System.out.println( getName()+"'s hand : " + hand);
+    // todo remember to remove this line
     Vector<Card> playableCards = hand.getPlayableCard(board, trump);
 
     // on a une seule carte jouable
@@ -45,8 +48,8 @@ public class BotPlayer extends Player {
       // On est pas le premier à jouer
       else {
 
-        // Cas 1 : On peut prendre l'avantage sans jouer d'atout
-        Card winCard = hand.getAdvantageWithoutTrump(board, trump);
+        // Cas 1 : On peut prendre l'avantage sans couper
+        Card winCard = hand.getAdvantageWithoutCut(board, trump);
         if (winCard != null) {
           return winCard;
         }
@@ -58,12 +61,18 @@ public class BotPlayer extends Player {
         }
 
         // Cas 3 : On joue une petite carte
-        Card card = smallCard(playableCards, trump);
+        Card card = smallCard(playableCards, trump, 4);
         if (card != null) {
           return card;
         }
 
-        // Cas 4 : On joue une carte au hasard
+        // Cas 4 : On joue une carte moyenne
+        card = smallCard(playableCards, trump, 8);
+        if (card != null) {
+          return card;
+        }
+
+        // Cas 5 : On joue une carte au hasard
         return playableCards.get((int) (Math.random() * playableCards.size()));
       }
     }
@@ -80,12 +89,13 @@ public class BotPlayer extends Player {
         - hand.getNumberOfCardsByColor(hand.getContent(), trump);
   }
 
-  private Card smallCard(Vector<Card> cards, CardColor trump) {
+  private Card smallCard(Vector<Card> cards, CardColor trump, int limit) {
     for (Card card : cards) {
-      if (card.getColor() != trump && card.getValue().ordinal() < 4) {
+      if (card.getColor() != trump && card.getValue().ordinal() < limit) {
         return card;
       }
     }
     return null;
   }
+
 }

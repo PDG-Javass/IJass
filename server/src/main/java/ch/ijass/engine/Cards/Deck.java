@@ -77,4 +77,8 @@ public class Deck {
     }
     return ret;
   }
+
+  public String toString() {
+    return content.toString();
+  }
 }
