@@ -1,93 +1,248 @@
 <script lang="ts">
+  const data = [
+    {
+      family: 1,
+      value: 0
+    },
+    {
+      family: 0,
+      value: 1,
+    },
+    {
+      family: 3,
+      value: 4
+    },
+    {
+      family: 0,
+      value: 3
+    },
+    {
+      family: 1,
+      value: 8
+    },
+    {
+      family: 0,
+      value: 5
+    },
+    {
+      family: 0,
+      value: 6
+    },
+    {
+      family: 0,
+      value: 7
+    },
+    {
+      family: 0,
+      value: 8
+    },
+  ]
+
   //player's deck
   let deck = [
-    { name: "cards/card_0_0_160.png", visible: true },
-    { name: "cards/card_0_1_160.png", visible: true },
-    { name: "cards/card_0_2_160.png", visible: true },
-    { name: "cards/card_0_3_160.png", visible: true },
-    { name: "cards/card_0_4_160.png", visible: true },
-    { name: "cards/card_0_5_160.png", visible: true },
-    { name: "cards/card_0_6_160.png", visible: true },
-    { name: "cards/card_0_7_160.png", visible: true },
-    { name: "cards/card_0_8_160.png", visible: true },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
+    { name: "", visible: true, playable: false },
   ];
 
   let card_board = "";
   let visible = false;
+  let visible_co = false;
+  let visible_op_1 = false;
+  let visible_op_2 = false;
+
+  let trump_me = true;
+  let trump_current = "";
+
+  function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+   async function showCard(begin){
+    for(let i = 0; i < 4; ++i){
+      await sleep(2000);
+      switch(begin){
+        case 0:
+          visible_op_1 = true;
+          break;
+        case 1:
+          visible_co = true;
+          break;
+        case 2:
+          visible_op_2 = true;
+          break;
+        case 3:
+          {for(let i = 0; i < 9; ++i){
+          deck[i].playable = true;
+    }}
+          break;
+      }
+      ++begin;
+      
+  }
+
+  }
+
+  function setTrump(id){
+    trump_me = false;
+    trump_current = "trump_" + id + ".png"
+
+    for(let i = 0; i < 9; ++i){
+          deck[i].playable = true;
+    }
+  }
 
   //play the selected card
   function moveCardToBoard(x: number) {
+ 
     deck[x].visible = false;
     visible = true;
     card_board = deck[x].name;
+
+    for(let i = 0; i < 9; ++i){
+      deck[i].playable = false;
+    }
+    
+    showCard(0);
+
   }
+
+  function setDeck(cardState) {
+    for (let i = 0; i < deck.length; ++i) {
+      deck[i].name = `cards/card_${cardState[i].family}_${cardState[i].value}_160.png`;
+      console.log(`cards/card_${cardState[i].family}_${cardState[i].value}_160.png`);
+    }
+  }
+
+
+  setDeck(data);
+  
 </script>
 
-<body>
-  <!-- board with cards -->
-  <div class="main">
-    <div class="table">
-      <div class="board">
-        <!-- fold cards -->
-        <div class="tapis">
-          <table class="tab_tapis">
-            <tr>
-              <td />
-              <td id="card_co" class="card-small"
-                ><img src="cards/card_0_0_160.png" alt="carte" /></td
-              >
-              <td />
-            </tr>
-            <tr>
-              <td id="card_op_1" class="card-small"
-                ><img src="cards/card_1_8_160.png" alt="carte" /></td
-              >
-              <td />
-              <td id="card_op_2" class="card-small"
-                ><img src="cards/card_2_7_160.png" alt="carte" /></td
-              >
-            </tr>
-            <tr>
-              <td />
+<div id="left">Left Side Menu</div>
 
+<!-- board with cards -->
+  <div id="middle" class="table">
+    <div class="board">
+      <!-- fold cards -->
+      <div class="tapis">
+        <table class="tab_tapis">
+          <tr>
+            {#if trump_me}
+            <td class="card-trump"><img src="trump_0.png" alt="trump" on:click={() => setTrump(0)}></td>
+            {:else}
+            <td/>
+            {/if}
+
+            {#if visible_co}
+            <td class="card-small"
+              ><img src="cards/card_2_7_160.png" alt="carte" /></td>
+            {:else}
+              <td class="card-transparent"
+                ><img src="cards/card_transparent.png" alt="carte" /></td>
+            {/if}
+            
+            {#if trump_me}
+            <td class="card-trump"><img src="trump_1.png" alt="trump" on:click={() => setTrump(1)}></td>
+            {:else}
+            <td/>
+            {/if}
+
+          </tr>
+
+          <tr>
+            {#if visible_op_1}
+            <td class="card-small"
+              ><img src="cards/card_2_8_160.png" alt="carte" /></td>
+            {:else}
+              <td class="card-transparent"
+                ><img src="cards/card_transparent.png" alt="carte" /></td>
+            {/if}
+
+            <td/>
+
+            {#if visible_op_2}
+            <td class="card-small"
+              ><img src="cards/card_2_3_160.png" alt="carte" /></td>
+            {:else}
+              <td  class="card-transparent"
+                ><img src="cards/card_transparent.png" alt="carte" /></td>
+            {/if}
+          </tr>
+
+          <tr>
+            {#if trump_me}
+            <td class="card-trump"><img src="trump_2.png" alt="trump" on:click={() => setTrump(2)}></td>
+            {:else}
+            <td/>
+            {/if}
+
+            {#if visible}
+              <td id="card_me" class="card-small"
+                ><img src={card_board} alt="carte" /></td>
+            {:else}
+            <td class="card-transparent"
+                ><img src="cards/card_transparent.png" alt="carte" /></td>
+            {/if}
+
+            {#if trump_me}
+            <td class="card-trump"><img src="trump_3.png" alt="trump" on:click={() => setTrump(3)}></td>
+            {:else}
+            <td/>
+            {/if}
+          </tr>
+
+        </table>
+      </div>
+
+      <div>
+        <!-- players cards-->
+        <table class="tab_tapis">
+          <tr>
+            <!-- each card is visible at the beginning. On click goes to board and dispear -->
+            {#each deck as { name, visible, playable }, i}
               {#if visible}
-                <td id="card_me" class="card-small"
-                  ><img src={card_board} alt="carte" /></td
-                >
-              {/if}
-
-              <td />
-            </tr>
-          </table>
-        </div>
-
-        <div>
-          <!-- players cards-->
-          <table class="tab_tapis">
-            <tr>
-              <!-- each card is visible at the beginning. On click goes to board and dispear -->
-              {#each deck as { name, visible }, i}
-                {#if visible}
-                  <td id="card_0"
-                    ><div class="card-small">
-                      <img
+              <td>
+                <div class="card-small">
+                      <img id={name}
                         src={name}
+                        class="{playable ? '' : 'noclick'}"
                         alt="carte"
-                        on:click={() => moveCardToBoard(i)}
-                      />
-                    </div></td
-                  >
-                {/if}
-              {/each}
-            </tr>
-          </table>
-        </div>
+                        on:click={() => moveCardToBoard(i)}/>
+                    </div>
+                </td>
+              {/if}
+            {/each}
+          </tr>
+        </table>
       </div>
     </div>
   </div>
-</body>
+
+  <div id="right" class="card-trump"><img src={trump_current} alt=" "></div>
+
+
+
 
 <style>
+  #left {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  #right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
   .tapis {
     margin-bottom: 10%;
     padding: 10px;
@@ -105,23 +260,24 @@
     border-radius: 15px;
   }
 
-  .main {
-    width: 1000px;
-    margin: auto;
-    padding: 10px;
-  }
 
   .table {
     background-color: green;
     height: 800px;
-    width: 120%;
-    margin: 0 auto;
+    width: 1200px;
+    margin: auto;
+    padding: 10px;
     border: 1em solid black;
   }
 
   .board {
     top: 40%;
     left: 20%;
+  }
+
+  .noclick{
+    pointer-events: none
+    
   }
 
   .card-small {
@@ -131,6 +287,23 @@
     width: 105px;
     /*70% of height*/
     margin-right: 5px;
+    float: left;
+    background-color: white;
+  }
+
+  .card-transparent{
+    border-radius: 10%;
+    height: 150px;
+    width: 105px;
+    margin-right: 5px;
+    float: left;
+  }
+
+  .card-trump{
+    border: 0.2em solid black;
+    border-radius: 10%;
+    height: 150px;
+    width: 150px;
     float: left;
     background-color: white;
   }

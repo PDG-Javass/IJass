@@ -1,83 +1,49 @@
 package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.*;
-import ch.ijass.engine.Cards.InGameCard;
 import ch.ijass.engine.Players.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Vector;
 
 public class GameManager {
   private Player firstForRound;
   private Player firstForFold;
   private Vector<Player> players;
-  private Team team1, team2;
-  int counterRound;
-  int counterFold;
+  private CardColor trump;
+  // private int counterRound;
+  // private int counterFold;
+  // private BoardDeck playMat;
 
-  public void setTrump(CardColor trump) {
-    this.trump = trump;
-  }
-
-  CardColor trump;
-  InGameCard playMat;
-  Deck playedCards;
-  GameDeck initialDeck;
-
-  final int CINQDEDER = 5;
-
-  final int POINTS = 1000;
-
-  /*
-  GameManager() {
-      this(null);
-      players = new Vector<Player>();
-      players.add(new BotPlayer("Lapinou ", team1));
-      players.add(new BotPlayer("Chacha ", team2));
-      players.add(new BotPlayer("Titi ", team1));
-      players.add(new PersonPlayer("Toto ", team2));
-
-  }
-
-  GameManager(Vector<Player> players) {
-      this.players = new Vector<>(players);
-      playMat = new InGameCard();
-      firstForFold = players.firstElement();
-      firstForRound = players.firstElement();
-      counterRound = 1;
-  }
-   */
+  private State state;
+  private Deck playedCards;
+  private StartingDeck initialDeck;
+  private final int CINQDEDER = 5;
+  private final int POINTS = 1000;
 
   GameManager() {
-    team1 = new Team();
-    team2 = new Team();
+    state = new State();
+    Team team1 = new Team();
+    Team team2 = new Team();
     players = new Vector<Player>();
     players.add(new PersonPlayer("Toto ", team1));
     players.add(new BotPlayer("Titi ", team2));
     players.add(new BotPlayer("Lapinou ", team1));
     players.add(new BotPlayer("Chacha ", team2));
 
-    playMat = new InGameCard();
     firstForFold = players.firstElement();
+    state.setIdFirstForFold(firstForFold.getId());
     firstForRound = players.firstElement();
-    counterRound = 1;
-  }
-
-  public void setPlayers(Vector<Player> players) {
-    this.players = players;
+    state.setCounterRound(1);
   }
 
   Vector<Player> getPlayers() {
     return players;
   }
 
-  public Player getWinner(CardColor colorAsked) {
-    return playMat.getFoldWinner(colorAsked, trump);
-  }
-
   public void initiateRound() {
-    playMat = new InGameCard();
     playedCards = new Deck();
-    initialDeck = new GameDeck();
-    counterFold = 1;
+    initialDeck = new StartingDeck();
+    state.setCounterFold(1);
     distribute();
   }
 
@@ -90,25 +56,29 @@ public class GameManager {
       if (player.getHand().numberOfCards() != 0)
         throw new RuntimeException("Can not distribute if one of the players still have cards");
     }
+
     // Distribution des cartes
     while (initialDeck.numberOfCards() > 0) {
       for (Player player : players) {
         player.addCard(initialDeck.pickCardRandomly());
       }
     }
+    setHand();
   }
 
   public void doOneRound() {
     initiateRound();
     updateFirstForRound(); // todo update le systeme de nexte player
     firstForFold = firstForRound;
+    state.setIdFirstForFold(firstForFold.getId());
     trump = firstForRound.chooseTrump();
+    state.setTrump(trump.ordinal());
 
-    System.out.println("\n\nRound " + counterRound);
+    System.out.println("\n\nRound " + state.getCounterRound());
     System.out.println("Trump is " + trump);
 
     // Déroulement de la manche
-    while (counterFold < 10 && getHighestScore() < POINTS) {
+    while (state.getCounterFold() < 10 && getHighestScore() < POINTS) {
       doOneFold();
     }
 
@@ -116,25 +86,35 @@ public class GameManager {
     for (Player player : players) {
       player.emptyHand();
     }
-    counterRound++;
+    state.setCounterRound(state.getCounterRound() + 1);
     // Vide les cartes jouées pendant le round
     playedCards.emptyDeck();
+  }
+
+  public Player getPlayerById(int id) {
+    for (Player player : players) {
+      if (player.getId() == id) {
+        return player;
+      }
+    }
+    return null;
   }
 
   public Player find7ofDiamonds() {
     for (Player player : players) {
       Card card = player.getHand().findCard(CardColor.DIAMONDS, CardValue.SEVEN);
-      if (card != null) return card.getOwner();
+      if (card != null) return getPlayerById(card.getPlayerId());
     }
     return null;
   }
 
   public int getHighestScore() {
-    return Math.max(team1.getScore(), team2.getScore());
+    return Math.max(
+        players.firstElement().getTeam().getScore(), players.lastElement().getTeam().getScore());
   }
 
   public void updateFirstForRound() {
-    if (counterRound == 1) {
+    if (state.getCounterRound() == 1) {
       firstForRound = find7ofDiamonds();
     } else {
       firstForRound = players.get((players.indexOf(firstForRound) + 1) % 4);
@@ -143,37 +123,63 @@ public class GameManager {
 
   private CardColor everybodyPlays() { // 🎵🎵🎵
     Player current = firstForFold;
-    Card firstCard = current.playCard(playMat, trump);
-    playMat.addCard(firstCard);
+    Card firstCard = current.playCard(state.getBoard(), trump);
+    state.getBoard().addCard(firstCard);
     CardColor colorAsked = firstCard.getColor();
+    state.setPlayableCards(players.get(0).getHand().getPlayableCard(state.getBoard(), trump));
+    setHand();
 
     int startIndex = players.indexOf(current) + 1;
     for (int i = 0; i < 3; ++i) {
-      playMat.addCard(players.get((startIndex + i) % 4).playCard(playMat, trump));
+
+      state.getBoard().addCard(players.get((startIndex + i) % 4).playCard(state.getBoard(), trump));
+      state.setPlayableCards(players.get(0).getHand().getPlayableCard(state.getBoard(), trump));
+      setHand();
+      try {
+        System.out.println(
+            new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(state));
+      } catch (Exception e) {
+      }
+      ;
     }
     return colorAsked;
   }
 
   public void doOneFold() {
-    System.out.println("Fold " + counterFold);
+    // On commence le tour
+    System.out.println("Fold " + state.getCounterFold());
+    state.setPlayableCards(players.get(0).getHand().getPlayableCard(state.getBoard(), trump));
     CardColor colorAsked = everybodyPlays();
-    counterFold++;
-    firstForFold = playMat.getFoldWinner(colorAsked, trump);
-    firstForFold.getTeam().addPoints(playMat.countPoints(trump));
+    state.setCounterFold(state.getCounterFold() + 1);
 
-    playedCards.addCards(playMat.getContent());
-    playMat.emptyDeck();
+    // On calcul qui gagne la plie et on attribut les points
+    firstForFold = getPlayerById(state.getBoard().getFoldWinner(colorAsked, trump));
+    state.setIdFirstForFold(firstForFold.getId());
+    firstForFold.getTeam().addPoints(state.getBoard().countPoints(trump));
 
-    if (counterFold == 9) firstForFold.getTeam().addPoints(CINQDEDER);
+    // On set les variables de l'état
+    state.setIdWinner(firstForFold.getId());
+    state.setScoreBot(players.get(1).getTeam().getScore());
+    state.setScorePerson(players.get(0).getTeam().getScore());
+
+    // On deplace les cartes jouées du board vers le discardDeck
+    playedCards.addCards(state.getBoard().getContent());
+    state.getBoard().emptyDeck();
+
+    if (state.getCounterFold() == 9) firstForFold.getTeam().addPoints(CINQDEDER);
     System.out.println("the winner is :" + firstForFold.getName());
     System.out.println("the bot score is :" + players.get(1).getTeam().getScore());
     System.out.println("the person score is :" + players.get(0).getTeam().getScore());
   }
 
-  void playing() {
+  public void playing() {
     while (getHighestScore() < POINTS) { // todo ajouter vérification de victoire à chaque plie
       doOneRound();
     }
+  }
+
+  public void setHand() {
+    state.setHand(players.firstElement().getHand().getContent());
   }
 
   public static void main(String[] args) {

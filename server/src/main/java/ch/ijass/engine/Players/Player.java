@@ -1,40 +1,36 @@
 package ch.ijass.engine.Players;
 
+import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
-import ch.ijass.engine.Cards.Hand;
-import ch.ijass.engine.Cards.InGameCard;
+import ch.ijass.engine.Cards.HandDeck;
 import java.util.Collection;
 
 public abstract class Player {
+  private int id;
   private final String name;
-  protected Hand hand;
+  protected HandDeck hand;
   private Team team;
-
-  private Player(String name, Collection<Card> hand) {
-    this.name = name;
-    this.hand = new Hand();
-    this.hand.copyDeck(hand);
-  }
-
-  public Player() {
-    this.name = "Unnamed";
-    this.hand = new Hand();
-  }
+  private static int counterId = 0;
 
   public Player(String name, Team team) {
+    this.id = ++counterId;
     this.name = name;
     this.team = team;
-    hand = new Hand();
+    hand = new HandDeck();
   }
 
-  public Card playCard(InGameCard playMat, CardColor trump) {
+  public int getId() {
+    return id;
+  }
+
+  public Card playCard(BoardDeck playMat, CardColor trump) {
     Card cardToPlay = play(playMat, trump);
     hand.play(cardToPlay);
     return cardToPlay;
   }
 
-  public abstract Card play(InGameCard playMat, CardColor trump);
+  public abstract Card play(BoardDeck playMat, CardColor trump);
 
   public Team getTeam() {
     return team;
@@ -54,20 +50,20 @@ public abstract class Player {
     this.hand.emptyDeck();
     this.hand.addCards(content);
     for (Card card : content) {
-      card.setOwner(this);
+      card.setPlayerId(this);
     }
   }
 
   public void addCard(Card card) {
     hand.addCard(card);
-    card.setOwner(this);
+    card.setPlayerId(this);
   }
 
   public void emptyHand() {
     hand.emptyDeck();
   }
 
-  public Hand getHand() {
+  public HandDeck getHand() {
     return hand;
   }
 
