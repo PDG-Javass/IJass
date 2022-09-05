@@ -21,12 +21,25 @@ public class State {
   public int scorePerson;
   public int scoreBot;
   public Vector<Card> hand;
+
+  public void setHand(Vector<Card> hand) {
+    this.hand = new Vector<>();
+    this.hand.addAll(hand);
+  }
+
+  public void setPlayableCards(Vector<Integer> playableCards) {
+    this.playableCards = new Vector<>();
+    this.playableCards.addAll(playableCards);
+  }
+
   public Vector<Integer> playableCards;
   public Vector<Card> playedCards;
 
   public void clearPlayedCards() { playedCards.clear(); }
 
   public void addPlayedCard(Card card) { playedCards.add(card); }
+
+
 
   State() {
     board = new BoardDeck();
