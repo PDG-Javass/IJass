@@ -194,7 +194,9 @@ setDeck(data);
   
 </script>
 
-<div id="left">Left Side Menu</div>
+<div id="left"><table class="score"><tr><td/><td>Score</td><td/></tr>
+<tr><td>Moi + Lapinou</td><td/><td>Chacha + Titi</td></tr>
+<tr><td>xxxx</td><td/><td>xxxx</td></tr></table></div>
 
 <!-- board with cards -->
   <div id="middle" class="table">
@@ -310,6 +312,12 @@ setDeck(data);
     position: absolute;
     top: 10px;
     right: 10px;
+  }
+
+  .score{
+    background-color: grey;
+    padding: 10px;
+    font-size: 17px;
   }
 
   .tapis {
