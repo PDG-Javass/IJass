@@ -1,5 +1,8 @@
 package ch.ijass.engine.Cards;
 
+import java.util.Collections;
+import java.util.Vector;
+
 public class BoardDeck extends Deck {
 
   public BoardDeck() {
@@ -7,7 +10,6 @@ public class BoardDeck extends Deck {
   }
 
   public int countPoints(CardColor trump) {
-    allPlayersPlayed();
     int result = 0;
     for (Card card : content) {
       result += card.points(trump);
@@ -18,12 +20,12 @@ public class BoardDeck extends Deck {
   public int getFoldWinner(CardColor colorAsked, CardColor trump) {
     allPlayersPlayed();
     if (isCut(trump)) {
-      return getHighestByColor(trump, true).getPlayerId();
+      return getHighestByColor(content, trump, true).getPlayerId();
     } else {
-      return getHighestByColor(colorAsked, colorAsked == trump).getPlayerId();
+      return getHighestByColor(content, colorAsked, false).getPlayerId();
     }
   }
-
+/*
   public Card getHighestByColor(CardColor color, boolean trump) {
     Card highestCard = null;
 
@@ -55,14 +57,16 @@ public class BoardDeck extends Deck {
     return highestCard;
   }
 
-  private void allPlayersPlayed() {
+ */
+
+
+
+
+
+    private void allPlayersPlayed() {
     if (content.size() != 4) {
       throw new RuntimeException("Not all players played");
     }
-  }
-
-  public int size() {
-    return content.size();
   }
 
   public CardColor colorAsked() {

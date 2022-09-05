@@ -1,9 +1,7 @@
 package ch.ijass.engine.Players;
 
-import ch.ijass.engine.Cards.BoardDeck;
-import ch.ijass.engine.Cards.Card;
-import ch.ijass.engine.Cards.CardColor;
-import ch.ijass.engine.Cards.HandDeck;
+import ch.ijass.engine.Cards.*;
+
 import java.util.Collection;
 
 public abstract class Player {
@@ -14,7 +12,7 @@ public abstract class Player {
   private static int counterId = 0;
 
   public Player(String name, Team team) {
-    this.id = ++counterId;
+    this.id = counterId++;
     this.name = name;
     this.team = team;
     hand = new HandDeck();
@@ -24,13 +22,13 @@ public abstract class Player {
     return id;
   }
 
-  public Card playCard(BoardDeck playMat, CardColor trump) {
-    Card cardToPlay = play(playMat, trump);
+  public Card playCard(BoardDeck playMat, DiscardDeck playedCards, CardColor trump) {
+    Card cardToPlay = play(playMat, playedCards,  trump);
     hand.play(cardToPlay);
     return cardToPlay;
   }
 
-  public abstract Card play(BoardDeck playMat, CardColor trump);
+  public abstract Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump);
 
   public Team getTeam() {
     return team;

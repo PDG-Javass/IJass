@@ -15,10 +15,6 @@ public class StartingDeck extends Deck {
     content = Card.getInitialDeck();
   }
 
-  /** Mélange le deck */
-  public void shuffle() {
-    Collections.shuffle(content);
-  }
 
   /**
    * Fonction permettant de tirer une carte aléatoirement dans le deck, cette dernière ne se trouve
@@ -26,9 +22,8 @@ public class StartingDeck extends Deck {
    * @return la carte choisie, s'il en reste
    */
   public Card pickCardRandomly() {
-    Card ret = null;
-    shuffle();
-    ret = content.get(0);
+    Collections.shuffle(content);
+    Card ret = content.get(0);;
     content.remove(0);
     if (ret == null) {
       throw new RuntimeException("Could not choose a card from the deck");

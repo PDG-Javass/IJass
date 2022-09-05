@@ -12,6 +12,7 @@ public class HandDeck extends Deck {
     Collections.sort(content);
   }
 
+  /*
   public Card play(int index) {
     if (index < 0 || index > content.size())
       throw new RuntimeException("Index out of bounds for card played");
@@ -19,21 +20,12 @@ public class HandDeck extends Deck {
     content.remove(index);
     return ret;
   }
+   */
 
-  public Vector<Card> getAllCardOfColor(CardColor color) {
-    Vector<Card> ret = new Vector<>();
-    for (Card card : content) {
-      if (card.getColor() == color) ret.add(card);
-    }
-    return ret;
-  }
 
-  public int getNumberOfCardsByColor(CardColor color) {
-    int count = 0;
-    for (Card c : content) {
-      if (c.getColor() == color) count++;
-    }
-    return count;
+
+  public int getNumberOfCardsByColor(Vector<Card> cards, CardColor color) {
+    return getAllCardsOfColor(cards, color).size();
   }
 
   public CardColor getColorMostPresent() {
@@ -74,10 +66,6 @@ public class HandDeck extends Deck {
         .getKey();
   }
 
-  public void throwCard(Card card) {
-    content.removeElement(card);
-  }
-
   public Card findCard(CardColor color, CardValue value) {
     for (Card card : content) {
       if (card.getColor() == color && card.getValue() == value) {
@@ -90,7 +78,7 @@ public class HandDeck extends Deck {
   public Vector<Card> getPlayableCard(BoardDeck playMat, CardColor trump) {
 
     // 1er joue nimporte quoi
-    if (playMat.size() == 0) {
+    if (playMat.numberOfCards() == 0) {
       return content;
 
     } else {
@@ -99,11 +87,11 @@ public class HandDeck extends Deck {
 
       // si la couleur demandée est atout
       if (color == trump) {
-        if (getNumberOfCardsByColor(trump) == 0
-            || (getNumberOfCardsByColor(trump) == 1 && findCard(trump, CardValue.JACK) != null)) {
+        if (getNumberOfCardsByColor(content, trump) == 0
+            || (getNumberOfCardsByColor(content, trump) == 1 && findCard(trump, CardValue.JACK) != null)) {
           return content;
         } else {
-          return getAllCardOfColor(trump);
+          return getAllCardsOfColor(content, trump);
         }
       }
 
@@ -111,16 +99,16 @@ public class HandDeck extends Deck {
       else {
 
         Vector<Card> ret = new Vector<>();
-        ret.addAll(getAllCardOfColor(color));
+        ret.addAll(getAllCardsOfColor(content, color));
 
         // si personne n'a coupé
         if (!playMat.isCut(trump)) {
-          ret.addAll(getAllCardOfColor(trump));
+          ret.addAll(getAllCardsOfColor(content, trump));
 
         } else {
 
           // trouver la carte atout la plus elevée sur le tapis
-          Card highestTrump = playMat.getHighestByColor(trump, true);
+          Card highestTrump = playMat.getHighestByColor(playMat.content, trump, true);
           // construire un vecteur avec les cartes atouts plus elevées que la carte atout la plus
           // elevée
           for (Card card : content) {
@@ -135,4 +123,42 @@ public class HandDeck extends Deck {
       }
     }
   }
+
+
+  public Card findAce(CardColor trump) {
+    for (Card card : content) {
+      if (card.getColor() != trump && card.getValue() == CardValue.ACE) {
+        return card;
+      }
+    }
+    return null;
+  }
+
+  public Card getAdvantageWithoutTrump(BoardDeck board, CardColor trump){
+    if ((board.isCut(trump)) || getNumberOfCardsByColor(content, board.colorAsked()) == 0){
+      return null;
+    }
+    else{
+      Card highestCardOnBoard = board.getHighestByColor(board.content, board.colorAsked(), false);
+      Card highestCardInHand = getHighestByColor(content, board.colorAsked(), false);
+      if (highestCardInHand.getValue().ordinal() > highestCardOnBoard.getValue().ordinal()){
+          return highestCardInHand;
+      }
+      else{
+          return null;
+      }
+    }
+  }
+
+  // todo AAAAAHHHHH
+  public Card findSmallCardInMostPresentColor(Vector<Card> playableCards , CardColor trump){
+    CardColor mostPresent = getColorMostPresent();
+    if(mostPresent == trump){
+      return null;
+    }
+    return null;
+  }
+
+
+
 }
