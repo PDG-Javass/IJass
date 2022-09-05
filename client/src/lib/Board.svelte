@@ -1,42 +1,66 @@
 <script lang="ts">
-  const data = [
-    {
-      family: 1,
-      value: 0
-    },
-    {
-      family: 0,
-      value: 1,
-    },
-    {
-      family: 3,
-      value: 4
-    },
-    {
-      family: 0,
-      value: 3
-    },
-    {
-      family: 1,
-      value: 8
-    },
-    {
-      family: 0,
-      value: 5
-    },
-    {
-      family: 0,
-      value: 6
-    },
-    {
-      family: 0,
-      value: 7
-    },
-    {
-      family: 0,
-      value: 8
-    },
-  ];
+  const json = `{
+  "idGame" : 0,
+  "counterRound" : 1,
+  "trump" : 3,
+  "counterFold" : 1,
+  "idFirstForFold" : 1,
+  "board" : {
+    "content" : [ {
+      "color" : 1,
+      "value" : 5,
+      "playerId" : 1
+    }, {
+      "color" : 1,
+      "value" : 6,
+      "playerId" : 2
+    } ]
+  },
+  "idWinner" : 0,
+  "scorePerson" : 0,
+  "scoreBot" : 0,
+  "hand" : [ {
+    "color" : 2,
+    "value" : 6,
+    "playerId" : 0
+  }, {
+    "color" : 1,
+    "value" : 3,
+    "playerId" : 0
+  }, {
+    "color" : 3,
+    "value" : 8,
+    "playerId" : 0
+  }, {
+    "color" : 2,
+    "value" : 5,
+    "playerId" : 0
+  }, {
+    "color" : 3,
+    "value" : 1,
+    "playerId" : 0
+  }, {
+    "color" : 3,
+    "value" : 3,
+    "playerId" : 0
+  }, {
+    "color" : 3,
+    "value" : 4,
+    "playerId" : 0
+  }, {
+    "color" : 3,
+    "value" : 5,
+    "playerId" : 0
+  }, {
+    "color" : 1,
+    "value" : 1,
+    "playerId" : 0
+  } ],
+  "playableCards" : [ 1, 2, 4, 5, 6, 7 ]
+}
+  `;
+
+  const data = JSON.parse(json);
 
   //player's deck
   let deck = [
@@ -52,9 +76,9 @@
   ];
 
   let deckBot = [
-    { name: "cards/card_2_2_160.png", visible: false},
-    { name: "cards/card_2_3_160.png", visible: false},
-    { name: "cards/card_2_6_160.png", visible: false},
+    { name: "", visible: false},
+    { name: "", visible: false},
+    { name: "", visible: false},
   ];
 
   let card_board = "";
@@ -67,6 +91,18 @@
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+//set bot deck
+function setBotDeck(id){
+  let cards = data.board.content;
+
+  for(let i = 0; i < cards.length; ++i){
+    if(cards[i].playerId == id){
+      deckBot[id-1].name = "cards/card_" + cards[i].color + "_" + cards[i].value+ "_160.png";
+    }
+  }
+}
+
+
 //show card, player card become playable
   async function showCard(begin){
   for(let i = 0; i < 4; ++i){
@@ -78,13 +114,16 @@
   }}
         break;
       case 1:
+        setBotDeck(1);
         deckBot[0].visible = true;
         break;
       case 2:
+        setBotDeck(2);
         deckBot[1].visible = true;
         break;
       case 3:
-       deckBot[2].visible = true;
+        setBotDeck(3);
+        deckBot[2].visible = true;
         break;
       
     }
@@ -122,7 +161,7 @@
   //show player deck
   function setDeck(cardState) {
     for (let i = 0; i < deck.length; ++i) {
-      deck[i].name = `cards/card_${cardState[i].family}_${cardState[i].value}_160.png`;
+      deck[i].name = `cards/card_${cardState.hand[i].color}_${cardState.hand[i].value}_160.png`;
 
       deck[i].visible = true;
     }
@@ -187,9 +226,9 @@ setDeck(data);
           </tr>
 
           <tr>
-            {#if deckBot[0].visible}
+            {#if deckBot[2].visible}
             <td class="card-small"
-              ><img src={deckBot[0].name} alt="carte" /></td>
+              ><img src={deckBot[2].name} alt="carte" /></td>
             {:else}
               <td class="card-transparent"
                 ><img src="cards/card_transparent.png" alt="carte" /></td>
@@ -197,9 +236,9 @@ setDeck(data);
 
             <td/>
 
-            {#if deckBot[2].visible}
+            {#if deckBot[0].visible}
             <td class="card-small"
-              ><img src={deckBot[2].name} alt="carte" /></td>
+              ><img src={deckBot[0].name} alt="carte" /></td>
             {:else}
               <td  class="card-transparent"
                 ><img src="cards/card_transparent.png" alt="carte" /></td>
