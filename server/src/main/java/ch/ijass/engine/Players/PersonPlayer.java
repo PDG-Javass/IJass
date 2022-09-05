@@ -15,12 +15,8 @@ public class PersonPlayer extends Player {
   }
 
   @Override
-  public Card play(BoardDeck playMat, CardColor trump) {
-    System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).firstElement());
-    return hand.getPlayableCard(playMat, trump)
-        .firstElement(); // todo a modifier pour l'instant rend la 1er carte de la main
-
-    // A ne pas oublier : doit enlever la carte jouée de sa hand
+  public Card chooseCard(BoardDeck playMat, CardColor trump) {
+    return null;
   }
 
   public CardColor chooseTrump() {

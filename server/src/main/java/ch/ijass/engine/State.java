@@ -22,9 +22,17 @@ public class State {
   public int scoreBot;
   public Vector<Card> hand;
   public Vector<Integer> playableCards;
+  public Vector<Card> playedCards;
+
+  public void clearPlayedCards() { playedCards.clear(); }
+
+  public void addPlayedCard(Card card) { playedCards.add(card); }
 
   State() {
     board = new BoardDeck();
+    playedCards = new Vector<>();
+    hand = new Vector<>();
+    playableCards = new Vector<>();
     idGame = counterIdGame++;
   }
 

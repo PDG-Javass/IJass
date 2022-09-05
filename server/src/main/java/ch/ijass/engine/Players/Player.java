@@ -25,12 +25,16 @@ public abstract class Player {
   }
 
   public Card playCard(BoardDeck playMat, CardColor trump) {
-    Card cardToPlay = play(playMat, trump);
+    Card cardToPlay = chooseCard(playMat, trump);
     hand.play(cardToPlay);
     return cardToPlay;
   }
 
-  public abstract Card play(BoardDeck playMat, CardColor trump);
+  public abstract Card chooseCard(BoardDeck playMat, CardColor trump);
+
+  public Card playChoice(Card choice) { return hand.play(choice); }
+
+  public Card playChoice(int choice) { return hand.play(choice); }
 
   public Team getTeam() {
     return team;
