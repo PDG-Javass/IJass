@@ -28,12 +28,11 @@ public class GameManager {
     players.add(new BotPlayer("Lapinou ", team1));
     players.add(new BotPlayer("Chacha ", team2));
 
-    initiateRound();
-    state.setIdFirstForFold(firstForFold.getId());
-    current = firstForFold;
-
     state.setCounterRound(1);
     state.setCounterFold(1);
+    initiateRound();
+    state.setIdFirstForFold(firstForFold.getId());
+
   }
 
   Vector<Player> getPlayers() {
@@ -74,7 +73,6 @@ public class GameManager {
         player.addCard(initialDeck.pickCardRandomly());
       }
     }
-    setHand();
   }
 
   public void doOneRound() {
@@ -252,7 +250,8 @@ public class GameManager {
   }
 
   public void setHand() {
-    state.setHand(current.getHand().getContent());
+    if (current != null)
+      state.setHand(current.getHand().getContent());
   }
 
   public boolean endGame() {

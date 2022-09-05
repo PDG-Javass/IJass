@@ -16,9 +16,6 @@ public class BotPlayer extends Player {
     Card choice = hand.getPlayableCard(playMat, trump).firstElement();
     playChoice(choice);
     return choice;
-    // todo a modifier pour l'instant rend la 1er carte playable
-
-    // A ne pas oublier : doit enlever la carte jouée de sa hand
   }
 
   @Override
