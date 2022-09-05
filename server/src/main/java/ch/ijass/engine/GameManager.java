@@ -8,6 +8,8 @@ import java.util.Vector;
 public class GameManager {
   private Player firstForRound;
   private Player firstForFold;
+
+  private Player current;
   private Vector<Player> players;
   private CardColor trump;
   // private int counterRound;
@@ -15,12 +17,11 @@ public class GameManager {
   // private BoardDeck playMat;
 
   private State state;
-  private Deck playedCards;
   private StartingDeck initialDeck;
   private final int CINQDEDER = 5;
   private final int POINTS = 1000;
 
-  GameManager() {
+  public GameManager() {
     state = new State();
     Team team1 = new Team();
     Team team2 = new Team();
@@ -40,10 +41,19 @@ public class GameManager {
     return players;
   }
 
+  public int getGameId() { return state.getGameId(); }
+
+  public void setTrump(int trump) {
+    if (trump < 0 || trump >= CardColor.values().length)
+      throw new RuntimeException("Ordinal out of bounds for CardColor");
+    this.trump = CardColor.values()[trump];
+    state.setTrump(trump);
+  }
+
   public void initiateRound() {
-    playedCards = new Deck();
     initialDeck = new StartingDeck();
     state.setCounterFold(1);
+    current = firstForRound;
     distribute();
   }
 
@@ -88,7 +98,7 @@ public class GameManager {
     }
     state.setCounterRound(state.getCounterRound() + 1);
     // Vide les cartes jouées pendant le round
-    playedCards.emptyDeck();
+    state.clearPlayedCards();
   }
 
   public Player getPlayerById(int id) {
@@ -145,6 +155,57 @@ public class GameManager {
     return colorAsked;
   }
 
+  public void playUntilNextPersonPlayer() {
+    Player curr = current;
+    Card choice;
+    do {
+      choice = curr.chooseCard(state.board, trump);
+      state.board.addCard(choice);
+      state.addPlayedCard(choice);
+      nextPlayer();
+    } while(choice != null && state.board.size() < 4);
+    if (state.board.size() == 4) {
+      state.clearPlayedCards();
+      firstForFold = players.get(state.board.getFoldWinner(state.board.colorAsked(), trump));
+      firstForFold.getTeam().addPoints(state.board.countPoints(trump));
+      state.setIdFirstForFold(firstForFold.getId());
+
+      // On set les variables de l'état
+      state.setIdWinner(firstForFold.getId());
+      state.setScoreBot(players.get(1).getTeam().getScore());
+      state.setScorePerson(players.get(0).getTeam().getScore());
+
+      // On déplace les cartes jouées du board vers le discardDeck
+      state.getBoard().emptyDeck();
+      ++state.counterFold;
+      if (endGame())
+        return;
+
+      if (state.getCounterFold() == 9) {
+        firstForFold.getTeam().addPoints(CINQDEDER);
+        state.counterFold = 1;
+        state.counterRound++;
+      }
+    }
+  }
+
+  public void nextPlayer() {
+    current = players.get((players.indexOf(current) + 1) % 4);
+  }
+
+  public State compute(int playerId, int cardChoice) {
+    if (playerId != current.getId())
+      throw new RuntimeException("Invalid player id");
+    current.playChoice(cardChoice);
+    nextPlayer();
+    playUntilNextPersonPlayer();
+    state.playedCards.clear();
+    state.playedCards.addAll(current.getHand().getContent());
+    state.playableCards.clear();
+    state.playableCards.addAll(current.getHand().getPlayableCard(state.getBoard(), trump));
+    return state;
+  }
+
   public void doOneFold() {
     // On commence le tour
     System.out.println("Fold " + state.getCounterFold());
@@ -163,7 +224,6 @@ public class GameManager {
     state.setScorePerson(players.get(0).getTeam().getScore());
 
     // On deplace les cartes jouées du board vers le discardDeck
-    playedCards.addCards(state.getBoard().getContent());
     state.getBoard().emptyDeck();
 
     if (state.getCounterFold() == 9) firstForFold.getTeam().addPoints(CINQDEDER);
@@ -180,6 +240,10 @@ public class GameManager {
 
   public void setHand() {
     state.setHand(players.firstElement().getHand().getContent());
+  }
+
+  public boolean endGame() {
+    return getHighestScore() > POINTS;
   }
 
   public static void main(String[] args) {

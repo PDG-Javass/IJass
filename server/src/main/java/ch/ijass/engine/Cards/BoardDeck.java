@@ -10,7 +10,12 @@ public class BoardDeck extends Deck {
     allPlayersPlayed();
     int result = 0;
     for (Card card : content) {
-      result += card.points(trump);
+      if (card.isEqual(new Card(trump, CardValue.JACK)))
+        result += 20;
+      else if (card.isEqual(new Card(trump, CardValue.NINE)))
+        result += 14;
+      else
+        result += card.points(trump);
     }
     return result;
   }
