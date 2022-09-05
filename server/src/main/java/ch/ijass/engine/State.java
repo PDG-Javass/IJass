@@ -21,7 +21,7 @@ public class State {
   public int scorePerson;
   public int scoreBot;
   public Vector<Card> hand;
-  public Vector<Card> playableCards;
+  public Vector<Integer> playableCards;
   public Vector<Card> playedCards;
 
   public void clearPlayedCards() { playedCards.clear(); }

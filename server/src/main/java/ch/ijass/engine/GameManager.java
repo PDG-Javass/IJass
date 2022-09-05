@@ -22,7 +22,7 @@ public class GameManager {
     state = new State();
     Team team1 = new Team();
     Team team2 = new Team();
-    players = new Vector<Player>();
+    players = new Vector<>();
     players.add(new PersonPlayer("Toto ", team1));
     players.add(new BotPlayer("Titi ", team2));
     players.add(new BotPlayer("Lapinou ", team1));
@@ -38,7 +38,7 @@ public class GameManager {
     return players;
   }
 
-  public int getGameId() { return state.getGameId(); }
+  public int getGameId() { return state.idGame; }
 
   public void setTrump(int trump) {
     if (trump < 0 || trump >= CardColor.values().length)
@@ -50,8 +50,10 @@ public class GameManager {
   public void initiateRound() {
     initialDeck = new StartingDeck();
     state.setCounterFold(1);
-    current = firstForRound;
+    firstForFold = firstForRound;
+    current = firstForFold;
     distribute();
+    updateFirstForRound();
   }
 
   public void distribute() {
@@ -75,7 +77,7 @@ public class GameManager {
 
   public void doOneRound() {
     initiateRound();
-    updateFirstForRound(); // todo update le systeme de nexte player
+    updateFirstForRound(); // todo update le systeme de next player
     firstForFold = firstForRound;
     state.setIdFirstForFold(firstForFold.getId());
     trump = firstForRound.chooseTrump();
@@ -156,6 +158,8 @@ public class GameManager {
   public void playUntilNextPersonPlayer() {
     Player curr = current;
     Card choice;
+    if (state.counterFold == 1)
+      initiateRound();
     do {
       choice = curr.chooseCard(state.board, trump);
       state.board.addCard(choice);
@@ -197,10 +201,8 @@ public class GameManager {
     current.playChoice(cardChoice);
     nextPlayer();
     playUntilNextPersonPlayer();
-    state.playedCards.clear();
-    state.playedCards.addAll(current.getHand().getContent());
-    state.playableCards.clear();
-    state.playableCards.addAll(current.getHand().getPlayableCard(state.getBoard(), trump));
+    setPlayable();
+    setHand();
     return state;
   }
 
@@ -237,7 +239,7 @@ public class GameManager {
   }
 
   public void setHand() {
-    state.setHand(players.firstElement().getHand().getContent());
+    state.setHand(current.getHand().getContent());
   }
 
   public boolean endGame() {

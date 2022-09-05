@@ -2,6 +2,7 @@ package ch.ijass.server;
 
 import ch.ijass.engine.GameManager;
 import ch.ijass.engine.State;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,15 +27,21 @@ public class Mappings {
         mapping.put(gm.getGameId(), gm);
     }
 
-    public void next(@RequestParam Integer gameId, @RequestParam(required = false)Integer playerId,
+    public String next(@RequestParam Integer gameId, @RequestParam(required = false)Integer playerId,
                      @RequestParam(required = false)Integer cardPlayed, @RequestParam(required = false)Integer trump) {
         GameManager concerned = mapping.get(gameId);
         if (trump != null) {
             concerned.setTrump(trump);
-            return;
+            return "Changed trump";
         }
         else if (playerId != null && cardPlayed != null) {
             State newState = concerned.compute(playerId, cardPlayed);
+            try {
+                return new ObjectMapper().writeValueAsString(newState);
+            } catch(Exception e) {
+                return e.getMessage();
+            }
         }
+        return "No changes";
     }
 }
