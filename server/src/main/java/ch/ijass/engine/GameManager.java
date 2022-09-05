@@ -172,7 +172,7 @@ public class GameManager {
   }
 
   public void playing() {
-    while (getHighestScore() < POINTS) { // todo ajouter vérification de victoire à chaque plie
+    while (getHighestScore() < POINTS) {
       doOneRound();
     }
   }

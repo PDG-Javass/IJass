@@ -12,18 +12,6 @@ public class HandDeck extends Deck {
     Collections.sort(content);
   }
 
-  /*
-  public Card play(int index) {
-    if (index < 0 || index > content.size())
-      throw new RuntimeException("Index out of bounds for card played");
-    Card ret = content.get(index);
-    content.remove(index);
-    return ret;
-  }
-   */
-
-
-
   public int getNumberOfCardsByColor(Vector<Card> cards, CardColor color) {
     return getAllCardsOfColor(cards, color).size();
   }
@@ -62,7 +50,7 @@ public class HandDeck extends Deck {
             CardColor.CLUBS,
             nbClubs);
     return Collections.max(
-            map.entrySet(), (entry1, entry2) -> entry1.getValue() - entry2.getValue())
+            map.entrySet(), Comparator.comparingInt(Map.Entry::getValue))
         .getKey();
   }
 
@@ -148,15 +136,6 @@ public class HandDeck extends Deck {
           return null;
       }
     }
-  }
-
-  // todo AAAAAHHHHH
-  public Card findSmallCardInMostPresentColor(Vector<Card> playableCards , CardColor trump){
-    CardColor mostPresent = getColorMostPresent();
-    if(mostPresent == trump){
-      return null;
-    }
-    return null;
   }
 
 

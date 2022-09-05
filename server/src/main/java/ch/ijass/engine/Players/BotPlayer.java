@@ -40,8 +40,8 @@ public class BotPlayer extends Player {
           return ace;
         }
 
-        // Cas 3 : On joue une petite carte
-        return playableCards.get(0);
+        // Cas 3 : On joue une petite carte parmis la couleur la plus presente
+        return hand.getLowestByColor(playableCards, hand.getColorMostPresent(), false);
       }
 
 
@@ -59,10 +59,16 @@ public class BotPlayer extends Player {
           return hand.getLowestByColor(playableCards, trump, true);
         }
 
+        // Cas 3 : On joue une petite carte
+        Card card = smallCard(playableCards, trump);
+        if(card != null){
+          return card;
+        }
 
+        // Cas 4 : On joue une carte au hasard
+        return playableCards.get((int) (Math.random() * playableCards.size()));
       }
     }
-    return playableCards.get(0);
   }
 
   @Override
@@ -72,5 +78,14 @@ public class BotPlayer extends Player {
 
   private int nbTrumpInNature(DiscardDeck playedCards, CardColor trump){
     return 9 - playedCards.getCounterTrump() - hand.getNumberOfCardsByColor(hand.getContent(), trump);
+  }
+
+  private Card smallCard(Vector<Card> cards, CardColor trump){
+    for(Card card : cards){
+      if(card.getColor() != trump && card.getValue().ordinal() < 4){
+        return card;
+      }
+    }
+    return null;
   }
 }

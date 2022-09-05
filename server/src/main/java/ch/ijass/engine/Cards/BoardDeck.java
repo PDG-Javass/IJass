@@ -1,7 +1,5 @@
 package ch.ijass.engine.Cards;
 
-import java.util.Collections;
-import java.util.Vector;
 
 public class BoardDeck extends Deck {
 
@@ -25,40 +23,6 @@ public class BoardDeck extends Deck {
       return getHighestByColor(content, colorAsked, false).getPlayerId();
     }
   }
-/*
-  public Card getHighestByColor(CardColor color, boolean trump) {
-    Card highestCard = null;
-
-    if (trump) {
-      for (Card card : content) {
-        if (card.getColor() == color) {
-          if (highestCard == null) {
-            highestCard = card;
-          } else {
-            if (card.getValue().ordinalWithTrump() > highestCard.getValue().ordinalWithTrump()) {
-              highestCard = card;
-            }
-          }
-        }
-      }
-    } else {
-      for (Card card : content) {
-        if (card.getColor() == color) {
-          if (highestCard == null) {
-            highestCard = card;
-          } else {
-            if (card.getValue().ordinal() > highestCard.getValue().ordinal()) {
-              highestCard = card;
-            }
-          }
-        }
-      }
-    }
-    return highestCard;
-  }
-
- */
-
 
 
 

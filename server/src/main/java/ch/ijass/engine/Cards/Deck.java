@@ -2,6 +2,7 @@ package ch.ijass.engine.Cards;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 
 public class Deck {
@@ -35,15 +36,6 @@ public class Deck {
   public Vector<Card> getContent() {
     return content;
   }
-  /*
-  public boolean contains(Card c) {
-    for (Card card : content) {
-      if (card.isEqual(c)) return true;
-    }
-    return false;
-  }
-
-   */
 
 
   public Card play(Card card) {
@@ -67,19 +59,30 @@ public class Deck {
   public Card getHighestByColor(Vector<Card> cards, CardColor color, boolean trump) {
     Vector<Card> res = getAllCardsOfColor(cards, color);
     if (trump) {
-      return Collections.max(res, (c1, c2) -> c1.getValue().ordinalWithTrump() - c2.getValue().ordinalWithTrump());
+      return Collections.max(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
     } else {
-      return Collections.max(res, (c1, c2) -> c1.getValue().ordinal() - c2.getValue().ordinal());
+      return Collections.max(res, Comparator.comparingInt(c -> c.getValue().ordinal()));
     }
   }
 
   public Card getLowestByColor(Vector<Card> cards,CardColor color, boolean trump) {
     Vector<Card> res = getAllCardsOfColor(cards, color);
     if (trump) {
-      return Collections.min(res, (c1, c2) -> c1.getValue().ordinalWithTrump() - c2.getValue().ordinalWithTrump());
+      return Collections.min(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
     } else {
-      return Collections.min(res, (c1, c2) -> c1.getValue().ordinal() - c2.getValue().ordinal());
+      return Collections.min(res, Comparator.comparingInt(c -> c.getValue().ordinal()));
     }
   }
+
+  public Card pickCardRandomly() {
+    Collections.shuffle(content);
+    Card ret = content.get(0);
+    content.remove(0);
+    if (ret == null) {
+      throw new RuntimeException("Could not choose a card from the deck");
+    }
+    return ret;
+  }
+
 
 }
