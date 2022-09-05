@@ -102,6 +102,12 @@ function setBotDeck(id){
   }
 }
 
+function playableCards(){
+  for(let i = 0; i < data.playableCards.length; ++i){
+    deck[i].playable = true;
+  }
+}
+
 
 //show card, player card become playable
   async function showCard(begin){
@@ -109,9 +115,7 @@ function setBotDeck(id){
     await sleep(2000);
     switch(begin){
       case 0:
-        {for(let i = 0; i < 9; ++i){
-        deck[i].playable = true;
-  }}
+        playableCards();
         break;
       case 1:
         setBotDeck(1);
@@ -128,6 +132,9 @@ function setBotDeck(id){
       
     }
     ++begin;
+    if(begin == 4){
+      begin = 0;
+    }
     
 }
 
@@ -190,6 +197,9 @@ function setBotDeck(id){
 }
 
 setDeck(data);
+if(data.trump != null){
+  setTrump(data.trump);
+}
 //playGame();
   
 </script>
@@ -315,6 +325,7 @@ setDeck(data);
   }
 
   .score{
+    border: 0.2em solid black;
     background-color: grey;
     padding: 10px;
     font-size: 17px;
@@ -353,7 +364,8 @@ setDeck(data);
   }
 
   .noclick{
-    pointer-events: none
+    pointer-events: none;
+    opacity: 0.5;
     
   }
 
