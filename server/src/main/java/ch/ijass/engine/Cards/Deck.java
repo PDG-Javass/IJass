@@ -68,6 +68,12 @@ public class Deck {
     throw new RuntimeException("Can not play a card not in the Deck");
   }
 
-  // todo add getHighestCard(Cardcolor color)
-  // doit marcher pour atout et non atout
+  public int points(CardColor trump) {
+    int count = 0;
+    for (Card card : content) {
+      if (card.isEqual(new Card(trump, CardValue.JACK)))
+        count += 20;
+    }
+    return 0;
+  }
 }
