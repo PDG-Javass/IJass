@@ -104,7 +104,7 @@ function setBotDeck(id){
 
 function playableCards(){
   for(let i = 0; i < data.playableCards.length; ++i){
-    deck[i].playable = true;
+    deck[data.playableCards[i]].playable = true;
   }
 }
 
