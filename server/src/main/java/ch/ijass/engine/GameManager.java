@@ -142,10 +142,6 @@ public class GameManager {
       choice = current.chooseCard(state.board, trump);
     }
   }
-
-  private void updateState() {
-
-  }
   public State doOneFold(int playerId, int cardChoice) {
     // On commence le tour
     playUntilNextPersonPlayer();
@@ -163,6 +159,7 @@ public class GameManager {
       state.setScoreBot(players.get(1).getTeam().getScore());
       state.setScorePerson(players.get(0).getTeam().getScore());
       setPlayable();
+      setHand();
       state.setCounterFold(state.getCounterFold() + 1);
 
       // On calcul qui gagne la plie et on attribut les points
