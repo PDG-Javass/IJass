@@ -14,7 +14,7 @@ public abstract class Player {
   private static int counterId = 0;
 
   public Player(String name, Team team) {
-    this.id = ++counterId;
+    this.id = counterId++;
     this.name = name;
     this.team = team;
     hand = new HandDeck();

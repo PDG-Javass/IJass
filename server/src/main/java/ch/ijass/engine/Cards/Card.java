@@ -60,6 +60,19 @@ public class Card implements Comparable {
     return value.points();
   }
 
+  public boolean isStronger(Card other, CardColor trump) {
+    if (color == trump) {
+      if (other.color == trump)
+        return value == CardValue.JACK
+                || (value == CardValue.NINE && other.value != CardValue.JACK)
+                || (other.value != CardValue.JACK && other.value != CardValue.NINE
+                && value.ordinal() > other.value.ordinal());
+      else
+        return true;
+    } else
+      return color == other.color && value.ordinal() > other.value.ordinal();
+  }
+
   public String toString() {
     StringBuilder sb = new StringBuilder();
     switch (value) {

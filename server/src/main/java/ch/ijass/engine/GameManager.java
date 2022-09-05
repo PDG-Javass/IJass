@@ -28,10 +28,12 @@ public class GameManager {
     players.add(new BotPlayer("Lapinou ", team1));
     players.add(new BotPlayer("Chacha ", team2));
 
-    firstForFold = players.firstElement();
+    initiateRound();
     state.setIdFirstForFold(firstForFold.getId());
-    firstForRound = players.firstElement();
+    current = firstForFold;
+
     state.setCounterRound(1);
+    state.setCounterFold(1);
   }
 
   Vector<Player> getPlayers() {
@@ -50,10 +52,10 @@ public class GameManager {
   public void initiateRound() {
     initialDeck = new StartingDeck();
     state.setCounterFold(1);
-    firstForFold = firstForRound;
-    current = firstForFold;
     distribute();
     updateFirstForRound();
+    firstForFold = firstForRound;
+    current = firstForFold;
   }
 
   public void distribute() {
@@ -156,20 +158,33 @@ public class GameManager {
   }
 
   public void playUntilNextPersonPlayer() {
-    Player curr = current;
-    Card choice;
-    if (state.counterFold == 1)
-      initiateRound();
-    do {
-      choice = curr.chooseCard(state.board, trump);
-      state.board.addCard(choice);
+    //Player curr = current;
+    Card choice = current.playChoice(current.chooseCard(state.board, trump));
+    while (choice != null && state.board.size() < 4) {
       state.addPlayedCard(choice);
+      state.board.addCard(choice);
       nextPlayer();
-    } while(choice != null && state.board.size() < 4);
+      choice = current.chooseCard(state.board, trump);
+    }
+  }
+
+  public void nextPlayer() {
+    current = players.get((players.indexOf(current) + 1) % 4);
+  }
+
+  public State compute(int playerId, int cardChoice) {
+    if (current == null || playerId != current.getId())
+      throw new RuntimeException("Invalid player id");
+    if (trump == null)
+      return state;
+    if (state.counterFold == 1 && state.counterRound > 1) {
+      initiateRound();
+      state.playedCards.clear();
+    }
     if (state.board.size() == 4) {
-      state.clearPlayedCards();
-      firstForFold = players.get(state.board.getFoldWinner(state.board.colorAsked(), trump));
+      firstForFold = players.get(state.board.getFoldWinner(trump));
       firstForFold.getTeam().addPoints(state.board.countPoints(trump));
+      current = firstForFold;
       state.setIdFirstForFold(firstForFold.getId());
 
       // On set les variables de l'état
@@ -181,28 +196,24 @@ public class GameManager {
       state.getBoard().emptyDeck();
       ++state.counterFold;
       if (endGame())
-        return;
+        return state;
 
       if (state.getCounterFold() == 9) {
         firstForFold.getTeam().addPoints(CINQDEDER);
         state.counterFold = 1;
         state.counterRound++;
+        updateFirstForRound();
       }
     }
-  }
+    playUntilNextPersonPlayer();
 
-  public void nextPlayer() {
-    current = players.get((players.indexOf(current) + 1) % 4);
-  }
+    Card played = current.playChoice(cardChoice);
+    state.board.addCard(played);
+    state.playedCards.add(played);
 
-  public State compute(int playerId, int cardChoice) {
-    if (playerId != current.getId())
-      throw new RuntimeException("Invalid player id");
-    if (trump == null)
-      return state;
-    current.playChoice(cardChoice);
     nextPlayer();
     playUntilNextPersonPlayer();
+
     setPlayable();
     setHand();
     return state;
@@ -216,7 +227,7 @@ public class GameManager {
     state.setCounterFold(state.getCounterFold() + 1);
 
     // On calcul qui gagne la plie et on attribut les points
-    firstForFold = getPlayerById(state.getBoard().getFoldWinner(colorAsked, trump));
+    firstForFold = getPlayerById(state.getBoard().getFoldWinner(trump));
     state.setIdFirstForFold(firstForFold.getId());
     firstForFold.getTeam().addPoints(state.getBoard().countPoints(trump));
 
@@ -260,8 +271,6 @@ public class GameManager {
     }
     state.setPlayableCards(indexPlayable);
   }
-
-
 
   public static void main(String[] args) {
     GameManager game = new GameManager();

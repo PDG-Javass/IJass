@@ -23,10 +23,12 @@ public class Mappings {
     }
 
     @GetMapping("/newgame")
-    public void newGame() {
+    public String newGame() {
         GameManager gm = new GameManager();
-        mapping.put(gm.getGameId(), gm);
+        int id = gm.getGameId();
 
+        mapping.put(id, gm);
+        return String.valueOf(id);
     }
 
     @GetMapping("/next")
@@ -38,9 +40,10 @@ public class Mappings {
             return "Changed trump";
         }
         else if (playerId != null && cardPlayed != null) {
+
             State newState = concerned.compute(playerId, cardPlayed);
             try {
-                return new ObjectMapper().writeValueAsString(newState);
+                return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(newState);
             } catch(Exception e) {
                 return e.getMessage();
             }

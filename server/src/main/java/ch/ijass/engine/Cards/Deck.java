@@ -65,7 +65,7 @@ public class Deck {
       content.remove(card);
       return card;
     }
-    throw new RuntimeException("Can not play a card not in the Deck");
+    return null;
   }
 
   public int points(CardColor trump) {
