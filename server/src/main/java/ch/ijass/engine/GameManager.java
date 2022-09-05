@@ -12,7 +12,7 @@ public class GameManager {
   private CardColor trump;
 
   private State state;
-  private Deck playedCards;
+  private DiscardDeck playedCards;
   private StartingDeck initialDeck;
   private final int CINQDEDER = 5;
   private final int POINTS = 1000;
@@ -38,7 +38,7 @@ public class GameManager {
   }
 
   public void initiateRound() {
-    playedCards = new Deck();
+    playedCards = new DiscardDeck();
     initialDeck = new StartingDeck();
     state.setCounterFold(1);
     distribute();
@@ -60,7 +60,9 @@ public class GameManager {
         player.addCard(initialDeck.pickCardRandomly());
       }
     }
+    players.get(0).getHand().sort();
     setHand();
+    setPlayable();
   }
 
   public void doOneRound() {
@@ -120,17 +122,19 @@ public class GameManager {
 
   private CardColor everybodyPlays() { // 🎵🎵🎵
     Player current = firstForFold;
-    Card firstCard = current.playCard(state.getBoard(), trump);
+    Card firstCard = current.playCard(state.getBoard(), playedCards, trump);
     state.getBoard().addCard(firstCard);
     CardColor colorAsked = firstCard.getColor();
     setHand();
     setPlayable();
 
-
     int startIndex = players.indexOf(current) + 1;
     for (int i = 0; i < 3; ++i) {
 
-      state.getBoard().addCard(players.get((startIndex + i) % 4).playCard(state.getBoard(), trump));
+      state
+          .getBoard()
+          .addCard(
+              players.get((startIndex + i) % 4).playCard(state.getBoard(), playedCards, trump));
       setHand();
       setPlayable();
       try {
@@ -146,7 +150,6 @@ public class GameManager {
   public void doOneFold() {
     // On commence le tour
     System.out.println("Fold " + state.getCounterFold());
-    setPlayable();
     CardColor colorAsked = everybodyPlays();
     state.setCounterFold(state.getCounterFold() + 1);
 
@@ -161,7 +164,7 @@ public class GameManager {
     state.setScorePerson(players.get(0).getTeam().getScore());
 
     // On deplace les cartes jouées du board vers le discardDeck
-    playedCards.addCards(state.getBoard().getContent());
+    playedCards.addFold(state.getBoard().getContent(), trump);
     state.getBoard().emptyDeck();
 
     if (state.getCounterFold() == 9) firstForFold.getTeam().addPoints(CINQDEDER);
@@ -171,7 +174,7 @@ public class GameManager {
   }
 
   public void playing() {
-    while (getHighestScore() < POINTS) { // todo ajouter vérification de victoire à chaque plie
+    while (getHighestScore() < POINTS) {
       doOneRound();
     }
   }
@@ -181,19 +184,17 @@ public class GameManager {
   }
 
   // fonction qui permet de trouver a quel indice se trouve les cartes jouables au sain de la hand
-  private void setPlayable(){
+  private void setPlayable() {
     Vector<Integer> indexPlayable = new Vector<>();
     int index = 0;
-    for(Card card : state.getHand()){
-      if(players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)){
+    for (Card card : state.getHand()) {
+      if (players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)) {
         indexPlayable.add(index);
       }
       index++;
     }
     state.setPlayableCards(indexPlayable);
   }
-
-
 
   public static void main(String[] args) {
     GameManager game = new GameManager();

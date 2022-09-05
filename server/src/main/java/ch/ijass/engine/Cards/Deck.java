@@ -1,6 +1,8 @@
 package ch.ijass.engine.Cards;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 
 public class Deck {
@@ -8,6 +10,11 @@ public class Deck {
 
   public Deck() {
     content = new Vector<>();
+  }
+
+  public void addCard(Card card) {
+    if (card == null) throw new RuntimeException("Adding null card to hand");
+    content.add(card);
   }
 
   public void addCards(Collection<Card> content) {
@@ -18,46 +25,13 @@ public class Deck {
     content.removeAllElements();
   }
 
-  public void addCard(Card card) {
-    if (card == null) throw new RuntimeException("Adding null card to hand");
-    content.add(card);
-  }
-
-  public void copyDeck(Collection<? extends Card> deck) {
-    if (deck == null) throw new RuntimeException("Copy of a null card collection");
-    content.removeAllElements();
-    content.addAll(deck);
-  }
-
   public int numberOfCards() {
     if (content == null) throw new RuntimeException("Uninitialized deck content");
     return content.size();
   }
 
   public Vector<Card> getContent() {
-    return new Vector<>(content);
-  }
-
-  public boolean contains(Card c) {
-    for (Card card : content) {
-      if (card.isEqual(c)) return true;
-    }
-    return false;
-  }
-
-  public boolean isEqual(Deck other) {
-    for (Card c : content) {
-      if (!other.contains(c)) return false;
-    }
-    return true;
-  }
-
-  public Vector<Card> getCardsOfColor(CardColor color) {
-    Vector<Card> ret = new Vector<>();
-    for (Card c : content) {
-      if (c.getColor() == color) ret.add(c);
-    }
-    return ret;
+    return content;
   }
 
   public Card play(Card card) {
@@ -68,12 +42,39 @@ public class Deck {
     throw new RuntimeException("Can not play a card not in the Deck");
   }
 
-  public int points(CardColor trump) {
-    int count = 0;
-    for (Card card : content) {
-      if (card.isEqual(new Card(trump, CardValue.JACK)))
-        count += 20;
+  public Vector<Card> getAllCardsOfColor(Vector<Card> cards, CardColor color) {
+    Vector<Card> ret = new Vector<>();
+    for (Card card : cards) {
+      if (card.getColor() == color) ret.add(card);
     }
-    return 0;
+    return ret;
+  }
+
+  public Card getHighestByColor(Vector<Card> cards, CardColor color, boolean trump) {
+    Vector<Card> res = getAllCardsOfColor(cards, color);
+    if (trump) {
+      return Collections.max(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
+    } else {
+      return Collections.max(res, Comparator.comparingInt(c -> c.getValue().ordinal()));
+    }
+  }
+
+  public Card getLowestByColor(Vector<Card> cards, CardColor color, boolean trump) {
+    Vector<Card> res = getAllCardsOfColor(cards, color);
+    if (trump) {
+      return Collections.min(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
+    } else {
+      return Collections.min(res, Comparator.comparingInt(c -> c.getValue().ordinal()));
+    }
+  }
+
+  public Card pickCardRandomly() {
+    Collections.shuffle(content);
+    Card ret = content.get(0);
+    content.remove(0);
+    if (ret == null) {
+      throw new RuntimeException("Could not choose a card from the deck");
+    }
+    return ret;
   }
 }
