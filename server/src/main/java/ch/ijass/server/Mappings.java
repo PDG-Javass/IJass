@@ -22,11 +22,14 @@ public class Mappings {
         mapping = new ConcurrentHashMap<>();
     }
 
+    @GetMapping("/newgame")
     public void newGame() {
         GameManager gm = new GameManager();
         mapping.put(gm.getGameId(), gm);
+
     }
 
+    @GetMapping("/next")
     public String next(@RequestParam Integer gameId, @RequestParam(required = false)Integer playerId,
                      @RequestParam(required = false)Integer cardPlayed, @RequestParam(required = false)Integer trump) {
         GameManager concerned = mapping.get(gameId);
