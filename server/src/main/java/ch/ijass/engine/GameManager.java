@@ -198,6 +198,8 @@ public class GameManager {
   public State compute(int playerId, int cardChoice) {
     if (playerId != current.getId())
       throw new RuntimeException("Invalid player id");
+    if (trump == null)
+      return state;
     current.playChoice(cardChoice);
     nextPlayer();
     playUntilNextPersonPlayer();
