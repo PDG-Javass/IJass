@@ -7,13 +7,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = Utils.expectedClientUrl)
 public class Mappings {
-  @GetMapping("/coucou")
-  public String coucou() {
-    return "au revoir";
-  }
-
-  @GetMapping("/hello")
-  public String hello() {
-    return "salam";
-  }
+ 
 }
