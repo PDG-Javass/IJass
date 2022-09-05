@@ -130,7 +130,7 @@ public class GameManager {
     }
   }
 
-  private CardColor everybodyPlays() { // 🎵🎵🎵
+  private CardColor everybodyPlays() {
     Player current = firstForFold;
     Card firstCard = current.playCard(state.getBoard(), trump);
     state.getBoard().addCard(firstCard);
@@ -200,7 +200,6 @@ public class GameManager {
         firstForFold.getTeam().addPoints(CINQDEDER);
         state.counterFold = 1;
         state.counterRound++;
-        updateFirstForRound();
       }
     }
     playUntilNextPersonPlayer();
