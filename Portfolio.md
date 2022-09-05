@@ -235,15 +235,7 @@ Voici la représentation JSON générée par le serveur pour réprésenter l'ét
                   }
                },
                {
-                  "name":"bot3",
-                  "card":{
-                     
-                  }
-               },
-               {
-                  "name":"me",
-                  "card":{
-                     "family":0,
+             Joueur        "family":0,
                      "value":0
                   }
                }
@@ -253,3 +245,19 @@ Voici la représentation JSON générée par le serveur pour réprésenter l'ét
    }
 }
 ```
+
+## Numérotation
+
+### Joueurs
+
+- 0: joueur réel
+- 1: bot opposant
+- 2: bot allié
+- 3: bot opposant
+
+### Famille
+
+- 0: pique
+- 1: tréfle
+- 2: coeur
+- 3: carreaux
