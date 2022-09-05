@@ -12,9 +12,6 @@ public class GameManager {
   private Player current;
   private Vector<Player> players;
   private CardColor trump;
-  // private int counterRound;
-  // private int counterFold;
-  // private BoardDeck playMat;
 
   private State state;
   private StartingDeck initialDeck;
@@ -136,15 +133,16 @@ public class GameManager {
     Card firstCard = current.playCard(state.getBoard(), trump);
     state.getBoard().addCard(firstCard);
     CardColor colorAsked = firstCard.getColor();
-    state.setPlayableCards(players.get(0).getHand().getPlayableCard(state.getBoard(), trump));
     setHand();
+    setPlayable();
+
 
     int startIndex = players.indexOf(current) + 1;
     for (int i = 0; i < 3; ++i) {
 
       state.getBoard().addCard(players.get((startIndex + i) % 4).playCard(state.getBoard(), trump));
-      state.setPlayableCards(players.get(0).getHand().getPlayableCard(state.getBoard(), trump));
       setHand();
+      setPlayable();
       try {
         System.out.println(
             new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(state));
@@ -209,7 +207,7 @@ public class GameManager {
   public void doOneFold() {
     // On commence le tour
     System.out.println("Fold " + state.getCounterFold());
-    state.setPlayableCards(players.get(0).getHand().getPlayableCard(state.getBoard(), trump));
+    setPlayable();
     CardColor colorAsked = everybodyPlays();
     state.setCounterFold(state.getCounterFold() + 1);
 
@@ -245,6 +243,21 @@ public class GameManager {
   public boolean endGame() {
     return getHighestScore() > POINTS;
   }
+
+  // fonction qui permet de trouver a quel indice se trouve les cartes jouables au sain de la hand
+  private void setPlayable(){
+    Vector<Integer> indexPlayable = new Vector<>();
+    int index = 0;
+    for(Card card : state.getHand()){
+      if(players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)){
+        indexPlayable.add(index);
+      }
+      index++;
+    }
+    state.setPlayableCards(indexPlayable);
+  }
+
+
 
   public static void main(String[] args) {
     GameManager game = new GameManager();

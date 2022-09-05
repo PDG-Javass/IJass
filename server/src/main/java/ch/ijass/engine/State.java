@@ -8,10 +8,6 @@ import lombok.Data;
 @Data
 public class State {
   static int counterIdGame = 0;
-  public int getGameId() {
-    return idGame;
-  }
-
   public int idGame;
 
   public int counterRound;
@@ -19,11 +15,6 @@ public class State {
 
   public int counterFold;
   public int idFirstForFold;
-
-  public BoardDeck getBoard() {
-    return board;
-  }
-
   public BoardDeck board;
   public int idWinner;
 
