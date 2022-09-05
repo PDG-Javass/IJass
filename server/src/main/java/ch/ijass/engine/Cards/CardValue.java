@@ -1,5 +1,7 @@
 package ch.ijass.engine.Cards;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum CardValue {
   SIX,
   SEVEN,
@@ -51,6 +53,11 @@ public enum CardValue {
   }
 
   public int ordinalWithTrump() {
+    return ordinal();
+  }
+
+  @JsonValue
+  public int value() {
     return ordinal();
   }
 };
