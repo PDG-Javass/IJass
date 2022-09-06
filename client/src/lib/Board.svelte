@@ -34,9 +34,13 @@
 
     display.cardPlayedId = x;
 
+    let tmp = deck[x].name;
+
     for(let i = x; i < deck.length - 1; ++i){
       deck[i] = deck[i + 1]
     }
+
+    deck[8].name = tmp;
     deck[8].visible = false;
 
 
@@ -195,12 +199,13 @@
 
 
         if (i == 0) {
-          await setAndShowDeck(data);
+          setAndShowDeck(data);
 
           if (data.trump != -1) {
             display.trump.show = false;
             display.trump.current = "trump_" + data.trump + ".png";
           } else {
+            display.trump.current = "";
             display.trump.show = true;
             await waitUserInput();
             await fetchChooseTrump(data.idGame, display.trump.choice);
