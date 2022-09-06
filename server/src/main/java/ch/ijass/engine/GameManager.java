@@ -66,6 +66,10 @@ public class GameManager {
       state.setTrump(-1);
     }
 
+    // On flush les carte du tapis dans les cartes jouées durant la plie
+    state.addPlayedCards(state.board.getContent());
+    state.board.emptyDeck();
+
     // On assigne la nouvelle main du joueur à l'état
     Player person = getPlayerById(playerId);
     state.setHand(person.getHand().getContent());
@@ -115,9 +119,7 @@ public class GameManager {
   }
 
   public State startFold(int playerId) {
-    // On flush les carte du tapis dans les cartes jouées durant la plie
-    state.addPlayedCards(state.board.getContent());
-    state.board.emptyDeck();
+
     playUntilPlayerTurn(playerId);
     updateStateWhileFold(playerId);
     return state;
