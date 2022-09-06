@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { fetchNewGameId, fetchFirstFold } from "../mappings";
+  import { fetchNewGameId, fetchFirstFold, fetchSecondFold } from "../mappings";
 
   let card_board = "";
   let visible_me = false;
 
   //play the selected card
 
-  function moveCardToBoard(x: number) {
+  function playCardOnBoard(x: number) {
     deck[x].visible = false;
     visible_me = true;
     card_board = deck[x].name;
@@ -16,9 +16,8 @@
     }
 
     deck.slice(x, 2);
+    display.p = true;
   }
-
-  export const DEFAULT_PLAYER_ID = 0;
 
   const MAX_POINTS = 1000;
   const N_FOLDS = 9;
@@ -27,7 +26,7 @@
   let data: any = {
     idGame: 0,
     counterRound: 0,
-    trump: 0,
+    trump: -1,
     counterFold: 0,
     idFirstForFold: 0,
     board: [],
@@ -45,10 +44,13 @@
       remainingToDisplay: 0,
     },
     trump: {
-      choice: 0,
+      choice: -1,
       current: "trump_0.png",
       me: false,
+      show: false,
     },
+    cardPlayedId: -1,
+    p: false
   };
 
   //player's deck
@@ -79,13 +81,10 @@
 
   //set trump if it's player turn
   function setTrump(id) {
-    display.trump.me = false;
+    display.trump.show = false;
     display.trump.choice = id;
     display.trump.current = "trump_" + id + ".png";
-
-    for (let i = 0; i < deck.length; ++i) {
-      deck[i].playable = true;
-    }
+    display.trump.me = true;
   }
 
   function makeCardsPlayable() {
@@ -127,21 +126,39 @@
       }
       startIndex = (startIndex + 1) % 4;
     }
+    console.log("coucou");
     makeCardsPlayable();
+  }
+
+  async function chooseACard() {
+
   }
 
   async function mainLoop(gameId: number) {
     data.idGame = gameId;
+    console.log(gameId);
     while (data.scoreBot < 1000 || data.scorePerson < 1000) {
       for (let i = 0; i < N_FOLDS; ++i) {
-        data = await fetchFirstFold(data.idGame);
+        data = await fetchFirstFold(data.idGame, 0);
+        console.log(data);
         if (i == 0) {
           setAndShowDeck(data);
           if (data.trump != -1) {
             setTrump(data.trump);
+          } else {
+            display.trump.show = true;
           }
         }
-        showCard(data.idFirstForFold, data.board.length);
+        let startIndex = data.idFirstForFold;
+        let n = data.board.length;
+
+        showCard(startIndex, n);
+        /*while(!display.p) {
+          sleep(500);
+        }
+        display.p = false;*/
+        data = await fetchSecondFold(data.idGame, 0, display.cardPlayedId, display.trump.choice);
+        showCard(startIndex + n, 4 - n);
         break;
       }
       break;
@@ -211,7 +228,7 @@
     <div class="tapis">
       <table class="tab_tapis">
         <tr>
-          {#if display.trump.me}
+          {#if display.trump.show}
             <td class="card-trump"
               ><img
                 src="trump_0.png"
@@ -232,7 +249,7 @@
             >
           {/if}
 
-          {#if display.trump.me}
+          {#if display.trump.show}
             <td class="card-trump"
               ><img
                 src="trump_1.png"
@@ -268,7 +285,7 @@
         </tr>
 
         <tr>
-          {#if display.trump.me}
+          {#if display.trump.show}
             <td class="card-trump"
               ><img
                 src="trump_2.png"
@@ -290,7 +307,7 @@
             >
           {/if}
 
-          {#if display.trump.me}
+          {#if display.trump.show}
             <td class="card-trump"
               ><img
                 src="trump_3.png"
@@ -319,7 +336,7 @@
                     src={name}
                     class={playable ? "" : "noclick"}
                     alt="carte"
-                    on:click={() => moveCardToBoard(i)}
+                    on:click={() => playCardOnBoard(i)}
                   />
                 </div>
               </td>

@@ -1,11 +1,10 @@
-export { fetchNewGameId, fetchFirstFold };
-
-const DEFAULT_PLAYER_ID = 0;
+export { fetchNewGameId, fetchFirstFold, fetchSecondFold };
 
 const API_URL = "http://localhost:8080";
 const endpoints = {
     newgame: "/newgame",
-    firstPartFold: "/firstPartFold"
+    firstPartFold: "/firstPartFold",
+    secondPartFold: "/secondPartFold"
 };
 
 async function fetchRawDataFromEndpoint(endpoint: string): Promise<string> {
@@ -26,9 +25,16 @@ async function fetchNewGameId(): Promise<number> {
     });
 }
 
-async function fetchFirstFold(gameId: number): Promise<JSON> {
-    let params = `?gameId=${gameId}&playerId=${DEFAULT_PLAYER_ID}`;
+async function fetchFirstFold(idGame: number, idPlayer: number): Promise<JSON> {
+    let params = `?gameId=${idGame}&playerId=${idPlayer}`;
     return await fetchRawDataFromEndpoint(endpoints["firstPartFold"] + params).then((rawJSON) => {
+        return JSON.parse(rawJSON);
+    });
+}
+
+async function fetchSecondFold(idGame: number, idPlayer: number, cardPlayed: number, trump: number) {
+    let params = `?gameId=${idGame}&idPlayer=${idPlayer}&cardPlayed=${cardPlayed}` + (trump != -1 ? `&trump=${trump}` : "");
+    return await fetchRawDataFromEndpoint(endpoints["secondPartFold"] + params).then((rawJSON) => {
         return JSON.parse(rawJSON);
     });
 }
