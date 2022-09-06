@@ -1,78 +1,22 @@
 <script lang="ts">
-  const json = `{
-  "idGame" : 0,
-  "counterRound" : 1,
-  "trump" : 3,
-  "counterFold" : 1,
-  "idFirstForFold" : 1,
-  "board" : {
-    "content" : [ {
-      "color" : 1,
-      "value" : 5,
-      "playerId" : 1
-    }, {
-      "color" : 1,
-      "value" : 6,
-      "playerId" : 2
-    } ]
-  },
-  "idWinner" : 0,
-  "scorePerson" : 0,
-  "scoreBot" : 0,
-  "hand" : [ {
-    "color" : 2,
-    "value" : 6,
-    "playerId" : 0
-  }, {
-    "color" : 1,
-    "value" : 3,
-    "playerId" : 0
-  }, {
-    "color" : 3,
-    "value" : 8,
-    "playerId" : 0
-  }, {
-    "color" : 2,
-    "value" : 5,
-    "playerId" : 0
-  }, {
-    "color" : 3,
-    "value" : 1,
-    "playerId" : 0
-  }, {
-    "color" : 3,
-    "value" : 3,
-    "playerId" : 0
-  }, {
-    "color" : 3,
-    "value" : 4,
-    "playerId" : 0
-  }, {
-    "color" : 3,
-    "value" : 5,
-    "playerId" : 0
-  }, {
-    "color" : 1,
-    "value" : 1,
-    "playerId" : 0
-  } ],
-  "playableCards" : [ 1, 2, 4, 5, 6, 7 ]
-}
-  `;
+  
+  async function getData(URL) {
+    const res = await fetch(URL);
+    const text = await res.text();
 
-  const data = JSON.parse(json);
+    if (res.ok) {
+      return text;
+    } else {
+      throw new Error(text);
+    }
+  }
+
+  
+
 
   //player's deck
   let deck = [
-    { name: "", visible: true, playable: false },
-    { name: "", visible: true, playable: false },
-    { name: "", visible: true, playable: false },
-    { name: "", visible: true, playable: false },
-    { name: "", visible: true, playable: false },
-    { name: "", visible: true, playable: false },
-    { name: "", visible: true, playable: false },
-    { name: "", visible: true, playable: false },
-    { name: "", visible: true, playable: false },
+    
   ];
 
   let deckBot = [
@@ -143,9 +87,10 @@ function playableCards(){
 //set trump if it's player turn
   function setTrump(id){
     trump_me = false;
+    trumpChoice = id;
     trump_current = "trump_" + id + ".png"
 
-    for(let i = 0; i < 9; ++i){
+    for(let i = 0; i < deck.length; ++i){
           deck[i].playable = true;
     }
   }
@@ -157,9 +102,11 @@ function playableCards(){
     visible_me = true;
     card_board = deck[x].name;
 
-    for(let i = 0; i < 9; ++i){
+    for(let i = 0; i < deck.length; ++i){
       deck[i].playable = false;
     }
+
+    deck.slice(x,2);
     
     showCard(1);
 
@@ -167,40 +114,48 @@ function playableCards(){
 
   //show player deck
   function setDeck(cardState) {
-    for (let i = 0; i < deck.length; ++i) {
-      deck[i].name = `cards/card_${cardState.hand[i].color}_${cardState.hand[i].value}_160.png`;
+    for (let i = 0; i < 9; ++i) {
+      deck.push({name: `cards/card_${cardState.hand[i].color}_${cardState.hand[i].value}_160.png`, visible: true, playable: false});
 
-      deck[i].visible = true;
     }
   }
 
 
   
 
-  function playGame(){
-  let j = 1;
-  for(let i = 0; i < 8; ++i){
-    
-    if(j == 4){
-      j = 0;
-    }
-
-    
-
-    //await sleep(2000);
-    visible_me = false;
-
-    ++j;
   
+
+  const URL_newGame = "http://localhost:8080/newgame";
+
+  let idGame;
+
+  getData(URL_newGame).then((id) => idGame = id);
+
+  let URL_firstFold = "http://localhost:8080/firstPartFold?gameId=" + idGame;
+  let data_json;
+  let data;
+
+  const idPlayer = 0;
+  let idCardPlayed = 0;
+  let trumpChoice = 0;
+  let URL_secondFold = "http://localhost:8080/secondPartFold?gameId="+ idGame +"&playerId="+ idPlayer +"&cardPlayed="+ idCardPlayed;
+  let URL_secondFold_trump = "http://localhost:8080/secondPartFold?gameId="+ idGame +"&playerId="+ idPlayer +"&cardPlayed="+ idCardPlayed + "&trump=" + trumpChoice;
+
+
+  async function playGame(){
+  
+  data_json = getData(URL_firstFold).then;
+
+  data = JSON.parse(data_json);
+
+  setDeck(data);
+  if(data.trump != -1){
+    setTrump(data.trump);
   }
-
 }
 
-setDeck(data);
-if(data.trump != null){
-  setTrump(data.trump);
-}
-//playGame();
+playGame();
+
   
 </script>
 
