@@ -19,6 +19,9 @@ public class PersonPlayer extends Player {
     return null;
   }
 
+  @Override
+  public boolean isBot() { return false; }
+
   public CardColor chooseTrump() {
     return hand.getColorMostPresent();
   } // todo a modifier

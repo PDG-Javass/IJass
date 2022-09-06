@@ -4,7 +4,7 @@ import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Players.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Vector;
-
+// TODO : Méthode coup par coup
 public class GameManager {
   private Player firstForRound;
   private Player firstForFold;
@@ -12,7 +12,6 @@ public class GameManager {
   private Player current;
   private Vector<Player> players;
   private CardColor trump;
-
   private boolean inProgress;
 
   private State state;
@@ -38,6 +37,83 @@ public class GameManager {
 
   }
 
+  public boolean nextTurn() {
+    if (current.isBot()) {
+      state.board.addCard(current.playChoice(current.chooseCard(state.board, trump)));
+      nextPlayer();
+      return true;
+    }
+    return false;
+  }
+
+  public void updateStateForEndFold(int playerId) {
+    // Assignation du gagnant de la plie
+    int foldWinnerId = state.board.getFoldWinner(trump);
+    state.setIdWinner(foldWinnerId);
+    Player winner = getPlayerById(foldWinnerId);
+    winner.getTeam().addPoints(state.board.points(trump));
+    firstForFold = winner;
+    state.idFirstForFold = foldWinnerId;
+    state.counterFold++;
+
+    // On flush les carte du tapis dans les cartes jouées durant la plie
+    state.addPlayedCards(state.board.getContent());
+    state.board.emptyDeck();
+    // On assigne la nouvelle main du joueur à l'état
+    Player person = getPlayerById(playerId);
+    state.setHand(person.getHand().getContent());
+    state.setPlayableCards(getIndexVector(person.getHand().getContent(),
+            person.getHand().getPlayableCard(state.board, trump)));
+
+    // Assignation des scores des équipes
+    Team player = person.getTeam(), bot = players.get((players.indexOf(person) + 1) % 4).getTeam();
+    state.setScoreBot(bot.getScore());
+    state.setScorePerson(player.getScore());
+
+  }
+
+  public void updateStateWhileFold(int playerId) {
+    Player person = getPlayerById(playerId);
+    state.setHand(person.getHand().getContent());
+    state.setPlayableCards(getIndexVector(person.getHand().getContent(),
+            person.getHand().getPlayableCard(state.board, trump)));
+  }
+
+  public Vector<Integer> getIndexVector(Vector<Card> cards, Vector<Card> playable) {
+    Vector<Integer> indexes = new Vector<>();
+    for (int i = 0; i < cards.size(); i++) {
+      if (playable.contains(cards.get(i)))
+        indexes.add(i);
+    }
+    return indexes;
+  }
+
+  public void playUntilPlayerTurn(int id) {
+    while (nextTurn());
+  }
+
+  public void playUntilEverybodyPlayed() {
+    while (state.board.numberOfCards() < 4)
+      nextTurn();
+  }
+
+  public void playerTurn(int cardChoice) {
+    state.board.addCard(current.playChoice(cardChoice));
+    nextPlayer();
+  }
+
+  public State startFold(int playerId, int cardChoice) {
+    playUntilPlayerTurn(playerId);
+    playerTurn(cardChoice);
+    updateStateWhileFold(playerId);
+    return state;
+  }
+  public State endFold(int playerId) {
+    playUntilEverybodyPlayed();
+    updateStateForEndFold(playerId);
+    return state;
+  }
+
   Vector<Player> getPlayers() {
     return players;
   }
@@ -53,7 +129,6 @@ public class GameManager {
 
   public void initiateRound() {
     initialDeck = new StartingDeck();
-    state.setCounterFold(1);
     clearHands();
     distribute();
     updateFirstForRound();
@@ -207,77 +282,3 @@ public class GameManager {
     System.out.println("Helllo");
   }
 }
-
-/*
-
-private CardColor everybodyPlays() {
-    Player current = firstForFold;
-    Card firstCard = current.playCard(state.getBoard(), trump);
-    state.getBoard().addCard(firstCard);
-    CardColor colorAsked = firstCard.getColor();
-    setHand();
-    setPlayable();
-
-
-    int startIndex = players.indexOf(current) + 1;
-    for (int i = 0; i < 3; ++i) {
-
-      state.getBoard().addCard(players.get((startIndex + i) % 4).playCard(state.getBoard(), trump));
-      setHand();
-      setPlayable();
-      try {
-        System.out.println(
-            new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(state));
-      } catch (Exception e) {
-      }
-      ;
-    }
-    return colorAsked;
-  }
-
-
-    public State compute(int playerId, int cardChoice) {
-    if (current == null || playerId != current.getId())
-      throw new RuntimeException("Invalid player id");
-    if (trump == null)
-      return state;
-    if (state.counterFold == 1 && state.counterRound > 1) {
-      initiateRound();
-      state.playedCards.clear();
-    }
-    if (state.board.size() == 4) {
-      firstForFold = players.get(state.board.getFoldWinner(trump));
-      firstForFold.getTeam().addPoints(state.board.countPoints(trump));
-      current = firstForFold;
-      state.setIdFirstForFold(firstForFold.getId());
-
-      // On set les variables de l'état
-      state.setIdWinner(firstForFold.getId());
-      state.setScoreBot(players.get(1).getTeam().getScore());
-      state.setScorePerson(players.get(0).getTeam().getScore());
-
-      // On déplace les cartes jouées du board vers le discardDeck
-      state.getBoard().emptyDeck();
-      ++state.counterFold;
-      if (endGame())
-        return state;
-
-      if (state.getCounterFold() == 9) {
-        firstForFold.getTeam().addPoints(CINQDEDER);
-        state.counterFold = 1;
-        state.counterRound++;
-      }
-    }
-    playUntilNextPersonPlayer();
-
-    Card played = current.playChoice(cardChoice);
-    state.board.addCard(played);
-    state.playedCards.add(played);
-
-    nextPlayer();
-    playUntilNextPersonPlayer();
-
-    setPlayable();
-    setHand();
-    return state;
-  }*/

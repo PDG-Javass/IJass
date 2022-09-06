@@ -13,6 +13,10 @@ public abstract class Player {
   private Team team;
   private static int counterId = 0;
 
+  public boolean isBot() {
+    return true;
+  }
+
   public Player(String name, Team team) {
     this.id = counterId++;
     this.name = name;

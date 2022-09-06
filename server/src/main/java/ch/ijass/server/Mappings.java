@@ -31,8 +31,8 @@ public class Mappings {
         return String.valueOf(id);
     }
 
-    @GetMapping("/next")
-    public String next(@RequestParam Integer gameId, @RequestParam(required = false)Integer playerId,
+    @GetMapping("/firstPartFold")
+    public String firstPartFold(@RequestParam Integer gameId, @RequestParam(required = false)Integer playerId,
                      @RequestParam(required = false)Integer cardPlayed, @RequestParam(required = false)Integer trump) {
         GameManager concerned = mapping.get(gameId);
         if (trump != null) {
@@ -49,5 +49,15 @@ public class Mappings {
             }
         }
         return "No changes";
+    }
+    @GetMapping("/secondPartFold")
+    public String secondPartFold(@RequestParam Integer gameId, @RequestParam Integer playerId,
+                       @RequestParam(required = false)Integer cardPlayed, @RequestParam(required = false)Integer trump) {
+        GameManager concerned = mapping.get(gameId);
+        try {
+            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(concerned.endFold(playerId));
+        } catch(Exception e) {
+            return e.getMessage();
+        }
     }
 }

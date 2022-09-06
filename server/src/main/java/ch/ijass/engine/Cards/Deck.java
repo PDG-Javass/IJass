@@ -1,5 +1,7 @@
 package ch.ijass.engine.Cards;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.Collection;
 import java.util.Vector;
 
@@ -73,7 +75,14 @@ public class Deck {
     for (Card card : content) {
       if (card.isEqual(new Card(trump, CardValue.JACK)))
         count += 20;
+      else if (card.isEqual(new Card(trump, CardValue.NINE)))
+        count += 14;
+      else
+        count += card.points(trump);
     }
-    return 0;
+    return count;
   }
+
+  @JsonValue
+  public Vector<Card> value() { return content; }
 }
