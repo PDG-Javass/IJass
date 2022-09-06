@@ -1,6 +1,8 @@
 package ch.ijass.engine.Cards;
 
 import ch.ijass.engine.Players.Player;
+
+import java.util.Arrays;
 import java.util.Vector;
 
 public class Card implements Comparable {
@@ -36,8 +38,15 @@ public class Card implements Comparable {
 
   static public Vector<Card> getBiggerCards(CardValue rank, CardColor color, boolean trump) {
     Vector<Card> ret = new Vector<>();
-    for (int i = rank.ordinal() + 1; i < CardValue.values().length; i++) {
-      ret.add(new Card(color, CardValue.values()[i]));
+
+    if (trump) {
+      for(int i = rank.ordinalWithTrump() + 1; i < CardValue.valuesWithTrump().size(); i++) {
+        ret.add(new Card(color, CardValue.valuesWithTrump().get(i)));
+      }
+    } else {
+      for (int i = rank.ordinal() + 1; i < CardValue.values().length; i++) {
+        ret.add(new Card(color, CardValue.values()[i]));
+      }
     }
     return ret;
   }
