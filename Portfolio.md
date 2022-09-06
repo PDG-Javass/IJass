@@ -173,7 +173,7 @@ Fonctionnalités implémentées:
 - Calculer les scores à la fin de chaque plie
 - Simulation d'une partie entre 4 bots
 
-## Tests effectué
+## Tests effectués
 
 - Distribution aléatoire des cartes
 - Fin de plie lorsque les 4 joueurs ont joué
