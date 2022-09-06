@@ -44,7 +44,7 @@ public class BoardDeck extends Deck {
    * @return la couleur de la première carte de la plie
    */
   public CardColor colorAsked() {
-    return content.firstElement().getColor();
+    return content.get(0).getColor();
   }
 
   /**

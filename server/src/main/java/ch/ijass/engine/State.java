@@ -2,7 +2,7 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
-import java.util.Vector;
+import java.util.ArrayList;
 import lombok.Data;
 
 @Data
@@ -20,14 +20,14 @@ public class State {
 
   public int scorePerson;
   public int scoreBot;
-  public Vector<Card> hand;
-  public Vector<Integer> playableCards;
+  public ArrayList<Card> hand;
+  public ArrayList<Integer> playableCards;
 
   State() {
     board = new BoardDeck();
     idGame = counterIdGame++;
   }
 
-  // todo : vector the playable card en liste d'index de par rapport a hand
+  // todo : ArrayList the playable card en liste d'index de par rapport a hand
 
 }

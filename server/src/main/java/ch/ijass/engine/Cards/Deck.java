@@ -3,16 +3,16 @@ package ch.ijass.engine.Cards;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Deck {
-  protected Vector<Card> content;
+  protected ArrayList<Card> content;
 
   /**
    * Constructeur de la classe Deck
    */
   public Deck() {
-    content = new Vector<>();
+    content = new ArrayList<>();
   }
 
   /**
@@ -30,7 +30,7 @@ public class Deck {
   }
 
   public void emptyDeck() {
-    content.removeAllElements();
+    content.clear();
   }
 
   public int numberOfCards() {
@@ -38,7 +38,7 @@ public class Deck {
     return content.size();
   }
 
-  public Vector<Card> getContent() {
+  public ArrayList<Card> getContent() {
     return content;
   }
 
@@ -50,25 +50,26 @@ public class Deck {
     throw new RuntimeException("Can not play a card not in the Deck");
   }
 
-  public Vector<Card> getAllCardsOfColor(Vector<Card> cards, CardColor color) {
-    Vector<Card> ret = new Vector<>();
+  public ArrayList<Card> getAllCardsOfColor(ArrayList<Card> cards, CardColor color) {
+    ArrayList<Card> ret = new ArrayList<>();
     for (Card card : cards) {
       if (card.getColor() == color) ret.add(card);
     }
     return ret;
   }
 
-  public Card getHighestByColor(Vector<Card> cards, CardColor color, boolean trump) {
-    Vector<Card> res = getAllCardsOfColor(cards, color);
+  public Card getHighestByColor(ArrayList<Card> cards, CardColor color, boolean trump) {
+    ArrayList<Card> res = getAllCardsOfColor(cards, color);
     if (trump) {
       return Collections.max(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
     } else {
       return Collections.max(res, Comparator.comparingInt(c -> c.getValue().ordinal()));
     }
+    
   }
 
-  public Card getLowestByColor(Vector<Card> cards, CardColor color, boolean trump) {
-    Vector<Card> res = getAllCardsOfColor(cards, color);
+  public Card getLowestByColor(ArrayList<Card> cards, CardColor color, boolean trump) {
+    ArrayList<Card> res = getAllCardsOfColor(cards, color);
     if (trump) {
       return Collections.min(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
     } else {
