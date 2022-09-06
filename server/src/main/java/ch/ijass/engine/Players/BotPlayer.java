@@ -14,7 +14,6 @@ public class BotPlayer extends Player {
   public Card chooseCard(BoardDeck playMat, CardColor trump) {
     System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).firstElement());
     Card choice = hand.getPlayableCard(playMat, trump).firstElement();
-    playChoice(choice);
     return choice;
   }
 

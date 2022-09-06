@@ -21,8 +21,8 @@ public class Deck {
   }
 
   public void addCard(Card card) {
-    if (card == null) throw new RuntimeException("Adding null card to hand");
-    content.add(card);
+    if (card != null)
+      content.add(card);
   }
 
   public void copyDeck(Collection<? extends Card> deck) {
