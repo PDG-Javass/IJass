@@ -1,41 +1,55 @@
 <script lang="ts">
-  import { fetchNewGameId, fetchFirstFold, fetchSecondFold, fetchChooseTrump } from "../mappings";
+  import {
+    fetchNewGameId,
+    fetchFirstFold,
+    fetchSecondFold,
+    fetchChooseTrump,
+  } from "../mappings";
 
   let card_board = "";
   let visible_me = false;
 
-  const timeout = async ms => new Promise(res => setTimeout(res, ms));
+  const timeout = async (ms) => new Promise((res) => setTimeout(res, ms));
   let next = false;
 
-  async function waitUserInput(){
-    while(next === false){
-    await timeout(50);}
+  async function waitUserInput() {
+    while (next === false) {
+      await timeout(50);
+    }
 
-    console.log("j'ai attendu")
+    console.log("j'ai attendu");
     next = false;
   }
 
   //play the selected card
 
   async function playCardOnBoard(x: number) {
-    deck[x].visible = false;
     visible_me = true;
     card_board = deck[x].name;
+
 
     for (let i = 0; i < deck.length; ++i) {
       deck[i].playable = false;
     }
 
     display.cardPlayedId = x;
-    deck.slice(x, 2);
 
+    for(let i = x; i < deck.length - 1; ++i){
+      deck[i] = deck[i + 1]
+    }
+    deck[8].visible = false;
+
+
+    //deck.slice(x, 1);
+
+    console.log("après avoir bougé:")
+    console.log(deck);
     next = true;
-
   }
 
   const MAX_POINTS = 1000;
   const N_FOLDS = 9;
-  const TIME_SLEEP = 2000;
+  const TIME_SLEEP = 1000;
 
   let data: any = {
     idGame: 0,
@@ -64,9 +78,8 @@
       show: false,
     },
     cardPlayedId: -1,
-    p: false
+    p: false,
   };
-
 
   let startIndex = data.idFirstForFold;
   let n = data.board.length;
@@ -92,8 +105,9 @@
         playable: false,
       });
     }
-    console.log("From setDeck: ");
+
     console.log(deck);
+
   }
 
   //set trump if it's player turn
@@ -101,7 +115,7 @@
     display.trump.show = false;
     display.trump.choice = id;
     display.trump.current = "trump_" + id + ".png";
-    display.trump.me = true;
+    next = true;
   }
 
   function makeCardsPlayable() {
@@ -121,9 +135,9 @@
     }
   }
 
-  function setDeckBotAsc(id){
+  function setDeckBotAsc(id) {
     let cards = data.playedCards;
-    for(let i = cards.length - 1; i >= 0; --i){
+    for (let i = cards.length - 1; i >= 0; --i) {
       if (cards[i].playerId == id) {
         deckBot[id - 1].name =
           "cards/card_" + cards[i].color + "_" + cards[i].value + "_160.png";
@@ -131,90 +145,96 @@
     }
   }
 
+  function setDeckBotChoose(id){
+    if(data.board.length == 0){
+      setDeckBotAsc(id);
+    }else{
+      setDeckBot(id);
+    }
+    deckBot[id -1].visible = true;
+  }
+
   //show card, player card become playable
-  async function showCard(startIndex: number, remainingToDisplay: number, second: boolean) {
+  async function showCard(
+    startIndex: number,
+    remainingToDisplay: number,
+  ) {
     for (let i = 0; i < remainingToDisplay; ++i) {
       await sleep(TIME_SLEEP);
       switch (startIndex) {
         case 0:
           break;
-        case 1:{
-          if(second){
-            setDeckBotAsc(1);
-          }else{
-          setDeckBot(1);
-          }
-          deckBot[0].visible = true;
+        case 1: 
+          setDeckBotChoose(1);
           break;
-        }
-        case 2:{
-          if(second){
-            setDeckBotAsc(2);
-          }else{
-          setDeckBot(2);
-          }
-          deckBot[1].visible = true;
+        
+        case 2: 
+          setDeckBotChoose(2);
           break;
-        }
-        case 3:{
-          if(second){
-            setDeckBotAsc(3);
-          }else{
-          setDeckBot(3);
-          }
-          deckBot[2].visible = true;
+        
+        case 3: 
+          setDeckBotChoose(3);
           break;
-        }
+        
       }
       startIndex = (startIndex + 1) % 4;
     }
 
-    makeCardsPlayable();
-  }
 
+    makeCardsPlayable();
+    
+  }
 
   async function mainLoop(gameId: number) {
     data.idGame = gameId;
     console.log(gameId);
-    while (data.scoreBot < 1000 || data.scorePerson < 1000) {
+    while (data.scoreBot < MAX_POINTS || data.scorePerson < MAX_POINTS) {
       for (let i = 0; i < N_FOLDS; ++i) {
         data = await fetchFirstFold(data.idGame, 0);
-        console.log(data);
+        console.log("first part");
+
+
         if (i == 0) {
-          setAndShowDeck(data);
+          await setAndShowDeck(data);
+
           if (data.trump != -1) {
-            setTrump(data.trump);
+            display.trump.show = false;
+            display.trump.current = "trump_" + data.trump + ".png";
           } else {
             display.trump.show = true;
+            await waitUserInput();
+            await fetchChooseTrump(data.idGame, display.trump.choice);
           }
+
+          startIndex = data.idFirstForFold;
+
+        }else{
+          startIndex = data.board[0].playerId;
+
         }
-        startIndex = data.idFirstForFold;
+
         n = data.board.length;
 
-        showCard(startIndex, n, false);
+        await showCard(startIndex, n);
 
-       await waitUserInput();
+        await waitUserInput();
 
-       console.log("card player: " + display.cardPlayedId);
+        console.log("card player: " + display.cardPlayedId);
 
-       if(display.trump.choice != -1){
-        await fetchChooseTrump(data.idGame, display.trump.choice);
-       }
+        data = await fetchSecondFold(data.idGame, 0, display.cardPlayedId);
 
-       data = await fetchSecondFold(data.idGame, 0, display.cardPlayedId);
+        console.log("second part");
 
-    
-      showCard(startIndex + n, 4 - n, true);
+        await showCard(startIndex + n, 4 - n);
 
-      await sleep(1000);
-        
-      for(let i = 0; i < deckBot.length; ++i){
-        deckBot[i].visible = false;
-      }
-      visible_me = false;
+        await sleep(1000);
+
+        for (let i = 0; i < deckBot.length; ++i) {
+          deckBot[i].visible = false;
+        }
+        visible_me = false;
 
         console.log("round" + i);
-        break;
       }
       break;
     }
@@ -224,7 +244,6 @@
     mainLoop(id);
   });
 
-  
   function debug() {
     console.log("from debug");
     console.log(data);
