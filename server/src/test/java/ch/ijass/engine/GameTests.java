@@ -12,7 +12,7 @@ public class GameTests {
     StartingDeck d1 = new StartingDeck();
     StartingDeck d2 = new StartingDeck();
 
-    Vector<Card> content = d1.getContent();
+    ArrayList<Card> content = d1.getContent();
     Card c1 = content.get(0);
     int count = 1;
     for (int i = 1; i < content.size(); i++) {
@@ -31,9 +31,9 @@ public class GameTests {
     int essaisReussis = 0;
     for (int i = 0; i < ESSAIS; i++) {
       StartingDeck d = new StartingDeck();
-      Vector<Card> cards = d.getContent();
+      ArrayList<Card> cards = d.getContent();
       d.shuffle();
-      Vector<Card> cardsShuffled = d.getContent();
+      ArrayList<Card> cardsShuffled = d.getContent();
       // Vérifie si le paquet a bien été mélangé en interrogeant le même index de leur contenu
       Random r = new Random();
       int index = r.nextInt(0, 36); // TODO: ne pas mettre le nombre de cartes en dur ?
@@ -88,7 +88,7 @@ public class GameTests {
     h1.sort();
 
     // Vérification de l'ordre deux à deux
-    Vector<Card> content = h1.getContent();
+    ArrayList<Card> content = h1.getContent();
     Card c = content.get(0);
     for (int i = 1; i < content.size(); i++) {
       assert (c.getColor() != content.get(i).getColor()
