@@ -8,14 +8,22 @@ import java.util.Vector;
 public class Deck {
   protected Vector<Card> content;
 
+  /**
+   * Constructeur de la classe Deck
+   */
   public Deck() {
     content = new Vector<>();
   }
 
+  /**
+   * Ajouter une carte au deck
+   * @param card Carte à ajouter
+   */
   public void addCard(Card card) {
     if (card == null) throw new RuntimeException("Adding null card to hand");
     content.add(card);
   }
+
 
   public void addCards(Collection<Card> content) {
     this.content.addAll(content);
