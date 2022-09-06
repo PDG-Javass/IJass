@@ -33,8 +33,9 @@ async function fetchFirstFold(idGame: number, idPlayer: number): Promise<JSON> {
 }
 
 async function fetchSecondFold(idGame: number, idPlayer: number, cardPlayed: number, trump: number) {
-    let params = `?gameId=${idGame}&idPlayer=${idPlayer}&cardPlayed=${cardPlayed}` + (trump != -1 ? `&trump=${trump}` : "");
+    let params = `?gameId=${idGame}&playerId=${idPlayer}&cardPlayed=${cardPlayed}` + (trump != -1 ? `&trump=${trump}` : "");
     return await fetchRawDataFromEndpoint(endpoints["secondPartFold"] + params).then((rawJSON) => {
+        console.log(rawJSON);
         return JSON.parse(rawJSON);
     });
 }

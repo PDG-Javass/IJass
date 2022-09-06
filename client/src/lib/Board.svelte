@@ -4,9 +4,11 @@
   let card_board = "";
   let visible_me = false;
 
+  
+
   //play the selected card
 
-  function playCardOnBoard(x: number) {
+  async function playCardOnBoard(x: number) {
     deck[x].visible = false;
     visible_me = true;
     card_board = deck[x].name;
@@ -15,8 +17,12 @@
       deck[i].playable = false;
     }
 
+
+    data = await fetchSecondFold(data.idGame, 0, x, display.trump.choice);
+
     deck.slice(x, 2);
-    display.p = true;
+    showCard(startIndex + n, 4 - n, true);
+
   }
 
   const MAX_POINTS = 1000;
@@ -53,6 +59,9 @@
     p: false
   };
 
+
+  let startIndex = data.idFirstForFold;
+  let n = data.board.length;
   //player's deck
   let deck = [];
 
@@ -104,35 +113,57 @@
     }
   }
 
+  function setDeckBotAsc(id){
+    let cards = data.playedCards;
+    for(let i = cards.length - 1; i >= 0; --i){
+      if (cards[i].playerId == id) {
+        deckBot[id - 1].name =
+          "cards/card_" + cards[i].color + "_" + cards[i].value + "_160.png";
+      }
+    }
+  }
+
   //show card, player card become playable
-  async function showCard(startIndex: number, remainingToDisplay: number) {
+  async function showCard(startIndex: number, remainingToDisplay: number, second: boolean) {
     for (let i = 0; i < remainingToDisplay; ++i) {
       await sleep(TIME_SLEEP);
       switch (startIndex) {
         case 0:
           break;
-        case 1:
+        case 1:{
+          if(second){
+            setDeckBotAsc(1);
+          }else{
           setDeckBot(1);
+          }
           deckBot[0].visible = true;
           break;
-        case 2:
+        }
+        case 2:{
+          if(second){
+            setDeckBotAsc(2);
+          }else{
           setDeckBot(2);
+          }
           deckBot[1].visible = true;
           break;
-        case 3:
+        }
+        case 3:{
+          if(second){
+            setDeckBotAsc(3);
+          }else{
           setDeckBot(3);
+          }
           deckBot[2].visible = true;
           break;
+        }
       }
       startIndex = (startIndex + 1) % 4;
     }
-    console.log("coucou");
+
     makeCardsPlayable();
   }
 
-  async function chooseACard() {
-
-  }
 
   async function mainLoop(gameId: number) {
     data.idGame = gameId;
@@ -149,17 +180,12 @@
             display.trump.show = true;
           }
         }
-        let startIndex = data.idFirstForFold;
-        let n = data.board.length;
+        startIndex = data.idFirstForFold;
+        n = data.board.length;
 
-        showCard(startIndex, n);
-        /*while(!display.p) {
-          sleep(500);
-        }
-        display.p = false;*/
-        data = await fetchSecondFold(data.idGame, 0, display.cardPlayedId, display.trump.choice);
-        showCard(startIndex + n, 4 - n);
-        break;
+        showCard(startIndex, n, false);
+        
+        console.log("round" + i);
       }
       break;
     }
@@ -217,7 +243,7 @@
   <table class="score" on:click={debug}>
     <tr><td /><td>Score</td><td /></tr>
     <tr><td>Moi + Lapinou</td><td /><td>Chacha + Titi</td></tr>
-    <tr><td>xxxx</td><td /><td>xxxx</td></tr>
+    <tr><td>{data.scorePerson}</td><td /><td>{data.scoreBot}</td></tr>
   </table>
 </div>
 
