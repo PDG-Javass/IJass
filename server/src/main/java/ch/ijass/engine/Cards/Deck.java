@@ -3,13 +3,13 @@ package ch.ijass.engine.Cards;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Collection;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Deck {
-  protected Vector<Card> content;
+  protected ArrayList<Card> content;
 
   public Deck() {
-    content = new Vector<>();
+    content = new ArrayList<>();
   }
 
   public void addCards(Collection<Card> content) {
@@ -17,7 +17,7 @@ public class Deck {
   }
 
   public void emptyDeck() {
-    content.removeAllElements();
+    content.clear();
   }
 
   public void addCard(Card card) {
@@ -27,7 +27,7 @@ public class Deck {
 
   public void copyDeck(Collection<? extends Card> deck) {
     if (deck == null) throw new RuntimeException("Copy of a null card collection");
-    content.removeAllElements();
+    emptyDeck();
     content.addAll(deck);
   }
 
@@ -36,8 +36,8 @@ public class Deck {
     return content.size();
   }
 
-  public Vector<Card> getContent() {
-    return new Vector<>(content);
+  public ArrayList<Card> getContent() {
+    return new ArrayList<>(content);
   }
 
   public boolean contains(Card c) {
@@ -54,8 +54,8 @@ public class Deck {
     return true;
   }
 
-  public Vector<Card> getCardsOfColor(CardColor color) {
-    Vector<Card> ret = new Vector<>();
+  public ArrayList<Card> getCardsOfColor(CardColor color) {
+    ArrayList<Card> ret = new ArrayList<>();
     for (Card c : content) {
       if (c.getColor() == color) ret.add(c);
     }
@@ -84,5 +84,5 @@ public class Deck {
   }
 
   @JsonValue
-  public Vector<Card> value() { return content; }
+  public ArrayList<Card> value() { return content; }
 }

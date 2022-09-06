@@ -3,13 +3,13 @@ package ch.ijass.engine;
 import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Players.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Vector;
+import java.util.ArrayList;
 // TODO : Méthode coup par coup
 public class GameManager {
   private Player firstForRound;
   private Player firstForFold;
   private Player current;
-  private Vector<Player> players;
+  private ArrayList<Player> players;
   private CardColor trump;
   private boolean inProgress;
 
@@ -26,7 +26,7 @@ public class GameManager {
     state = new State();
     Team team1 = new Team();
     Team team2 = new Team();
-    players = new Vector<>();
+    players = new ArrayList<>();
     inProgress = false;
     players.add(new PersonPlayer("Toto ", team1));
     players.add(new BotPlayer("Titi ", team2));
@@ -66,13 +66,10 @@ public class GameManager {
       state.setTrump(-1);
     }
 
-    // On flush les carte du tapis dans les cartes jouées durant la plie
-    state.addPlayedCards(state.board.getContent());
-    state.board.emptyDeck();
     // On assigne la nouvelle main du joueur à l'état
     Player person = getPlayerById(playerId);
     state.setHand(person.getHand().getContent());
-    state.setPlayableCards(getIndexVector(person.getHand().getContent(),
+    state.setPlayableCards(getIndexArrayList(person.getHand().getContent(),
             person.getHand().getPlayableCard(state.board, trump)));
 
     // Assignation des scores des équipes
@@ -86,7 +83,7 @@ public class GameManager {
     Player person = getPlayerById(playerId);
     state.idFirstForFold = firstForFold.getId();
     state.setHand(person.getHand().getContent());
-    state.setPlayableCards(getIndexVector(person.getHand().getContent(),
+    state.setPlayableCards(getIndexArrayList(person.getHand().getContent(),
             person.getHand().getPlayableCard(state.board, trump)));
     if (trump != null)
       state.setTrump(trump.ordinal());
@@ -94,8 +91,8 @@ public class GameManager {
       state.setTrump(-1);
   }
 
-  public Vector<Integer> getIndexVector(Vector<Card> cards, Vector<Card> playable) {
-    Vector<Integer> indexes = new Vector<>();
+  public ArrayList<Integer> getIndexArrayList(ArrayList<Card> cards, ArrayList<Card> playable) {
+    ArrayList<Integer> indexes = new ArrayList<>();
     for (int i = 0; i < cards.size(); i++) {
       if (playable.contains(cards.get(i)))
         indexes.add(i);
@@ -118,6 +115,9 @@ public class GameManager {
   }
 
   public State startFold(int playerId) {
+    // On flush les carte du tapis dans les cartes jouées durant la plie
+    state.addPlayedCards(state.board.getContent());
+    state.board.emptyDeck();
     playUntilPlayerTurn(playerId);
     updateStateWhileFold(playerId);
     return state;
@@ -129,7 +129,7 @@ public class GameManager {
     return state;
   }
 
-  Vector<Player> getPlayers() {
+  ArrayList<Player> getPlayers() {
     return players;
   }
 
@@ -213,7 +213,7 @@ public class GameManager {
 
   public int getHighestScore() {
     return Math.max(
-        players.firstElement().getTeam().getScore(), players.lastElement().getTeam().getScore());
+        players.get(0).getTeam().getScore(), players.get(players.size() - 1).getTeam().getScore());
   }
 
   public void updateFirstForRound() {
@@ -284,7 +284,7 @@ public class GameManager {
 
   // fonction qui permet de trouver a quel indice se trouve les cartes jouables au sain de la hand
   private void setPlayable(){
-    Vector<Integer> indexPlayable = new Vector<>();
+    ArrayList<Integer> indexPlayable = new ArrayList<>();
     int index = 0;
     for(Card card : state.getHand()){
       if(players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)){

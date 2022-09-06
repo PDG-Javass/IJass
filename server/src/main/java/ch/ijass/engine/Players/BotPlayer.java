@@ -12,8 +12,8 @@ public class BotPlayer extends Player {
 
   @Override
   public Card chooseCard(BoardDeck playMat, CardColor trump) {
-    System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).firstElement());
-    Card choice = hand.getPlayableCard(playMat, trump).firstElement();
+    System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).get(0));
+    Card choice = hand.getPlayableCard(playMat, trump).get(0);
     return choice;
   }
 
