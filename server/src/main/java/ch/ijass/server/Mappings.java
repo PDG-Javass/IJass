@@ -31,17 +31,34 @@ public class Mappings {
         return String.valueOf(id);
     }
 
-    @GetMapping("/firstPartFold")
-    public String firstPartFold(@RequestParam Integer gameId, @RequestParam(required = false)Integer playerId,
-                     @RequestParam(required = false)Integer cardPlayed, @RequestParam(required = false)Integer trump) {
+    @GetMapping("/startRound")
+    public String startRound(@RequestParam Integer gameId, @RequestParam Integer playerId) {
         GameManager concerned = mapping.get(gameId);
-        if (trump != null) {
-            concerned.setTrump(trump);
-            return "Changed trump";
+        concerned.initiateRound(playerId);
+        try {
+            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(concerned.getState());
+        } catch(Exception e) {
+            return e.getMessage();
         }
-        else if (playerId != null && cardPlayed != null) {
+    }
 
-            State newState = concerned.startFold(playerId, cardPlayed);
+    @GetMapping("/chooseTrump")
+    public String chooseTrump(@RequestParam Integer gameId, @RequestParam Integer trump) {
+        GameManager concerned = mapping.get(gameId);
+        concerned.setTrump(trump);
+        try {
+            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(concerned.getState());
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    @GetMapping("/firstPartFold")
+    public String firstPartFold(@RequestParam Integer gameId, @RequestParam(required = false)Integer playerId) {
+        GameManager concerned = mapping.get(gameId);
+        if (playerId != null) {
+
+            State newState = concerned.startFold(playerId);
             try {
                 return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(newState);
             } catch(Exception e) {
@@ -55,7 +72,9 @@ public class Mappings {
                        @RequestParam(required = false)Integer cardPlayed, @RequestParam(required = false)Integer trump) {
         GameManager concerned = mapping.get(gameId);
         try {
-            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(concerned.endFold(playerId));
+            return new ObjectMapper().
+                    writerWithDefaultPrettyPrinter().
+                    writeValueAsString(concerned.endFold(playerId, cardPlayed));
         } catch(Exception e) {
             return e.getMessage();
         }

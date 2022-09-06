@@ -8,11 +8,14 @@ import java.util.Vector;
 public class GameManager {
   private Player firstForRound;
   private Player firstForFold;
-
   private Player current;
   private Vector<Player> players;
   private CardColor trump;
   private boolean inProgress;
+
+  public State getState() {
+    return state;
+  }
 
   private State state;
   private StartingDeck initialDeck;
@@ -32,7 +35,7 @@ public class GameManager {
 
     state.setCounterRound(1);
     state.setCounterFold(1);
-    initiateRound();
+    initiateRound(players.get(0).getId());
     state.setIdFirstForFold(firstForFold.getId());
 
   }
@@ -56,6 +59,13 @@ public class GameManager {
     state.idFirstForFold = foldWinnerId;
     state.counterFold++;
 
+    if (state.counterFold == 9) {
+      state.counterRound++;
+      state.counterFold = 1;
+      trump = null;
+      state.setTrump(-1);
+    }
+
     // On flush les carte du tapis dans les cartes jouées durant la plie
     state.addPlayedCards(state.board.getContent());
     state.board.emptyDeck();
@@ -74,9 +84,14 @@ public class GameManager {
 
   public void updateStateWhileFold(int playerId) {
     Player person = getPlayerById(playerId);
+    state.idFirstForFold = firstForFold.getId();
     state.setHand(person.getHand().getContent());
     state.setPlayableCards(getIndexVector(person.getHand().getContent(),
             person.getHand().getPlayableCard(state.board, trump)));
+    if (trump != null)
+      state.setTrump(trump.ordinal());
+    else
+      state.setTrump(-1);
   }
 
   public Vector<Integer> getIndexVector(Vector<Card> cards, Vector<Card> playable) {
@@ -102,13 +117,13 @@ public class GameManager {
     nextPlayer();
   }
 
-  public State startFold(int playerId, int cardChoice) {
+  public State startFold(int playerId) {
     playUntilPlayerTurn(playerId);
-    playerTurn(cardChoice);
     updateStateWhileFold(playerId);
     return state;
   }
-  public State endFold(int playerId) {
+  public State endFold(int playerId, int cardChoice) {
+    playerTurn(cardChoice);
     playUntilEverybodyPlayed();
     updateStateForEndFold(playerId);
     return state;
@@ -127,13 +142,17 @@ public class GameManager {
     state.setTrump(trump);
   }
 
-  public void initiateRound() {
+  public void initiateRound(int playerId) {
     initialDeck = new StartingDeck();
     clearHands();
     distribute();
     updateFirstForRound();
+    if (firstForRound.isBot()) {
+      setTrump(firstForRound.chooseTrump().ordinal());
+    }
     firstForFold = firstForRound;
     current = firstForFold;
+    updateStateWhileFold(playerId);
   }
 
   public void clearHands() {
@@ -161,7 +180,7 @@ public class GameManager {
 
   public State doOneRound(int playerId, int cardChoice) {
     if (!inProgress) {
-      initiateRound();
+      initiateRound(players.get(0).getId());
       state.setIdFirstForFold(firstForFold.getId());
       trump = firstForRound.chooseTrump();
       state.setTrump(trump.ordinal());
