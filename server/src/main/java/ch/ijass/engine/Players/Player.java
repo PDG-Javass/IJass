@@ -18,7 +18,7 @@ public abstract class Player {
   }
 
   public Player(String name, Team team) {
-    this.id = counterId++;
+    this.id = (counterId++) % 4;
     this.name = name;
     this.team = team;
     hand = new HandDeck();
