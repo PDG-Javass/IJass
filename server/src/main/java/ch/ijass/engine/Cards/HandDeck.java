@@ -111,7 +111,20 @@ public class HandDeck extends Deck {
     }
   }
 
-  public Card findAce(CardColor trump) {
+  public Card findBock(Vector<Card> playable, CardColor trump, DiscardDeck discard){
+    Card bock = null;
+    for(CardColor color : CardColor.values()){
+      if(color != trump){
+        bock = getBockByColor( playable, discard,color, false);
+        if(bock != null){
+          return bock;
+        }
+      }
+    }
+    return null;
+  }
+
+  /*public Card findAce(CardColor trump) {
     for (Card card : content) {
       if (card.getColor() != trump && card.getValue() == CardValue.ACE) {
         return card;
@@ -119,6 +132,8 @@ public class HandDeck extends Deck {
     }
     return null;
   }
+
+   */
 
   public Card getAdvantageWithoutCut(BoardDeck board, CardColor trump) {
     if ((board.isCut(trump) && board.colorAsked() != trump) || getNumberOfCardsByColor(content, board.colorAsked()) == 0) {

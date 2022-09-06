@@ -34,6 +34,14 @@ public class Card implements Comparable {
     return ret;
   }
 
+  static public Vector<Card> getBiggerCards(CardValue rank, CardColor color, boolean trump) {
+    Vector<Card> ret = new Vector<>();
+    for (int i = rank.ordinal() + 1; i < CardValue.values().length; i++) {
+      ret.add(new Card(color, CardValue.values()[i]));
+    }
+    return ret;
+  }
+
   public CardValue getValue() {
     return value;
   }
