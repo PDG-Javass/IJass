@@ -1,10 +1,19 @@
 <script lang="ts">
-  import { fetchNewGameId, fetchFirstFold, fetchSecondFold } from "../mappings";
+  import { fetchNewGameId, fetchFirstFold, fetchSecondFold, fetchChooseTrump } from "../mappings";
 
   let card_board = "";
   let visible_me = false;
 
-  
+  const timeout = async ms => new Promise(res => setTimeout(res, ms));
+  let next = false;
+
+  async function waitUserInput(){
+    while(next === false){
+    await timeout(50);}
+
+    console.log("j'ai attendu")
+    next = false;
+  }
 
   //play the selected card
 
@@ -17,11 +26,10 @@
       deck[i].playable = false;
     }
 
-
-    data = await fetchSecondFold(data.idGame, 0, x, display.trump.choice);
-
+    display.cardPlayedId = x;
     deck.slice(x, 2);
-    showCard(startIndex + n, 4 - n, true);
+
+    next = true;
 
   }
 
@@ -184,8 +192,29 @@
         n = data.board.length;
 
         showCard(startIndex, n, false);
+
+       await waitUserInput();
+
+       console.log("card player: " + display.cardPlayedId);
+
+       if(display.trump.choice != -1){
+        await fetchChooseTrump(data.idGame, display.trump.choice);
+       }
+
+       data = await fetchSecondFold(data.idGame, 0, display.cardPlayedId);
+
+    
+      showCard(startIndex + n, 4 - n, true);
+
+      await sleep(1000);
         
+      for(let i = 0; i < deckBot.length; ++i){
+        deckBot[i].visible = false;
+      }
+      visible_me = false;
+
         console.log("round" + i);
+        break;
       }
       break;
     }
@@ -195,47 +224,10 @@
     mainLoop(id);
   });
 
-  /*
-  let URL_firstFold = "http://localhost:8080/firstPartFold?gameId=" + idGame;
-  let data_json;
-  let data;
-
-  const idPlayer = 0;
-  let idCardPlayed = 0;
-  let trumpChoice = 0;
-  let URL_secondFold =
-    "http://localhost:8080/secondPartFold?gameId=" +
-    idGame +
-    "&playerId=" +
-    idPlayer +
-    "&cardPlayed=" +
-    idCardPlayed;
-  let URL_secondFold_trump =
-    "http://localhost:8080/secondPartFold?gameId=" +
-    idGame +
-    "&playerId=" +
-    idPlayer +
-    "&cardPlayed=" +
-    idCardPlayed +
-    "&trump=" +
-    trumpChoice;
-
-  async function playGame() {
-    data_json = getData(URL_firstFold).then;
-
-    data = JSON.parse(data_json);
-
-    setDeck(data);
-    if (display.trump != -1) {
-      setTrump(display.trump);
-    }
-  }
-
-  playGame();
-  */
+  
   function debug() {
     console.log("from debug");
-    console.log(deck);
+    console.log(data);
   }
 </script>
 

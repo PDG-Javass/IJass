@@ -1,10 +1,11 @@
-export { fetchNewGameId, fetchFirstFold, fetchSecondFold };
+export { fetchNewGameId, fetchFirstFold, fetchSecondFold, fetchChooseTrump };
 
 const API_URL = "http://localhost:8080";
 const endpoints = {
     newgame: "/newgame",
     firstPartFold: "/firstPartFold",
-    secondPartFold: "/secondPartFold"
+    secondPartFold: "/secondPartFold",
+    chooseTrump: "/chooseTrump"
 };
 
 async function fetchRawDataFromEndpoint(endpoint: string): Promise<string> {
@@ -32,9 +33,17 @@ async function fetchFirstFold(idGame: number, idPlayer: number): Promise<JSON> {
     });
 }
 
-async function fetchSecondFold(idGame: number, idPlayer: number, cardPlayed: number, trump: number) {
-    let params = `?gameId=${idGame}&playerId=${idPlayer}&cardPlayed=${cardPlayed}` + (trump != -1 ? `&trump=${trump}` : "");
+async function fetchSecondFold(idGame: number, idPlayer: number, cardPlayed: number) {
+    let params = `?gameId=${idGame}&playerId=${idPlayer}&cardPlayed=${cardPlayed}`;
     return await fetchRawDataFromEndpoint(endpoints["secondPartFold"] + params).then((rawJSON) => {
+        console.log(rawJSON);
+        return JSON.parse(rawJSON);
+    });
+}
+
+async function fetchChooseTrump(idGame: number, trump: number) {
+    let params = `?gameId=${idGame}` + `&trump=${trump}`;
+    return await fetchRawDataFromEndpoint(endpoints["chooseTrump"] + params).then((rawJSON) => {
         console.log(rawJSON);
         return JSON.parse(rawJSON);
     });
