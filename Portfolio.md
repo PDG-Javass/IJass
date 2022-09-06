@@ -162,6 +162,28 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 
 # Sprint 2
 
+## Implémentation du jeu
+
+Nous avons créé une classe *GameManager* qui permet de gérer une partie de Jass.
+Fonctionnalités implémentées:
+- Création du GameManager ainsi que des 4 joueurs dont 3 bots.
+- Initialisation d'un round
+- Jouer un round
+- Joueur une plie
+- Calculer les scores à la fin de chaque plie
+- Simulation d'une partie entre 4 bots
+
+## Tests effectué
+
+- Distribution aléatoire des cartes
+- Fin de plie lorsque les 4 joueurs ont joué
+- Fin de round lorsque les 36 cartes ont été jouées
+- Mise à jour du joueur commençant le round
+  - Premier round : le joueur possédant le 7 de carreau
+  - Autres rounds : le prochain joueur dans l'ordre de jeu
+
+Nous avons une application, sans interaction externe, qui fonctionne correctement (état des plies, gagnant de plie, équipe gagnante, calcul des points). Cette simulation consiste en 4 bots qui jouent entre eux pour l'instant.
+
 ## JSON de l'état partagé
 
 Voici la représentation JSON générée par le serveur pour réprésenter l'état de la partie.
@@ -261,3 +283,31 @@ Voici la représentation JSON générée par le serveur pour réprésenter l'ét
 - 1: tréfle
 - 2: coeur
 - 3: carreaux
+
+## Problèmes rencontrés
+
+La mise en place du jeu a s'est bien passé, nous avons néanmoins rencontré les difficultés suivantes:
+- Gestion de l'atout lors des calcul du gagnant de la plie
+- Gestion du tour de jeu en fonction de l'état de la partie
+- Utilisation de Svelte pour le front :
+  - <A compléter par Hugo et Maelle>
+
+# Sprint 3
+
+## Requêtes et ccommunication entre le client et le serveur
+
+Lors de ce sprint nous nous sommes intéressés à la connexion entre le client et le serveur.
+Comme décris dans le précédent sprint, nous avons choisi de communiquer l'état de la partie en JSON.
+
+Voici le diagramme de séquence de la communication entre nos deux entités:
+[DiagrammeSéquence](/livrables/Img/DiagrammeSequence.png)
+
+## Problèmes rencontrés
+
+Ayant travaillé principalement en deux groupes: le backend et le frontend, nous avons rencontrés les problèmes suivant lors de leur connexion:
+- L'adaptation de la simulation (les bots jouent entre eux) en jeu interactif a été plus fastidieux que prévu car:
+  -   Le jeu ayant entiérement implémenté dans le GameManager, il a dû être segmenté afin d'être manipulé de façon plus atomique via les requêtes faites au serveur
+  -   Les changements effectués au point précédent ont causé 'apparition de certaines erreurs dans notre application ajoutant un travail de debug supplémentaire
+- Nous n'avions pas été assez dans les détails lorsque nous avons imaginé la première version de l'application, cela demandant des changements intermédiaires :
+  - La communication n'ayant pas été totalement défini tôt dans le projet, il a fallu adapter le code des deux côtés
+  - Nous avons créé le jeu (application serveur) sans considérer les informations que nécessite le GameManager et à quels moments, il a donc fallu fragmenter l'exécution initiale du jeu afin de l'adapter au mapping client-serveur
