@@ -34,6 +34,21 @@ public class Card implements Comparable {
     return ret;
   }
 
+  public static ArrayList<Card> getBiggerCards(CardValue rank, CardColor color, boolean trump) {
+    ArrayList<Card> ret = new ArrayList<>();
+
+    if (trump) {
+      for (int i = rank.ordinalWithTrump() + 1; i < CardValue.valuesWithTrump().size(); i++) {
+        ret.add(new Card(color, CardValue.valuesWithTrump().get(i)));
+      }
+    } else {
+      for (int i = rank.ordinal() + 1; i < CardValue.values().length; i++) {
+        ret.add(new Card(color, CardValue.values()[i]));
+      }
+    }
+    return ret;
+  }
+
   public CardValue getValue() {
     return value;
   }
