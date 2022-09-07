@@ -17,7 +17,7 @@ public class PersonPlayer extends Player {
 
   @Override
   public Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump, int choice) {
-    return hand.play(0);
+    return hand.play(choice);
   }
 
   @Override
