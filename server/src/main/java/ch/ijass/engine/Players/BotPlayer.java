@@ -32,13 +32,18 @@ public class BotPlayer extends Player {
         int nbTrumpsNature = nbTrumpInNature(playedCards, trump);
         if (nbTrumpsHand > 2 && nbTrumpsNature > 0
             || (nbTrumpsHand == 2 && nbTrumpsNature > 0 && nbTrumpsNature < 4)) {
-          return hand.getHighestByColor(playableCards, trump, true);
+          Card bock = hand.getBockByColor(playableCards, playedCards, trump, true);
+          if (bock != null) {
+            return bock;
+          } else {
+            return hand.getLowestByColor(playableCards, trump, true);
+          }
         }
 
-        // Cas 2 : On joue un as
-        Card ace = hand.findAce(trump);
-        if (ace != null) {
-          return ace;
+        // Cas 2 : On joue un bock //todo : findBock au lieu de findAce
+        Card bock = hand.findBock(playableCards, trump, playedCards);
+        if (bock != null) {
+          return bock;
         }
 
         // Cas 3 : On joue une petite carte parmis la couleur la plus presente
