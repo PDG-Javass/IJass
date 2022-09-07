@@ -25,19 +25,7 @@ public abstract class Player {
     return id;
   }
 
-  public Card playCard(BoardDeck playMat, DiscardDeck playedCards, CardColor trump) {
-    Card cardToPlay = play(playMat, playedCards, trump);
-    hand.play(cardToPlay);
-    return cardToPlay;
-  }
-
-  public abstract Card chooseCard(BoardDeck playMat, CardColor trump);
-
-  public Card playChoice(Card choice) { return hand.play(choice); }
-
-  public Card playChoice(int choice) { return hand.play(choice); }
-
-  public abstract Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump);
+  public abstract Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump, int choice);
 
   public Team getTeam() {
     return team;

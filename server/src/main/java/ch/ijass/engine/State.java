@@ -3,6 +3,8 @@ package ch.ijass.engine;
 import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
 import java.util.ArrayList;
+
+import ch.ijass.engine.Cards.DiscardDeck;
 import lombok.Data;
 
 @Data
@@ -38,8 +40,14 @@ public class State {
 
   public void addPlayedCard(Card card) { playedCards.add(card); }
 
-  public void addPlayedCards(Collection<Card> cards) {
+  public void addPlayedCards(ArrayList<Card> cards) {
     playedCards.addAll(cards);
+  }
+
+  public DiscardDeck getPlayedCards() {
+    DiscardDeck dd = new DiscardDeck();
+    dd.addCards(playedCards);
+    return dd;
   }
 
 

@@ -41,9 +41,17 @@ public class GameManager {
     initiateRound(players.get(0).getId());
   }
 
+  public int getGameId() { return  state.getIdGame(); }
+
+  public void setTrump(int trump) {
+    this.trump = CardColor.values()[trump];
+    state.setTrump(trump);
+  }
+
   public boolean nextTurn() {
     if (current.isBot()) {
-      state.board.addCard(current.playChoice(current.chooseCard(state.board, trump)));
+      state.board.addCard(current.play(state.board, state.getPlayedCards(), trump, 0)); // Le choix n'est pas utilisé dans
+                                                                                    // la redef de play dans BotPlayer
       nextPlayer();
       return true;
     }
@@ -55,10 +63,11 @@ public class GameManager {
     int foldWinnerId = state.board.getFoldWinner(trump);
     state.setIdWinner(foldWinnerId);
     Player winner = getPlayerById(foldWinnerId);
-    winner.getTeam().addPoints(state.board.points(trump));
+    winner.getTeam().addPoints(state.board.countPoints(trump));
     firstForFold = winner;
     state.idFirstForFold = foldWinnerId;
     state.counterFold++;
+    current = firstForFold;
 
     if (state.counterFold == 9) {
       state.counterRound++;
@@ -81,10 +90,6 @@ public class GameManager {
     state.setScoreBot(bot.getScore());
     state.setScorePerson(player.getScore());
   }
-
-    ArrayList<Player> getPlayers() {
-      return players;
-    }
 
   public void updateStateWhileFold(int playerId) {
     Player person = getPlayerById(playerId);
@@ -117,7 +122,7 @@ public class GameManager {
   }
 
   public void playerTurn(int cardChoice) {
-    state.board.addCard(current.playChoice(cardChoice));
+    state.board.addCard(current.play(state.board, state.getPlayedCards(), trump, cardChoice));
     nextPlayer();
   }
 
@@ -220,22 +225,13 @@ public class GameManager {
   public void nextPlayer() {
     current = players.get((players.indexOf(current) + 1) % 4);
   }
-  public void playUntilNextPersonPlayer() {
-    Card choice = current.playChoice(current.chooseCard(state.board, trump));
-    while (choice != null && state.board.size() < 4) {
-      state.addPlayedCard(choice);
-      state.board.addCard(choice);
-      nextPlayer();
-      choice = current.chooseCard(state.board, trump);
-    }
-  }
   public State doOneFold(int playerId, int cardChoice) {
     // On commence le tour
-    playUntilNextPersonPlayer();
+    playUntilPlayerTurn(playerId);
     inProgress = !inProgress;
     if (current.getId() != playerId)
       return state;
-    Card choice = current.playChoice(cardChoice);
+    Card choice = current.play(state.board, state.getPlayedCards(), trump, cardChoice);
     state.board.addCard(choice);
     state.playedCards.add(choice);
 

@@ -13,7 +13,7 @@ public class BotPlayer extends Player {
   }
 
   @Override
-  public Card play(BoardDeck board, DiscardDeck playedCards, CardColor trump) {
+  public Card play(BoardDeck board, DiscardDeck playedCards, CardColor trump, int choice) {
 
     ArrayList<Card> playableCards = hand.getPlayableCard(board, trump);
 

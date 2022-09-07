@@ -14,7 +14,7 @@ public class BoardDeck extends Deck {
     return result;
   }
 
-  public int getFoldWinner(CardColor colorAsked, CardColor trump) {
+  public int getFoldWinner(CardColor trump) {
     if (content.size() != 4) {
       throw new RuntimeException("Not all players played");
     }
@@ -22,7 +22,7 @@ public class BoardDeck extends Deck {
     if (isCut(trump)) {
       return getHighestByColor(content, trump, true).getPlayerId();
     } else {
-      return getHighestByColor(content, colorAsked, false).getPlayerId();
+      return getHighestByColor(content, colorAsked(), false).getPlayerId();
     }
   }
 
