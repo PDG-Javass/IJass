@@ -1,15 +1,18 @@
 package ch.ijass.engine.Cards;
 
+import java.util.*;
 import com.fasterxml.jackson.annotation.JsonValue;
-
-import java.util.Collection;
-import java.util.ArrayList;
 
 public class Deck {
   protected ArrayList<Card> content;
 
   public Deck() {
     content = new ArrayList<>();
+  }
+
+  public void addCard(Card card) {
+    if (card == null) throw new RuntimeException("Adding null card to hand");
+    content.add(card);
   }
 
   public void addCards(Collection<Card> content) {
@@ -20,46 +23,13 @@ public class Deck {
     content.clear();
   }
 
-  public void addCard(Card card) {
-    if (card != null)
-      content.add(card);
-  }
-
-  public void copyDeck(Collection<? extends Card> deck) {
-    if (deck == null) throw new RuntimeException("Copy of a null card collection");
-    emptyDeck();
-    content.addAll(deck);
-  }
-
   public int numberOfCards() {
     if (content == null) throw new RuntimeException("Uninitialized deck content");
     return content.size();
   }
 
   public ArrayList<Card> getContent() {
-    return new ArrayList<>(content);
-  }
-
-  public boolean contains(Card c) {
-    for (Card card : content) {
-      if (card.isEqual(c)) return true;
-    }
-    return false;
-  }
-
-  public boolean isEqual(Deck other) {
-    for (Card c : content) {
-      if (!other.contains(c)) return false;
-    }
-    return true;
-  }
-
-  public ArrayList<Card> getCardsOfColor(CardColor color) {
-    ArrayList<Card> ret = new ArrayList<>();
-    for (Card c : content) {
-      if (c.getColor() == color) ret.add(c);
-    }
-    return ret;
+    return content;
   }
 
   public Card play(Card card) {
@@ -67,20 +37,63 @@ public class Deck {
       content.remove(card);
       return card;
     }
-    return null;
+    throw new RuntimeException("Can not play a card not in the Deck");
   }
 
-  public int points(CardColor trump) {
-    int count = 0;
-    for (Card card : content) {
-      if (card.isEqual(new Card(trump, CardValue.JACK)))
-        count += 20;
-      else if (card.isEqual(new Card(trump, CardValue.NINE)))
-        count += 14;
-      else
-        count += card.points(trump);
+  public ArrayList<Card> getAllCardsOfColor(ArrayList<Card> cards, CardColor color) {
+    ArrayList<Card> ret = new ArrayList<>();
+    for (Card card : cards) {
+      if (card.getColor() == color) ret.add(card);
     }
-    return count;
+    return ret;
+  }
+
+  public Card getHighestByColor(ArrayList<Card> cards, CardColor color, boolean trump) {
+    ArrayList<Card> res = getAllCardsOfColor(cards, color);
+    if (res.isEmpty()) return null;
+
+    if (trump) {
+      return Collections.max(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
+    } else {
+      return Collections.max(res, Comparator.comparingInt(c -> c.getValue().ordinal()));
+    }
+  }
+
+  public Card getLowestByColor(ArrayList<Card> cards, CardColor color, boolean trump) {
+    ArrayList<Card> res = getAllCardsOfColor(cards, color);
+    if (res.isEmpty()) return null;
+
+    if (trump) {
+      return Collections.min(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
+    } else {
+      return Collections.min(res, Comparator.comparingInt(c -> c.getValue().ordinal()));
+    }
+  }
+
+  public Card getBockByColor(
+      ArrayList<Card> cards, DiscardDeck discard, CardColor colorBock, boolean trump) {
+    // On cherche les plus grandes cartes d'une certaine couleur
+    Card highestHand = getHighestByColor(cards, colorBock, trump);
+    if (highestHand == null) return null;
+    // On crée un vecteur de cartes contenant toutes les cartes plus elevé que la highestHand
+    ArrayList<Card> biggerCards = Card.getBiggerCards(highestHand.getValue(), colorBock, trump);
+
+    // On cherche si toute les cartes plus eleve que la highestHand sont presente dans discard
+    return discard.getContent().containsAll(biggerCards) ? highestHand : null;
+  }
+
+  public Card pickCardRandomly() {
+    Collections.shuffle(content);
+    Card ret = content.get(0);
+    content.remove(0);
+    if (ret == null) {
+      throw new RuntimeException("Could not choose a card from the deck");
+    }
+    return ret;
+  }
+
+  public String toString() {
+    return content.toString();
   }
 
   @JsonValue

@@ -18,6 +18,7 @@ public class GameManager {
   }
 
   private State state;
+  private DiscardDeck playedCards;
   private StartingDeck initialDeck;
   private final int CINQDEDER = 5;
   private final int POINTS = 1000;
@@ -26,18 +27,18 @@ public class GameManager {
     state = new State();
     Team team1 = new Team();
     Team team2 = new Team();
-    players = new ArrayList<>();
-    inProgress = false;
+    players = new ArrayList<Player>();
     players.add(new PersonPlayer("Toto ", team1));
     players.add(new BotPlayer("Titi ", team2));
     players.add(new BotPlayer("Lapinou ", team1));
     players.add(new BotPlayer("Chacha ", team2));
 
+    firstForFold = players.get(0);
+    state.setIdFirstForFold(firstForFold.getId());
+    firstForRound = players.get(0);
     state.setCounterRound(1);
     state.setCounterFold(1);
     initiateRound(players.get(0).getId());
-    state.setIdFirstForFold(firstForFold.getId());
-
   }
 
   public boolean nextTurn() {
@@ -65,7 +66,6 @@ public class GameManager {
       trump = null;
       state.setTrump(-1);
     }
-
     // On flush les carte du tapis dans les cartes jouées durant la plie
     state.addPlayedCards(state.board.getContent());
     state.board.emptyDeck();
@@ -80,8 +80,11 @@ public class GameManager {
     Team player = person.getTeam(), bot = players.get((players.indexOf(person) + 1) % 4).getTeam();
     state.setScoreBot(bot.getScore());
     state.setScorePerson(player.getScore());
-
   }
+
+    ArrayList<Player> getPlayers() {
+      return players;
+    }
 
   public void updateStateWhileFold(int playerId) {
     Player person = getPlayerById(playerId);
@@ -131,18 +134,7 @@ public class GameManager {
     return state;
   }
 
-  ArrayList<Player> getPlayers() {
-    return players;
-  }
 
-  public int getGameId() { return state.idGame; }
-
-  public void setTrump(int trump) {
-    if (trump < 0 || trump >= CardColor.values().length)
-      throw new RuntimeException("Ordinal out of bounds for CardColor");
-    this.trump = CardColor.values()[trump];
-    state.setTrump(trump);
-  }
 
   public void initiateRound(int playerId) {
     initialDeck = new StartingDeck();
@@ -228,7 +220,6 @@ public class GameManager {
   public void nextPlayer() {
     current = players.get((players.indexOf(current) + 1) % 4);
   }
-
   public void playUntilNextPersonPlayer() {
     Card choice = current.playChoice(current.chooseCard(state.board, trump));
     while (choice != null && state.board.size() < 4) {
@@ -288,14 +279,16 @@ public class GameManager {
   private void setPlayable(){
     ArrayList<Integer> indexPlayable = new ArrayList<>();
     int index = 0;
-    for(Card card : state.getHand()){
-      if(players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)){
+    for (Card card : state.getHand()) {
+      if (players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)) {
         indexPlayable.add(index);
       }
       index++;
     }
     state.setPlayableCards(indexPlayable);
   }
+
+
 
   public static void main(String[] args) {
     GameManager game = new GameManager();

@@ -2,8 +2,6 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
-
-import java.util.Collection;
 import java.util.ArrayList;
 import lombok.Data;
 

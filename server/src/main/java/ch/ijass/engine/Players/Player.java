@@ -1,9 +1,6 @@
 package ch.ijass.engine.Players;
 
-import ch.ijass.engine.Cards.BoardDeck;
-import ch.ijass.engine.Cards.Card;
-import ch.ijass.engine.Cards.CardColor;
-import ch.ijass.engine.Cards.HandDeck;
+import ch.ijass.engine.Cards.*;
 import java.util.Collection;
 
 public abstract class Player {
@@ -28,8 +25,8 @@ public abstract class Player {
     return id;
   }
 
-  public Card playCard(BoardDeck playMat, CardColor trump) {
-    Card cardToPlay = chooseCard(playMat, trump);
+  public Card playCard(BoardDeck playMat, DiscardDeck playedCards, CardColor trump) {
+    Card cardToPlay = play(playMat, playedCards, trump);
     hand.play(cardToPlay);
     return cardToPlay;
   }
@@ -39,6 +36,8 @@ public abstract class Player {
   public Card playChoice(Card choice) { return hand.play(choice); }
 
   public Card playChoice(int choice) { return hand.play(choice); }
+
+  public abstract Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump);
 
   public Team getTeam() {
     return team;

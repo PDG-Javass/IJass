@@ -28,12 +28,8 @@ public class HandDeck extends Deck {
     return ret;
   }
 
-  public int getNumberOfCardsByColor(CardColor color) {
-    int count = 0;
-    for (Card c : content) {
-      if (c.getColor() == color) count++;
-    }
-    return count;
+  public int getNumberOfCardsByColor(ArrayList<Card> cards, CardColor color) {
+    return getAllCardsOfColor(cards, color).size();
   }
 
   public CardColor getColorMostPresent() {
@@ -69,13 +65,7 @@ public class HandDeck extends Deck {
             nbSpades,
             CardColor.CLUBS,
             nbClubs);
-    return Collections.max(
-            map.entrySet(), (entry1, entry2) -> entry1.getValue() - entry2.getValue())
-        .getKey();
-  }
-
-  public void throwCard(Card card) {
-    content.remove(card);
+    return Collections.max(map.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
   }
 
   public Card findCard(CardColor color, CardValue value) {
@@ -90,7 +80,7 @@ public class HandDeck extends Deck {
   public ArrayList<Card> getPlayableCard(BoardDeck playMat, CardColor trump) {
 
     // 1er joue nimporte quoi
-    if (playMat.size() == 0) {
+    if (playMat.numberOfCards() == 0) {
       return content;
 
     } else {
@@ -99,11 +89,12 @@ public class HandDeck extends Deck {
 
       // si la couleur demandée est atout
       if (color == trump) {
-        if (getNumberOfCardsByColor(trump) == 0
-            || (getNumberOfCardsByColor(trump) == 1 && findCard(trump, CardValue.JACK) != null)) {
+        if (getNumberOfCardsByColor(content, trump) == 0
+            || (getNumberOfCardsByColor(content, trump) == 1
+                && findCard(trump, CardValue.JACK) != null)) {
           return content;
         } else {
-          return getAllCardOfColor(trump);
+          return getAllCardsOfColor(content, trump);
         }
       }
 
@@ -111,16 +102,16 @@ public class HandDeck extends Deck {
       else {
 
         ArrayList<Card> ret = new ArrayList<>();
-        ret.addAll(getAllCardOfColor(color));
+        ret.addAll(getAllCardsOfColor(content, color));
 
         // si personne n'a coupé
         if (!playMat.isCut(trump)) {
-          ret.addAll(getAllCardOfColor(trump));
+          ret.addAll(getAllCardsOfColor(content, trump));
 
         } else {
 
           // trouver la carte atout la plus elevée sur le tapis
-          Card highestTrump = playMat.getHighestByColor(trump, true);
+          Card highestTrump = playMat.getHighestByColor(playMat.content, trump, true);
           // construire un vecteur avec les cartes atouts plus elevées que la carte atout la plus
           // elevée
           for (Card card : content) {
@@ -132,6 +123,45 @@ public class HandDeck extends Deck {
           }
         }
         return ret.isEmpty() ? content : ret;
+      }
+    }
+  }
+
+  public Card findBock(ArrayList<Card> playable, CardColor trump, DiscardDeck discard) {
+    Card bock = null;
+    for (CardColor color : CardColor.values()) {
+      if (color != trump) {
+        bock = getBockByColor(playable, discard, color, false);
+        if (bock != null) {
+          return bock;
+        }
+      }
+    }
+    return null;
+  }
+
+  /*public Card findAce(CardColor trump) {
+    for (Card card : content) {
+      if (card.getColor() != trump && card.getValue() == CardValue.ACE) {
+        return card;
+      }
+    }
+    return null;
+  }
+
+   */
+
+  public Card getAdvantageWithoutCut(BoardDeck board, CardColor trump) {
+    if ((board.isCut(trump) && board.colorAsked() != trump)
+        || getNumberOfCardsByColor(content, board.colorAsked()) == 0) {
+      return null;
+    } else {
+      Card highestCardOnBoard = board.getHighestByColor(board.content, board.colorAsked(), false);
+      Card highestCardInHand = getHighestByColor(content, board.colorAsked(), false);
+      if (highestCardInHand.getValue().ordinal() > highestCardOnBoard.getValue().ordinal()) {
+        return highestCardInHand;
+      } else {
+        return null;
       }
     }
   }

@@ -3,7 +3,6 @@ package ch.ijass.engine.Cards;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum CardColor {
-
   SPADES,
   CLUBS,
   HEARTS,

@@ -1,3 +1,24 @@
 package ch.ijass.engine.Cards;
 
-public class DiscardDeck {}
+import java.util.ArrayList;
+
+public class DiscardDeck extends Deck {
+  int counterTrump;
+
+  public DiscardDeck() {
+    counterTrump = 0;
+  }
+
+  public void addFold(ArrayList<Card> cards, CardColor trump) {
+    for (Card card : cards) {
+      if (card.getColor() == trump) {
+        counterTrump++;
+      }
+    }
+    content.addAll(cards);
+  }
+
+  public int getCounterTrump() {
+    return counterTrump;
+  }
+}
