@@ -70,6 +70,7 @@ public class GameManager {
     current = firstForFold;
 
     if (state.counterFold == 9) {
+      winner.getTeam().addPoints(CINQDEDER);
       state.counterRound++;
       state.counterFold = 1;
       trump = null;
