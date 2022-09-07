@@ -146,6 +146,7 @@ public class GameManager {
     initialDeck = new StartingDeck();
     clearHands();
     distribute();
+    getPlayerById(playerId).sortHand();
     updateFirstForRound();
     if (firstForRound.isBot()) {
       setTrump(firstForRound.chooseTrump().ordinal());

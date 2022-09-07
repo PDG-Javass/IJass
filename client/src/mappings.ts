@@ -1,11 +1,12 @@
-export { fetchNewGameId, fetchFirstFold, fetchSecondFold, fetchChooseTrump };
+export { fetchNewGameId, fetchFirstFold, fetchSecondFold, fetchChooseTrump, fetchStartRound };
 
 const API_URL = "http://localhost:8080";
 const endpoints = {
     newgame: "/newgame",
     firstPartFold: "/firstPartFold",
     secondPartFold: "/secondPartFold",
-    chooseTrump: "/chooseTrump"
+    chooseTrump: "/chooseTrump",
+    startRound: "/startRound"
 };
 
 async function fetchRawDataFromEndpoint(endpoint: string): Promise<string> {
@@ -44,6 +45,14 @@ async function fetchSecondFold(idGame: number, idPlayer: number, cardPlayed: num
 async function fetchChooseTrump(idGame: number, trump: number) {
     let params = `?gameId=${idGame}` + `&trump=${trump}`;
     return await fetchRawDataFromEndpoint(endpoints["chooseTrump"] + params).then((rawJSON) => {
+        console.log(rawJSON);
+        return JSON.parse(rawJSON);
+    });
+}
+
+async function fetchStartRound(idGame: number, playerId: number) {
+    let params = `?gameId=${idGame}` + `&playerId=${playerId}`;
+    return await fetchRawDataFromEndpoint(endpoints["startRound"] + params).then((rawJSON) => {
         console.log(rawJSON);
         return JSON.parse(rawJSON);
     });
