@@ -2,6 +2,7 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
+import ch.ijass.engine.Cards.DiscardDeck;
 import java.util.ArrayList;
 import lombok.Data;
 
@@ -22,9 +23,42 @@ public class State {
   public int scoreBot;
   public ArrayList<Card> hand;
   public ArrayList<Integer> playableCards;
+  public ArrayList<Card> playedCards;
+
+  public void setHand(ArrayList<Card> hand) {
+    this.hand = new ArrayList<>();
+    this.hand.addAll(hand);
+  }
+
+  public void setPlayableCards(ArrayList<Integer> playableCards) {
+    this.playableCards = new ArrayList<>();
+    this.playableCards.addAll(playableCards);
+  }
+
+  public void clearPlayedCards() {
+    playedCards.clear();
+  }
+
+  public void addPlayedCard(Card card) {
+    playedCards.add(card);
+  }
+
+  public void addPlayedCards(ArrayList<Card> cards) {
+    playedCards.addAll(cards);
+  }
+
+  public DiscardDeck getPlayedCards() {
+    DiscardDeck dd = new DiscardDeck();
+    dd.addCards(playedCards);
+    return dd;
+  }
 
   State() {
+    trump = -1; // Atout pas encore choisi
     board = new BoardDeck();
+    playedCards = new ArrayList<>();
+    hand = new ArrayList<>();
+    playableCards = new ArrayList<>();
     idGame = counterIdGame++;
   }
 

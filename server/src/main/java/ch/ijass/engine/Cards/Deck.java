@@ -1,5 +1,6 @@
 package ch.ijass.engine.Cards;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.*;
 
 public class Deck {
@@ -32,7 +33,7 @@ public class Deck {
   }
 
   public Card play(Card card) {
-    if (content.contains(card)) {
+    if (card != null && content.contains(card)) {
       content.remove(card);
       return card;
     }
@@ -93,5 +94,10 @@ public class Deck {
 
   public String toString() {
     return content.toString();
+  }
+
+  @JsonValue
+  public ArrayList<Card> value() {
+    return content;
   }
 }

@@ -16,11 +16,13 @@ public class PersonPlayer extends Player {
   }
 
   @Override
-  public Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump) {
-    return hand.getPlayableCard(playMat, trump)
-        .get(0); // todo a modifier pour l'instant rend la 1er carte de la main
+  public Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump, int choice) {
+    return hand.play(choice);
+  }
 
-    // A ne pas oublier : doit enlever la carte jouée de sa hand
+  @Override
+  public boolean isBot() {
+    return false;
   }
 
   public CardColor chooseTrump() {

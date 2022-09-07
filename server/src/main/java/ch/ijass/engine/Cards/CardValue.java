@@ -94,4 +94,4 @@ public enum CardValue {
   public int value() {
     return ordinal();
   }
-};
+}

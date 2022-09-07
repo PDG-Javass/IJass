@@ -14,18 +14,15 @@ public class BoardDeck extends Deck {
     return result;
   }
 
-  public int getFoldWinner(CardColor colorAsked, CardColor trump) {
-    allPlayersPlayed();
+  public int getFoldWinner(CardColor trump) {
+    if (content.size() != 4) {
+      throw new RuntimeException("Not all players played");
+    }
+
     if (isCut(trump)) {
       return getHighestByColor(content, trump, true).getPlayerId();
     } else {
-      return getHighestByColor(content, colorAsked, false).getPlayerId();
-    }
-  }
-
-  private void allPlayersPlayed() {
-    if (content.size() != 4) {
-      throw new RuntimeException("Not all players played");
+      return getHighestByColor(content, colorAsked(), false).getPlayerId();
     }
   }
 

@@ -10,24 +10,27 @@ public abstract class Player {
   private Team team;
   private static int counterId = 0;
 
+  public boolean isBot() {
+    return true;
+  }
+
   public Player(String name, Team team) {
-    this.id = counterId++;
+    this.id = (counterId++) % 4;
     this.name = name;
     this.team = team;
     hand = new HandDeck();
+  }
+
+  public void sortHand() {
+    hand.sort();
   }
 
   public int getId() {
     return id;
   }
 
-  public Card playCard(BoardDeck playMat, DiscardDeck playedCards, CardColor trump) {
-    Card cardToPlay = play(playMat, playedCards, trump);
-    hand.play(cardToPlay);
-    return cardToPlay;
-  }
-
-  public abstract Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump);
+  public abstract Card play(
+      BoardDeck playMat, DiscardDeck playedCards, CardColor trump, int choice);
 
   public Team getTeam() {
     return team;
