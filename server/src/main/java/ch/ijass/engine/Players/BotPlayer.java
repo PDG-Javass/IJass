@@ -21,7 +21,7 @@ public class BotPlayer extends Player {
 
     // on a une seule carte jouable
     if (playableCards.size() == 1) {
-      return playableCards.get(0);
+      return hand.play(playableCards.get(0));
     } else {
       int nbTrumpsHand = hand.getNumberOfCardsByColor(hand.getContent(), trump);
 
@@ -34,20 +34,20 @@ public class BotPlayer extends Player {
             || (nbTrumpsHand == 2 && nbTrumpsNature > 0 && nbTrumpsNature < 4)) {
           Card bock = hand.getBockByColor(playableCards, playedCards, trump, true);
           if (bock != null) {
-            return bock;
+            return hand.play(bock);
           } else {
-            return hand.getLowestByColor(playableCards, trump, true);
+            return hand.play(hand.getLowestByColor(playableCards, trump, true));
           }
         }
 
         // Cas 2 : On joue un bock //todo : findBock au lieu de findAce
         Card bock = hand.findBock(playableCards, trump, playedCards);
         if (bock != null) {
-          return bock;
+          return hand.play(bock);
         }
 
         // Cas 3 : On joue une petite carte parmis la couleur la plus presente
-        return hand.getLowestByColor(playableCards, hand.getColorMostPresent(), false);
+        return hand.play(hand.getLowestByColor(playableCards, hand.getColorMostPresent(), false));
       }
 
       // On est pas le premier à jouer
@@ -56,29 +56,29 @@ public class BotPlayer extends Player {
         // Cas 1 : On peut prendre l'avantage sans couper
         Card winCard = hand.getAdvantageWithoutCut(board, trump);
         if (winCard != null) {
-          return winCard;
+          return hand.play(winCard);
         }
 
         // Cas 2 : On coupe car il y a beaucoup de points à gagner
         if ((board.countPoints(trump) > 10)
             && hand.getNumberOfCardsByColor(playableCards, trump) > 0) {
-          return hand.getLowestByColor(playableCards, trump, true);
+          return hand.play(hand.getLowestByColor(playableCards, trump, true));
         }
 
         // Cas 3 : On joue une petite carte
         Card card = smallCard(playableCards, trump, 4);
         if (card != null) {
-          return card;
+          return hand.play(card);
         }
 
         // Cas 4 : On joue une carte moyenne
         card = smallCard(playableCards, trump, 8);
         if (card != null) {
-          return card;
+          return hand.play(card);
         }
 
         // Cas 5 : On joue une carte au hasard
-        return playableCards.get((int) (Math.random() * playableCards.size()));
+        return hand.play(playableCards.get((int) (Math.random() * playableCards.size())));
       }
     }
   }

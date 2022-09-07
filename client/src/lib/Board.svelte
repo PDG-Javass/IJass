@@ -127,7 +127,8 @@
 
   function setDeckBotAsc(id) {
     let cards = data.playedCards;
-    for (let i = cards.length - 1; i >= 0; --i) {
+    let len = data.playedCards.length;
+    for (let i = len - 1; i >= len - 4; --i) {
       if (cards[i].playerId == id) {
         deckBot[id - 1].name =
           "cards/card_" + cards[i].color + "_" + cards[i].value + "_160.png";
@@ -188,6 +189,8 @@
 
 
         if (i == 0) {
+          setAndShowDeck(data);
+
           if (data.trump != -1) {
             display.trump.show = false;
             display.trump.current = "trump_" + data.trump + ".png";
@@ -196,6 +199,8 @@
             await waitUserInput();
             await fetchChooseTrump(data.idGame, display.trump.choice);
           }
+
+
         }
 
         startIndex = data.idFirstForFold;
@@ -206,22 +211,20 @@
 
         await waitUserInput();
 
-        console.log("card player: " + display.cardPlayedId);
-
         data = await fetchSecondFold(data.idGame, 0, display.cardPlayedId);
 
         console.log("second part");
 
         await showCard(startIndex + n, 4 - n, true);
 
-        await sleep(1000);
+        await sleep(4000);
 
         for (let i = 0; i < deckBot.length; ++i) {
           deckBot[i].visible = false;
         }
         visible_me = false;
 
-        console.log("round" + i);
+        console.log("fold" + i);
       }
       break;
     }
