@@ -21,6 +21,8 @@ public abstract class Player {
     hand = new HandDeck();
   }
 
+  public void sortHand() { hand.sort(); }
+
   public int getId() {
     return id;
   }

@@ -4,6 +4,7 @@
     fetchFirstFold,
     fetchSecondFold,
     fetchChooseTrump,
+    fetchStartRound,
   } from "../mappings";
 
   let card_board = "";
@@ -25,16 +26,14 @@
     visible_me = true;
     card_board = deck[x].name;
 
-
     for (let i = 0; i < deck.length; ++i) {
       deck[i].playable = false;
     }
 
     display.cardPlayedId = x;
 
-    deck.splice(x,1);
+    deck.splice(x, 1);
 
-    
     next = true;
   }
 
@@ -96,6 +95,7 @@
         playable: false,
       });
     }
+    
     deck = deck;
   }
 
@@ -136,13 +136,13 @@
     }
   }
 
-  function setDeckBotChoose(id, second){
-    if(second){
+  function setDeckBotChoose(id, second) {
+    if (second) {
       setDeckBotAsc(id);
-    }else{
+    } else {
       setDeckBot(id);
     }
-    deckBot[id -1].visible = true;
+    deckBot[id - 1].visible = true;
   }
 
   //show card, player card become playable
@@ -156,27 +156,35 @@
       switch (startIndex) {
         case 0:
           break;
-        case 1: 
+        case 1:
           setDeckBotChoose(1, second);
           break;
-        
-        case 2: 
+
+        case 2:
           setDeckBotChoose(2, second);
           break;
-        
-        case 3: 
+
+        case 3:
           setDeckBotChoose(3, second);
           break;
-        
       }
       startIndex = (startIndex + 1) % 4;
     }
 
-
-    if(!second){
-    makeCardsPlayable();
+    if (!second) {
+      makeCardsPlayable();
     }
-    
+  }
+
+  async function checkTrump(trump) {
+    if (trump == -1) {
+      display.trump.show = true;
+      await waitUserInput();
+      await fetchChooseTrump(data.idGame, display.trump.choice);
+    } else {
+      display.trump.show = false;
+      display.trump.current = "trump_" + data.trump + ".png";
+    }
   }
 
   async function mainLoop(gameId: number) {
@@ -185,22 +193,13 @@
     while (data.scoreBot < MAX_POINTS || data.scorePerson < MAX_POINTS) {
       for (let i = 0; i < N_FOLDS; ++i) {
         data = await fetchFirstFold(data.idGame, 0);
-        console.log("first part");
-
 
         if (i == 0) {
           setAndShowDeck(data);
 
-          if (data.trump != -1) {
-            display.trump.show = false;
-            display.trump.current = "trump_" + data.trump + ".png";
-          } else {
-            display.trump.show = true;
-            await waitUserInput();
-            await fetchChooseTrump(data.idGame, display.trump.choice);
+          if(data.counterRound == 1){
+          await checkTrump(data.trump);
           }
-
-
         }
 
         startIndex = data.idFirstForFold;
@@ -226,7 +225,9 @@
 
         console.log("fold" + i);
       }
-      break;
+
+      data = await fetchStartRound(data.idGame, 0);
+      await checkTrump(data.trump);
     }
   }
 
