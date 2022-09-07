@@ -1,5 +1,5 @@
 :root {
-  background: linear-gradient(90deg, lightsalmon 0%, lightcoral 100%);
+  background-color: #015C22;
   font-family: Helvetica;
   font-size: 16px;
   line-height: 24px;
@@ -42,7 +42,7 @@ h1 {
 #app {
   background-color: white;
   border-radius: 2em;
-  max-width: 1280px;
+  min-width: 60%;
   margin: 0 auto;
   padding: 1rem;
   text-align: center;
@@ -57,7 +57,7 @@ button {
   cursor: pointer;
   border-radius: 1em;
   padding: 2rem;
-  background-color: lightsalmon;
+  background-color: #FEE100;
   font-weight: bold;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -67,6 +67,5 @@ button {
 }
 
 button:hover {
-  background-color: lightcoral;
   transition: background-color 0.5s ease;
 }

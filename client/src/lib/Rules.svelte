@@ -23,16 +23,24 @@
         line-height: 1em;
     }
 
-    a {
-        color: salmon;
-        font-size: 2.5em;
-        font-weight: bold;
-        text-decoration: underline;
-        text-shadow: 10px;
+    @keyframes grow {
+        from {
+            font-size: 1em;
+        }
+        to {
+            font-size: 3em;
+        }
     }
 
-    a:hover {
-        color: coral;
-        transition: color 1s ease;
+    a {
+        animation-name: grow;
+        animation-duration: 10s;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
+        color: black;
+        font-weight: bold;
+        text-decoration: underline;
+        font-style: italic;
+        text-shadow: 10px;
     }
 </style>
