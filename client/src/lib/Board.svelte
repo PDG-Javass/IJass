@@ -7,6 +7,8 @@
     fetchStartRound,
   } from "../mappings";
 
+  import { nextPage, page } from "../stores";
+
   let card_board = "";
   let visible_me = false;
 
@@ -95,7 +97,7 @@
         playable: false,
       });
     }
-    
+
     deck = deck;
   }
 
@@ -197,8 +199,8 @@
         if (i == 0) {
           setAndShowDeck(data);
 
-          if(data.counterRound == 1){
-          await checkTrump(data.trump);
+          if (data.counterRound == 1) {
+            await checkTrump(data.trump);
           }
         }
 
@@ -229,6 +231,7 @@
       data = await fetchStartRound(data.idGame, 0);
       await checkTrump(data.trump);
     }
+    handleNext();
   }
 
   fetchNewGameId().then((id) => {
@@ -238,6 +241,10 @@
   function debug() {
     console.log("from debug");
     console.log(data);
+  }
+
+  function handleNext() {
+    nextPage(page);
   }
 </script>
 
