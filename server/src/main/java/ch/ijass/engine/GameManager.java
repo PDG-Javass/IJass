@@ -2,7 +2,6 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Players.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 
 public class GameManager {
@@ -121,28 +120,21 @@ public class GameManager {
   }
 
   private CardColor everybodyPlays() { // 🎵🎵🎵
-    Player current = firstForFold;
-    Card firstCard = current.playCard(state.getBoard(), playedCards, trump);
-    state.getBoard().addCard(firstCard);
-    CardColor colorAsked = firstCard.getColor();
-    setHand();
-    setPlayable();
+    int startIndex = players.indexOf(firstForFold);
+    CardColor colorAsked = null;
 
-    int startIndex = players.indexOf(current) + 1;
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 4; ++i) {
+      Player choosenPlayer = players.get((startIndex + i) % 4);
+      Card choosenCard = choosenPlayer.playCard(state.getBoard(), playedCards, trump);
 
-      state
-          .getBoard()
-          .addCard(
-              players.get((startIndex + i) % 4).playCard(state.getBoard(), playedCards, trump));
+      state.getBoard().addCard(choosenCard);
+      System.out.println(choosenPlayer.getName() + " : " + choosenCard);
+
+      if (i == 0) {
+        colorAsked = choosenCard.getColor();
+      }
       setHand();
       setPlayable();
-      try {
-        System.out.println(
-            new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(state));
-      } catch (Exception e) {
-      }
-      ;
     }
     return colorAsked;
   }

@@ -1,7 +1,6 @@
 package ch.ijass.engine.Cards;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
 
 public class DiscardDeck extends Deck {
   int counterTrump;

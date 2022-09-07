@@ -14,7 +14,10 @@ public class BotPlayer extends Player {
 
   @Override
   public Card play(BoardDeck board, DiscardDeck playedCards, CardColor trump) {
+
     ArrayList<Card> playableCards = hand.getPlayableCard(board, trump);
+
+    System.out.println(getName() + "'s hand : " + hand);
 
     // on a une seule carte jouable
     if (playableCards.size() == 1) {
@@ -45,8 +48,8 @@ public class BotPlayer extends Player {
       // On est pas le premier à jouer
       else {
 
-        // Cas 1 : On peut prendre l'avantage sans jouer d'atout
-        Card winCard = hand.getAdvantageWithoutTrump(board, trump);
+        // Cas 1 : On peut prendre l'avantage sans couper
+        Card winCard = hand.getAdvantageWithoutCut(board, trump);
         if (winCard != null) {
           return winCard;
         }
@@ -58,12 +61,18 @@ public class BotPlayer extends Player {
         }
 
         // Cas 3 : On joue une petite carte
-        Card card = smallCard(playableCards, trump);
+        Card card = smallCard(playableCards, trump, 4);
         if (card != null) {
           return card;
         }
 
-        // Cas 4 : On joue une carte au hasard
+        // Cas 4 : On joue une carte moyenne
+        card = smallCard(playableCards, trump, 8);
+        if (card != null) {
+          return card;
+        }
+
+        // Cas 5 : On joue une carte au hasard
         return playableCards.get((int) (Math.random() * playableCards.size()));
       }
     }
@@ -80,9 +89,9 @@ public class BotPlayer extends Player {
         - hand.getNumberOfCardsByColor(hand.getContent(), trump);
   }
 
-  private Card smallCard(ArrayList<Card> cards, CardColor trump) {
+  private Card smallCard(ArrayList<Card> cards, CardColor trump, int limit) {
     for (Card card : cards) {
-      if (card.getColor() != trump && card.getValue().ordinal() < 4) {
+      if (card.getColor() != trump && card.getValue().ordinal() < limit) {
         return card;
       }
     }

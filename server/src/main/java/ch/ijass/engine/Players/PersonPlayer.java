@@ -17,7 +17,6 @@ public class PersonPlayer extends Player {
 
   @Override
   public Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump) {
-    System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).get(0));
     return hand.getPlayableCard(playMat, trump)
         .get(0); // todo a modifier pour l'instant rend la 1er carte de la main
 
