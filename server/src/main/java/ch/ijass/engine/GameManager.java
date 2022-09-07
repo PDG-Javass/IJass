@@ -2,13 +2,12 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Players.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class GameManager {
   private Player firstForRound;
   private Player firstForFold;
-  private Vector<Player> players;
+  private ArrayList<Player> players;
   private CardColor trump;
 
   private State state;
@@ -21,19 +20,19 @@ public class GameManager {
     state = new State();
     Team team1 = new Team();
     Team team2 = new Team();
-    players = new Vector<Player>();
+    players = new ArrayList<Player>();
     players.add(new PersonPlayer("Toto ", team1));
     players.add(new BotPlayer("Titi ", team2));
     players.add(new BotPlayer("Lapinou ", team1));
     players.add(new BotPlayer("Chacha ", team2));
 
-    firstForFold = players.firstElement();
+    firstForFold = players.get(0);
     state.setIdFirstForFold(firstForFold.getId());
-    firstForRound = players.firstElement();
+    firstForRound = players.get(0);
     state.setCounterRound(1);
   }
 
-  Vector<Player> getPlayers() {
+  ArrayList<Player> getPlayers() {
     return players;
   }
 
@@ -109,7 +108,7 @@ public class GameManager {
 
   public int getHighestScore() {
     return Math.max(
-        players.firstElement().getTeam().getScore(), players.lastElement().getTeam().getScore());
+        players.get(0).getTeam().getScore(), players.get(players.size() - 1).getTeam().getScore());
   }
 
   public void updateFirstForRound() {
@@ -139,9 +138,6 @@ public class GameManager {
     }
     return colorAsked;
   }
-
-
-
 
   public void doOneFold() {
     // On commence le tour
@@ -176,12 +172,12 @@ public class GameManager {
   }
 
   public void setHand() {
-    state.setHand(players.firstElement().getHand().getContent());
+    state.setHand(players.get(0).getHand().getContent());
   }
 
   // fonction qui permet de trouver a quel indice se trouve les cartes jouables au sain de la hand
   private void setPlayable() {
-    Vector<Integer> indexPlayable = new Vector<>();
+    ArrayList<Integer> indexPlayable = new ArrayList<>();
     int index = 0;
     for (Card card : state.getHand()) {
       if (players.get(0).getHand().getPlayableCard(state.getBoard(), trump).contains(card)) {

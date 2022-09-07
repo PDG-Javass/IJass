@@ -3,11 +3,11 @@ package ch.ijass.engine.Cards;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.List;
-import java.util.Vector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum CardValue {
+
     SIX,
     SEVEN,
     EIGHT,
@@ -69,21 +69,22 @@ public enum CardValue {
         }
     };
 
-    public int points() {
-        return 0;
-    }
-
-    public int ordinalWithTrump() {
-        return ordinal();
-    }
-
-    @JsonValue
-    public int value() {
-        return ordinal();
-    }
-
     public static List<CardValue> valuesWithTrump(){
         Stream stream = Stream.of(CardValue.SIX, CardValue.SEVEN, CardValue.EIGHT, CardValue.TEN, CardValue.QUEEN, CardValue.KING, CardValue.ACE, CardValue.NINE, CardValue.JACK);
         return (List<CardValue>) stream.collect(Collectors.toList());
     }
+
+
+  public int points() {
+    return 0;
+  }
+
+  public int ordinalWithTrump() {
+    return ordinal();
+  }
+
+  @JsonValue
+  public int value() {
+    return ordinal();
+  }
 };

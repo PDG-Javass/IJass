@@ -12,7 +12,7 @@ public class HandDeck extends Deck {
     Collections.sort(content);
   }
 
-  public int getNumberOfCardsByColor(Vector<Card> cards, CardColor color) {
+  public int getNumberOfCardsByColor(ArrayList<Card> cards, CardColor color) {
     return getAllCardsOfColor(cards, color).size();
   }
 
@@ -61,7 +61,7 @@ public class HandDeck extends Deck {
     return null;
   }
 
-  public Vector<Card> getPlayableCard(BoardDeck playMat, CardColor trump) {
+  public ArrayList<Card> getPlayableCard(BoardDeck playMat, CardColor trump) {
 
     // 1er joue nimporte quoi
     if (playMat.numberOfCards() == 0) {
@@ -85,7 +85,7 @@ public class HandDeck extends Deck {
       // si la couleur demandée n'est pas atout
       else {
 
-        Vector<Card> ret = new Vector<>();
+        ArrayList<Card> ret = new ArrayList<>();
         ret.addAll(getAllCardsOfColor(content, color));
 
         // si personne n'a coupé
@@ -111,7 +111,7 @@ public class HandDeck extends Deck {
     }
   }
 
-  public Card findBock(Vector<Card> playable, CardColor trump, DiscardDeck discard){
+  public Card findBock(ArrayList<Card> playable, CardColor trump, DiscardDeck discard){
     Card bock = null;
     for(CardColor color : CardColor.values()){
       if(color != trump){
@@ -136,7 +136,8 @@ public class HandDeck extends Deck {
    */
 
   public Card getAdvantageWithoutCut(BoardDeck board, CardColor trump) {
-    if ((board.isCut(trump) && board.colorAsked() != trump) || getNumberOfCardsByColor(content, board.colorAsked()) == 0) {
+    if ((board.isCut(trump) && board.colorAsked() != trump)
+        || getNumberOfCardsByColor(content, board.colorAsked()) == 0) {
       return null;
     } else {
       Card highestCardOnBoard = board.getHighestByColor(board.content, board.colorAsked(), false);

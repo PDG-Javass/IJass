@@ -2,8 +2,7 @@ package ch.ijass.engine.Cards;
 
 import ch.ijass.engine.Players.Player;
 
-import java.util.Arrays;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Card implements Comparable {
   private final CardColor color;
@@ -26,8 +25,8 @@ public class Card implements Comparable {
    *
    * @return un nouveau vecteur de cartes contenant toutes les cartes du jeu
    */
-  public static Vector<Card> getInitialDeck() {
-    Vector<Card> ret = new Vector<>();
+  public static ArrayList<Card> getInitialDeck() {
+    ArrayList<Card> ret = new ArrayList<>();
     for (int i = 0; i < CardColor.values().length; i++) {
       for (int j = 0; j < CardValue.values().length; j++) {
         ret.add(new Card(CardColor.values()[i], CardValue.values()[j]));
@@ -36,8 +35,8 @@ public class Card implements Comparable {
     return ret;
   }
 
-  static public Vector<Card> getBiggerCards(CardValue rank, CardColor color, boolean trump) {
-    Vector<Card> ret = new Vector<>();
+  static public ArrayList<Card> getBiggerCards(CardValue rank, CardColor color, boolean trump) {
+    ArrayList<Card> ret = new ArrayList<>();
 
     if (trump) {
       for(int i = rank.ordinalWithTrump() + 1; i < CardValue.valuesWithTrump().size(); i++) {

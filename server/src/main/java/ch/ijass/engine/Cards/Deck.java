@@ -1,15 +1,12 @@
 package ch.ijass.engine.Cards;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Vector;
+import java.util.*;
 
 public class Deck {
-  protected Vector<Card> content;
+  protected ArrayList<Card> content;
 
   public Deck() {
-    content = new Vector<>();
+    content = new ArrayList<>();
   }
 
   public void addCard(Card card) {
@@ -22,7 +19,7 @@ public class Deck {
   }
 
   public void emptyDeck() {
-    content.removeAllElements();
+    content.clear();
   }
 
   public int numberOfCards() {
@@ -30,7 +27,7 @@ public class Deck {
     return content.size();
   }
 
-  public Vector<Card> getContent() {
+  public ArrayList<Card> getContent() {
     return content;
   }
 
@@ -42,17 +39,20 @@ public class Deck {
     throw new RuntimeException("Can not play a card not in the Deck");
   }
 
-  public Vector<Card> getAllCardsOfColor(Vector<Card> cards, CardColor color) {
-    Vector<Card> ret = new Vector<>();
+  public ArrayList<Card> getAllCardsOfColor(ArrayList<Card> cards, CardColor color) {
+    ArrayList<Card> ret = new ArrayList<>();
     for (Card card : cards) {
       if (card.getColor() == color) ret.add(card);
     }
     return ret;
   }
 
-  public Card getHighestByColor(Vector<Card> cards, CardColor color, boolean trump) {
-    Vector<Card> res = getAllCardsOfColor(cards, color);
-    if(res.isEmpty()) return null;
+
+
+  public Card getHighestByColor(ArrayList<Card> cards, CardColor color, boolean trump) {
+    ArrayList<Card> res = getAllCardsOfColor(cards, color);
+      if(res.isEmpty()) return null;
+
     if (trump) {
       return Collections.max(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
     } else {
@@ -60,9 +60,12 @@ public class Deck {
     }
   }
 
-  public Card getLowestByColor(Vector<Card> cards, CardColor color, boolean trump) {
-    Vector<Card> res = getAllCardsOfColor(cards, color);
-    if(res.isEmpty()) return null;
+
+
+  public Card getLowestByColor(ArrayList<Card> cards, CardColor color, boolean trump) {
+    ArrayList<Card> res = getAllCardsOfColor(cards, color);
+      if(res.isEmpty()) return null;
+
     if (trump) {
       return Collections.min(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
     } else {
@@ -70,12 +73,12 @@ public class Deck {
     }
   }
 
-  public Card getBockByColor(Vector<Card> cards, DiscardDeck discard, CardColor colorBock, boolean trump){
+  public Card getBockByColor(ArrayList<Card> cards, DiscardDeck discard, CardColor colorBock, boolean trump){
     // On cherche les plus grandes cartes d'une certaine couleur
     Card highestHand = getHighestByColor(cards, colorBock, trump);
     if(highestHand == null) return null;
     // On crée un vecteur de cartes contenant toutes les cartes plus elevé que la highestHand
-    Vector<Card> biggerCards = Card.getBiggerCards(highestHand.getValue(), colorBock, trump);
+    ArrayList<Card> biggerCards = Card.getBiggerCards(highestHand.getValue(), colorBock, trump);
 
     // On cherche si toute les cartes plus eleve que la highestHand sont presente dans discard
     return discard.getContent().containsAll(biggerCards) ? highestHand : null;
