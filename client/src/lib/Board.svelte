@@ -16,7 +16,6 @@
     while (next === false) {
       await timeout(50);
     }
-
     next = false;
   }
 
@@ -97,9 +96,7 @@
         playable: false,
       });
     }
-
-    console.log(deck);
-
+    deck = deck;
   }
 
   //set trump if it's player turn
@@ -191,8 +188,6 @@
 
 
         if (i == 0) {
-          setAndShowDeck(data);
-
           if (data.trump != -1) {
             display.trump.show = false;
             display.trump.current = "trump_" + data.trump + ".png";
@@ -201,8 +196,6 @@
             await waitUserInput();
             await fetchChooseTrump(data.idGame, display.trump.choice);
           }
-
-
         }
 
         startIndex = data.idFirstForFold;
