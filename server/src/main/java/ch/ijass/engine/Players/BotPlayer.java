@@ -4,7 +4,6 @@ import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
 import ch.ijass.engine.Cards.DiscardDeck;
-
 import java.util.Vector;
 
 public class BotPlayer extends Player {
@@ -12,10 +11,11 @@ public class BotPlayer extends Player {
   public BotPlayer(String name, Team team) {
     super(name, team);
   }
+
   @Override
   public Card play(BoardDeck board, DiscardDeck playedCards, CardColor trump) {
-    //if(Objects.equals(getName(), "Chacha "))
-      System.out.println( getName()+"'s hand : " + hand);
+    // if(Objects.equals(getName(), "Chacha "))
+    System.out.println(getName() + "'s hand : " + hand);
     // todo remember to remove this line
     Vector<Card> playableCards = hand.getPlayableCard(board, trump);
 
@@ -97,5 +97,4 @@ public class BotPlayer extends Player {
     }
     return null;
   }
-
 }

@@ -2,7 +2,6 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Players.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Vector;
 
 public class GameManager {
@@ -139,9 +138,6 @@ public class GameManager {
     }
     return colorAsked;
   }
-
-
-
 
   public void doOneFold() {
     // On commence le tour
