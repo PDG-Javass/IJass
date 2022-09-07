@@ -2,7 +2,6 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Players.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 
 public class GameManager {

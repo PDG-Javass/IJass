@@ -14,7 +14,7 @@ public class BotPlayer extends Player {
 
   @Override
   public Card play(BoardDeck board, DiscardDeck playedCards, CardColor trump) {
-  
+
     ArrayList<Card> playableCards = hand.getPlayableCard(board, trump);
 
     System.out.println(getName() + "'s hand : " + hand);
@@ -88,7 +88,6 @@ public class BotPlayer extends Player {
         - playedCards.getCounterTrump()
         - hand.getNumberOfCardsByColor(hand.getContent(), trump);
   }
-
 
   private Card smallCard(ArrayList<Card> cards, CardColor trump, int limit) {
     for (Card card : cards) {
