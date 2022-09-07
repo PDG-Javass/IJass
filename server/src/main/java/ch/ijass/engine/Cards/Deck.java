@@ -1,7 +1,7 @@
 package ch.ijass.engine.Cards;
 
-import java.util.*;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.*;
 
 public class Deck {
   protected ArrayList<Card> content;
@@ -97,5 +97,7 @@ public class Deck {
   }
 
   @JsonValue
-  public ArrayList<Card> value() { return content; }
+  public ArrayList<Card> value() {
+    return content;
+  }
 }
