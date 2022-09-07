@@ -1,6 +1,7 @@
 package ch.ijass.engine.Cards;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class DiscardDeck extends Deck {
   int counterTrump;
@@ -9,7 +10,7 @@ public class DiscardDeck extends Deck {
     counterTrump = 0;
   }
 
-  public void addFold(Vector<Card> cards, CardColor trump) {
+  public void addFold(ArrayList<Card> cards, CardColor trump) {
     for (Card card : cards) {
       if (card.getColor() == trump) {
         counterTrump++;

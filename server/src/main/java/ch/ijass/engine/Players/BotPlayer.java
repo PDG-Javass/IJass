@@ -4,7 +4,7 @@ import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
 import ch.ijass.engine.Cards.DiscardDeck;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class BotPlayer extends Player {
 
@@ -14,10 +14,10 @@ public class BotPlayer extends Player {
 
   @Override
   public Card play(BoardDeck board, DiscardDeck playedCards, CardColor trump) {
-    // if(Objects.equals(getName(), "Chacha "))
+  
+    ArrayList<Card> playableCards = hand.getPlayableCard(board, trump);
+
     System.out.println(getName() + "'s hand : " + hand);
-    // todo remember to remove this line
-    Vector<Card> playableCards = hand.getPlayableCard(board, trump);
 
     // on a une seule carte jouable
     if (playableCards.size() == 1) {
@@ -89,7 +89,8 @@ public class BotPlayer extends Player {
         - hand.getNumberOfCardsByColor(hand.getContent(), trump);
   }
 
-  private Card smallCard(Vector<Card> cards, CardColor trump, int limit) {
+
+  private Card smallCard(ArrayList<Card> cards, CardColor trump, int limit) {
     for (Card card : cards) {
       if (card.getColor() != trump && card.getValue().ordinal() < limit) {
         return card;

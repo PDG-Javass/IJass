@@ -18,7 +18,7 @@ public class PersonPlayer extends Player {
   @Override
   public Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump) {
     return hand.getPlayableCard(playMat, trump)
-        .firstElement(); // todo a modifier pour l'instant rend la 1er carte de la main
+        .get(0); // todo a modifier pour l'instant rend la 1er carte de la main
 
     // A ne pas oublier : doit enlever la carte jouée de sa hand
   }
