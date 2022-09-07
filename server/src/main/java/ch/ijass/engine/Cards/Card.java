@@ -1,7 +1,6 @@
 package ch.ijass.engine.Cards;
 
 import ch.ijass.engine.Players.Player;
-
 import java.util.ArrayList;
 
 public class Card implements Comparable {
@@ -35,11 +34,11 @@ public class Card implements Comparable {
     return ret;
   }
 
-  static public ArrayList<Card> getBiggerCards(CardValue rank, CardColor color, boolean trump) {
+  public static ArrayList<Card> getBiggerCards(CardValue rank, CardColor color, boolean trump) {
     ArrayList<Card> ret = new ArrayList<>();
 
     if (trump) {
-      for(int i = rank.ordinalWithTrump() + 1; i < CardValue.valuesWithTrump().size(); i++) {
+      for (int i = rank.ordinalWithTrump() + 1; i < CardValue.valuesWithTrump().size(); i++) {
         ret.add(new Card(color, CardValue.valuesWithTrump().get(i)));
       }
     } else {

@@ -111,12 +111,12 @@ public class HandDeck extends Deck {
     }
   }
 
-  public Card findBock(ArrayList<Card> playable, CardColor trump, DiscardDeck discard){
+  public Card findBock(ArrayList<Card> playable, CardColor trump, DiscardDeck discard) {
     Card bock = null;
-    for(CardColor color : CardColor.values()){
-      if(color != trump){
-        bock = getBockByColor( playable, discard,color, false);
-        if(bock != null){
+    for (CardColor color : CardColor.values()) {
+      if (color != trump) {
+        bock = getBockByColor(playable, discard, color, false);
+        if (bock != null) {
           return bock;
         }
       }

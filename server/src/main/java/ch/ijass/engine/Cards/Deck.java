@@ -47,11 +47,9 @@ public class Deck {
     return ret;
   }
 
-
-
   public Card getHighestByColor(ArrayList<Card> cards, CardColor color, boolean trump) {
     ArrayList<Card> res = getAllCardsOfColor(cards, color);
-      if(res.isEmpty()) return null;
+    if (res.isEmpty()) return null;
 
     if (trump) {
       return Collections.max(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
@@ -60,11 +58,9 @@ public class Deck {
     }
   }
 
-
-
   public Card getLowestByColor(ArrayList<Card> cards, CardColor color, boolean trump) {
     ArrayList<Card> res = getAllCardsOfColor(cards, color);
-      if(res.isEmpty()) return null;
+    if (res.isEmpty()) return null;
 
     if (trump) {
       return Collections.min(res, Comparator.comparingInt(c -> c.getValue().ordinalWithTrump()));
@@ -73,10 +69,11 @@ public class Deck {
     }
   }
 
-  public Card getBockByColor(ArrayList<Card> cards, DiscardDeck discard, CardColor colorBock, boolean trump){
+  public Card getBockByColor(
+      ArrayList<Card> cards, DiscardDeck discard, CardColor colorBock, boolean trump) {
     // On cherche les plus grandes cartes d'une certaine couleur
     Card highestHand = getHighestByColor(cards, colorBock, trump);
-    if(highestHand == null) return null;
+    if (highestHand == null) return null;
     // On crée un vecteur de cartes contenant toutes les cartes plus elevé que la highestHand
     ArrayList<Card> biggerCards = Card.getBiggerCards(highestHand.getValue(), colorBock, trump);
 
