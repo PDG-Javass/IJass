@@ -3,6 +3,7 @@ package ch.ijass.engine.Players;
 import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
 import ch.ijass.engine.Cards.CardColor;
+import ch.ijass.engine.Cards.DiscardDeck;
 
 public class PersonPlayer extends Player {
 
@@ -15,15 +16,16 @@ public class PersonPlayer extends Player {
   }
 
   @Override
-  public Card play(BoardDeck playMat, CardColor trump) {
-    System.out.println(getName() + " : " + hand.getPlayableCard(playMat, trump).firstElement());
-    return hand.getPlayableCard(playMat, trump)
-        .firstElement(); // todo a modifier pour l'instant rend la 1er carte de la main
+  public Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump, int choice) {
+    return hand.play(choice);
+  }
 
-    // A ne pas oublier : doit enlever la carte jouée de sa hand
+  @Override
+  public boolean isBot() {
+    return false;
   }
 
   public CardColor chooseTrump() {
     return hand.getColorMostPresent();
-  } // todo a modifier
+  }
 }

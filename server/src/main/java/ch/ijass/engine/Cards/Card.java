@@ -1,7 +1,7 @@
 package ch.ijass.engine.Cards;
 
 import ch.ijass.engine.Players.Player;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Card implements Comparable {
   private final CardColor color;
@@ -24,11 +24,26 @@ public class Card implements Comparable {
    *
    * @return un nouveau vecteur de cartes contenant toutes les cartes du jeu
    */
-  public static Vector<Card> getInitialDeck() {
-    Vector<Card> ret = new Vector<>();
+  public static ArrayList<Card> getInitialDeck() {
+    ArrayList<Card> ret = new ArrayList<>();
     for (int i = 0; i < CardColor.values().length; i++) {
       for (int j = 0; j < CardValue.values().length; j++) {
         ret.add(new Card(CardColor.values()[i], CardValue.values()[j]));
+      }
+    }
+    return ret;
+  }
+
+  public static ArrayList<Card> getBiggerCards(CardValue rank, CardColor color, boolean trump) {
+    ArrayList<Card> ret = new ArrayList<>();
+
+    if (trump) {
+      for (int i = rank.ordinalWithTrump() + 1; i < CardValue.valuesWithTrump().size(); i++) {
+        ret.add(new Card(color, CardValue.valuesWithTrump().get(i)));
+      }
+    } else {
+      for (int i = rank.ordinal() + 1; i < CardValue.values().length; i++) {
+        ret.add(new Card(color, CardValue.values()[i]));
       }
     }
     return ret;
@@ -120,6 +135,18 @@ public class Card implements Comparable {
       if (colorDiff != 0) return colorDiff;
       else return valueDiff;
     }
+  }
+
+  public boolean isStronger(Card other, CardColor trump) {
+    if (color == trump) {
+      if (other.color == trump)
+        return value == CardValue.JACK
+            || (value == CardValue.NINE && other.value != CardValue.JACK)
+            || (other.value != CardValue.JACK
+                && other.value != CardValue.NINE
+                && value.ordinal() > other.value.ordinal());
+      else return true;
+    } else return color == other.color && value.ordinal() > other.value.ordinal();
   }
 
   public boolean isEqual(Card other) {
