@@ -17,7 +17,6 @@
       await timeout(50);
     }
 
-    console.log("j'ai attendu");
     next = false;
   }
 
@@ -34,20 +33,9 @@
 
     display.cardPlayedId = x;
 
-    let tmp = deck[x].name;
+    deck.splice(x,1);
 
-    for(let i = x; i < deck.length - 1; ++i){
-      deck[i] = deck[i + 1]
-    }
-
-    deck[8].name = tmp;
-    deck[8].visible = false;
-
-
-    //deck.slice(x, 1);
-
-    console.log("après avoir bougé:")
-    console.log(deck);
+    
     next = true;
   }
 
@@ -77,7 +65,7 @@
     },
     trump: {
       choice: -1,
-      current: "trump_0.png",
+      current: "",
       me: false,
       show: false,
     },
@@ -125,6 +113,7 @@
   function makeCardsPlayable() {
     for (let i = 0; i < data.playableCards.length; ++i) {
       deck[data.playableCards[i]].playable = true;
+      console.log(data.playableCards[i]);
     }
   }
 
@@ -149,8 +138,8 @@
     }
   }
 
-  function setDeckBotChoose(id){
-    if(data.board.length == 0){
+  function setDeckBotChoose(id, second){
+    if(second){
       setDeckBotAsc(id);
     }else{
       setDeckBot(id);
@@ -162,6 +151,7 @@
   async function showCard(
     startIndex: number,
     remainingToDisplay: number,
+    second: boolean
   ) {
     for (let i = 0; i < remainingToDisplay; ++i) {
       await sleep(TIME_SLEEP);
@@ -169,15 +159,15 @@
         case 0:
           break;
         case 1: 
-          setDeckBotChoose(1);
+          setDeckBotChoose(1, second);
           break;
         
         case 2: 
-          setDeckBotChoose(2);
+          setDeckBotChoose(2, second);
           break;
         
         case 3: 
-          setDeckBotChoose(3);
+          setDeckBotChoose(3, second);
           break;
         
       }
@@ -185,7 +175,9 @@
     }
 
 
+    if(!second){
     makeCardsPlayable();
+    }
     
   }
 
@@ -205,22 +197,19 @@
             display.trump.show = false;
             display.trump.current = "trump_" + data.trump + ".png";
           } else {
-            display.trump.current = "";
             display.trump.show = true;
             await waitUserInput();
             await fetchChooseTrump(data.idGame, display.trump.choice);
           }
 
-          startIndex = data.idFirstForFold;
-
-        }else{
-          startIndex = data.board[0].playerId;
 
         }
 
+        startIndex = data.idFirstForFold;
+
         n = data.board.length;
 
-        await showCard(startIndex, n);
+        await showCard(startIndex, n, false);
 
         await waitUserInput();
 
@@ -230,7 +219,7 @@
 
         console.log("second part");
 
-        await showCard(startIndex + n, 4 - n);
+        await showCard(startIndex + n, 4 - n, true);
 
         await sleep(1000);
 
