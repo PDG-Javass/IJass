@@ -18,7 +18,7 @@ public class GameManager {
   }
 
   private State state;
-  private DiscardDeck playedCards;
+  // private DiscardDeck playedCards;
   private StartingDeck initialDeck;
   private final int CINQDEDER = 5;
   private final int POINTS = 1000;
