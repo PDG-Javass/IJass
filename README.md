@@ -1,6 +1,6 @@
 # IJass par Javass - Jeu de Jass automatisé
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Deutschweizer_Jasskarten_gef%C3%A4chert.png/1024px-Deutschweizer_Jasskarten_gef%C3%A4chert.png)
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Deutschweizer_Jasskarten_gef%C3%A4chert.png/640px-Deutschweizer_Jasskarten_gef%C3%A4chert.png)
 
 ## Description
 
