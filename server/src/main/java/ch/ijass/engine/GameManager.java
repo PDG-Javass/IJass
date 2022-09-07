@@ -135,6 +135,14 @@ public class GameManager {
       }
       setHand();
       setPlayable();
+      /*
+      try {
+        System.out.println(
+            new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(state));
+      } catch (Exception e) {
+      }
+      ;
+       */
     }
     return colorAsked;
   }
@@ -161,6 +169,7 @@ public class GameManager {
 
     if (state.getCounterFold() == 9) firstForFold.getTeam().addPoints(CINQDEDER);
     System.out.println("the winner is :" + firstForFold.getName());
+    System.out.println();
     System.out.println("the bot score is :" + players.get(1).getTeam().getScore());
     System.out.println("the person score is :" + players.get(0).getTeam().getScore());
   }
