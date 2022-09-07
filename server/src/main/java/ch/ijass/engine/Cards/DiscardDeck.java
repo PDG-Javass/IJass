@@ -21,4 +21,9 @@ public class DiscardDeck extends Deck {
   public int getCounterTrump() {
     return counterTrump;
   }
+
+  public void resetDiscardDeck() {
+    counterTrump = 0;
+    content.clear();
+  }
 }

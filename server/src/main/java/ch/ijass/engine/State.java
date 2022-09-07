@@ -24,7 +24,7 @@ public class State {
   public int scoreBot;
   public ArrayList<Card> hand;
   public ArrayList<Integer> playableCards;
-  public ArrayList<Card> playedCards;
+  public DiscardDeck playedCards;
 
 
   public void setHand(ArrayList<Card> hand) {
@@ -36,6 +36,7 @@ public class State {
     this.playableCards = new ArrayList<>();
     this.playableCards.addAll(playableCards);
   }
+  /*
   public void clearPlayedCards() { playedCards.clear(); }
 
   public void addPlayedCard(Card card) { playedCards.add(card); }
@@ -43,19 +44,14 @@ public class State {
   public void addPlayedCards(ArrayList<Card> cards) {
     playedCards.addAll(cards);
   }
-
-  public DiscardDeck getPlayedCards() {
-    DiscardDeck dd = new DiscardDeck();
-    dd.addCards(playedCards);
-    return dd;
-  }
+   */
 
 
 
   State() {
     trump = -1; // Atout pas encore choisi
     board = new BoardDeck();
-    playedCards = new ArrayList<>();
+    playedCards = new DiscardDeck();
     hand = new ArrayList<>();
     playableCards = new ArrayList<>();
     idGame = counterIdGame++;

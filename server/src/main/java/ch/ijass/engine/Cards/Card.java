@@ -157,4 +157,13 @@ public class Card implements Comparable {
   public CardColor getColor() {
     return color;
   }
+
+  public boolean equals(Object obj){
+    if (obj == null || obj.getClass() != Card.class)
+      return false;
+    else {
+      Card other = (Card) obj;
+      return color == other.color && value == other.value;
+    }
+  }
 }

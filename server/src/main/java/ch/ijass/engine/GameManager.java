@@ -69,7 +69,7 @@ public class GameManager {
     state.counterFold++;
     current = firstForFold;
 
-    if (state.counterFold == 9) {
+    if (state.counterFold == 10) {
       winner.getTeam().addPoints(CINQDEDER);
       state.counterRound++;
       state.counterFold = 1;
@@ -77,7 +77,7 @@ public class GameManager {
       state.setTrump(-1);
     }
     // On flush les carte du tapis dans les cartes jouées durant la plie
-    state.addPlayedCards(state.board.getContent());
+    state.getPlayedCards().addFold(state.board.getContent(), trump);
     state.board.emptyDeck();
 
     // On assigne la nouvelle main du joueur à l'état
@@ -145,6 +145,7 @@ public class GameManager {
   public void initiateRound(int playerId) {
     initialDeck = new StartingDeck();
     clearHands();
+    state.playedCards.resetDiscardDeck();
     distribute();
     getPlayerById(playerId).sortHand();
     updateFirstForRound();
@@ -179,6 +180,7 @@ public class GameManager {
     }
   }
 
+  /*
   public State doOneRound(int playerId, int cardChoice) {
     if (!inProgress) {
       initiateRound(players.get(0).getId());
@@ -194,6 +196,8 @@ public class GameManager {
     // Déroulement de la manche
     return doOneFold(playerId, cardChoice);
   }
+
+   */
 
   public Player getPlayerById(int id) {
     for (Player player : players) {
@@ -227,6 +231,8 @@ public class GameManager {
   public void nextPlayer() {
     current = players.get((players.indexOf(current) + 1) % 4);
   }
+
+  /*
   public State doOneFold(int playerId, int cardChoice) {
     // On commence le tour
     playUntilPlayerTurn(playerId);
@@ -259,10 +265,14 @@ public class GameManager {
     }
     return state;
   }
+   */
 
+  /*
   public State playing(int playerId, int cardChoice) {
       return doOneRound(playerId, cardChoice);
   }
+
+   */
 
   public void setHand() {
     if (current != null)
@@ -290,7 +300,7 @@ public class GameManager {
 
   public static void main(String[] args) {
     GameManager game = new GameManager();
-    game.playing(0,0);
+    //game.playing(0,0);
     System.out.println("Helllo");
   }
 }

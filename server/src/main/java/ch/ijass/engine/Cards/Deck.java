@@ -77,8 +77,8 @@ public class Deck {
     if (highestHand == null) return null;
     // On crée un vecteur de cartes contenant toutes les cartes plus elevé que la highestHand
     ArrayList<Card> biggerCards = Card.getBiggerCards(highestHand.getValue(), colorBock, trump);
-
     // On cherche si toute les cartes plus eleve que la highestHand sont presente dans discard
+
     return discard.getContent().containsAll(biggerCards) ? highestHand : null;
   }
 

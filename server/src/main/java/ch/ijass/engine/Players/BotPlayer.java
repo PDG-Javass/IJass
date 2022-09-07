@@ -18,6 +18,7 @@ public class BotPlayer extends Player {
     ArrayList<Card> playableCards = hand.getPlayableCard(board, trump);
 
     System.out.println(getName() + "'s hand : " + hand);
+    System.out.println( "discard deck : " + playedCards);
 
     // on a une seule carte jouable
     if (playableCards.size() == 1) {
@@ -40,7 +41,7 @@ public class BotPlayer extends Player {
           }
         }
 
-        // Cas 2 : On joue un bock //todo : findBock au lieu de findAce
+        // Cas 2 : On joue un bock
         Card bock = hand.findBock(playableCards, trump, playedCards);
         if (bock != null) {
           return hand.play(bock);
