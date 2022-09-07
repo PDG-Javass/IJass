@@ -9,7 +9,7 @@
 </script>
 
 <main>
-    <p>Si tu souhaites relire les règles du jeu:</p>
+    <p>Si tu souhaites relire ou apprendre les règles du jeu:</p>
     <a href={ruleUrl}>➡Clique sur ce lien⬅</a>
     <br />
     <button on:click={handleNext}>Continuer</button>
