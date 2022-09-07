@@ -176,8 +176,9 @@
     }
   }
 
-  async function checkTrump(trump) {
-    if (trump == -1) {
+  async function checkTrump(data) {
+    setAndShowDeck(data);
+    if (data.trump == -1) {
       display.trump.show = true;
       await waitUserInput();
       await fetchChooseTrump(data.idGame, display.trump.choice);
@@ -195,10 +196,9 @@
         data = await fetchFirstFold(data.idGame, 0);
 
         if (i == 0) {
-          setAndShowDeck(data);
 
           if(data.counterRound == 1){
-          await checkTrump(data.trump);
+          await checkTrump(data);
           }
         }
 
@@ -227,7 +227,7 @@
       }
 
       data = await fetchStartRound(data.idGame, 0);
-      await checkTrump(data.trump);
+      await checkTrump(data);
     }
   }
 
@@ -245,7 +245,7 @@
   <table class="score" on:click={debug}>
     <tr><td /><td>Score</td><td /></tr>
     <tr><td>Moi + Lapinou</td><td /><td>Chacha + Titi</td></tr>
-    <tr><td>{data.scorePerson}</td><td /><td>{data.scoreBot}</td></tr>
+    <tr><td><b>{data.scorePerson}</b></td><td /><td><b>{data.scoreBot}</b></td></tr>
   </table>
 </div>
 
