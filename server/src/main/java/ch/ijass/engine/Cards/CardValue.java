@@ -89,9 +89,6 @@ public enum CardValue {
   public int ordinalWithTrump() {
     return ordinal();
   }
-
   @JsonValue
-  public int value() {
-    return ordinal();
-  }
+  public int value() { return ordinal(); }
 }

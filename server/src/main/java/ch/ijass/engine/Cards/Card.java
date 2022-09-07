@@ -141,12 +141,13 @@ public class Card implements Comparable {
     if (color == trump) {
       if (other.color == trump)
         return value == CardValue.JACK
-            || (value == CardValue.NINE && other.value != CardValue.JACK)
-            || (other.value != CardValue.JACK
-                && other.value != CardValue.NINE
+                || (value == CardValue.NINE && other.value != CardValue.JACK)
+                || (other.value != CardValue.JACK && other.value != CardValue.NINE
                 && value.ordinal() > other.value.ordinal());
-      else return true;
-    } else return color == other.color && value.ordinal() > other.value.ordinal();
+      else
+        return true;
+    } else
+      return color == other.color && value.ordinal() > other.value.ordinal();
   }
 
   public boolean isEqual(Card other) {
@@ -155,5 +156,14 @@ public class Card implements Comparable {
 
   public CardColor getColor() {
     return color;
+  }
+
+  public boolean equals(Object obj){
+    if (obj == null || obj.getClass() != Card.class)
+      return false;
+    else {
+      Card other = (Card) obj;
+      return color == other.color && value == other.value;
+    }
   }
 }

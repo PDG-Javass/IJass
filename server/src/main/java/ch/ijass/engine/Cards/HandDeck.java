@@ -79,7 +79,7 @@ public class HandDeck extends Deck {
 
   public ArrayList<Card> getPlayableCard(BoardDeck playMat, CardColor trump) {
 
-    // 1er joue nimporte quoi
+    // Premier joueur joue n'importe quoi
     if (playMat.numberOfCards() == 0) {
       return content;
 
@@ -102,12 +102,15 @@ public class HandDeck extends Deck {
       else {
 
         ArrayList<Card> ret = new ArrayList<>();
-        ret.addAll(getAllCardsOfColor(content, color));
+        ArrayList<Card> cardsOfAskedColor = getAllCardsOfColor(content, color);
+        ret.addAll(cardsOfAskedColor);
 
         // si personne n'a coupé
         if (!playMat.isCut(trump)) {
+          if(cardsOfAskedColor.isEmpty()) {
+            return content;
+          }
           ret.addAll(getAllCardsOfColor(content, trump));
-
         } else {
 
           // trouver la carte atout la plus elevée sur le tapis
@@ -119,9 +122,12 @@ public class HandDeck extends Deck {
               if (card.getValue().ordinalWithTrump() > highestTrump.getValue().ordinalWithTrump()) {
                 ret.add(card);
               }
+            } else if(cardsOfAskedColor.isEmpty()) {
+              ret.add(card);
             }
           }
         }
+
         return ret.isEmpty() ? content : ret;
       }
     }

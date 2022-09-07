@@ -21,16 +21,13 @@ public abstract class Player {
     hand = new HandDeck();
   }
 
-  public void sortHand() {
-    hand.sort();
-  }
+  public void sortHand() { hand.sort(); }
 
   public int getId() {
     return id;
   }
 
-  public abstract Card play(
-      BoardDeck playMat, DiscardDeck playedCards, CardColor trump, int choice);
+  public abstract Card play(BoardDeck playMat, DiscardDeck playedCards, CardColor trump, int choice);
 
   public Team getTeam() {
     return team;

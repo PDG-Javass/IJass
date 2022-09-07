@@ -13,7 +13,6 @@ public enum CardColor {
   public void setTrump(boolean trump) {
     this.trump = trump;
   }
-
   @JsonValue
   public int value() {
     return ordinal();
