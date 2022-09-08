@@ -4,8 +4,7 @@
 
 Si vous souhaitez ajouter des fonctionnalités à Javass voici la marche à suivre :
 - Cloner le repository git en local
-- Afin de travailler proprement, créer une nouvelle branche depuis develop sur laquelle
-travailler
+- Afin de travailler proprement, créer une nouvelle branche depuis develop
 - Implémenter votre fonctionnalité sur cette nouvelle branche
 - Une fois satisfait de votre travail, effectuer une Pull Request de votre branche à develop
 
@@ -32,7 +31,12 @@ les classes que vous souhaitez. Actuellement le jeu possède la structure suivan
   * BotPlayer : les joueurs qui choisissent la meilleure carte à jouer selon un algorithme maison.
   * Team : classe représentant les deux équipes, permet de gérer les scores
 
-### Autres aspects de l'application
+### Requêtes et réponses
 
 Le serveur et le client communiquent au moyen de requêtes définies dans mappings. Leurs interactions consistent
 en l'échange d'un état, correspondant à l'état courant de la partie. Les requêtes se trouvent dans la classe [Mappings](https://github.com/PDG-Javass/IJass/blob/develop/server/src/main/java/ch/ijass/server/Mappings.java).
+Si vous souhaitez ajouter une nouvelle requête, il vous suffit d'ajouter une nouvelle méthode dans cette classe et 
+l'annoter avec @GetMapping. Ces méthodes retournent un String qui correspond soit au message d'erreur si un problème 
+d'exécution est survenu, soit à la conversion en JSON de l'état de la partie.
+
+
