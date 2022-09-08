@@ -8,9 +8,7 @@
     fetchSecondFold,
     fetchChooseTrump,
     fetchStartRound,
-  } from "../mappings";
-
-  import { nextPage, page } from "../stores";
+  } from "../utils/mappings";
 
   let card_board = "";
   let visible_me = false;
@@ -182,7 +180,7 @@
       makeCardsPlayable();
     }
   }
-  
+
   async function checkTrump(data): Promise<void> {
     setAndShowDeck(data);
     if (data.trump == -1) {
@@ -207,7 +205,7 @@
         data = await fetchFirstFold(data.idGame, 0);
 
         if (i == 0) {
-          if(data.counterRound == 1){
+          if (data.counterRound == 1) {
             await checkTrump(data);
           }
         }
