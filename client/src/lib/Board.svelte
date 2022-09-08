@@ -44,7 +44,7 @@
 
   const MAX_POINTS = 1000;
   const N_FOLDS = 9;
-  const TIME_SLEEP = 5;
+  const TIME_SLEEP = 1000;
 
   let data: any = {
     idGame: 0,
@@ -189,7 +189,7 @@
       display.trump.showSelection = true;
       display.trump.showCurrent = false;
 
-      await waitUserInput() Implémentation de l'interface client #21 ;
+      await waitUserInput();
       await fetchChooseTrump(data.idGame, display.trump.choice);
       display.trump.showCurrent = true;
     } else {
@@ -226,7 +226,7 @@
 
         await showCard(startIndex + n, 4 - n, true);
 
-        await sleep(TIME_SLEEP);
+        await sleep(TIME_SLEEP * 2);
 
         for (let i = 0; i < deckBot.length; ++i) {
           deckBot[i].visible = false;
