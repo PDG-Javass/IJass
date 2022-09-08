@@ -1,6 +1,6 @@
 export { fetchNewGameId, fetchFirstFold, fetchSecondFold, fetchChooseTrump, fetchStartRound };
 
-const API_URL = "https://server-xxcwjwt7qq-ue.a.run.app:8080";
+const API_URL = "https://server-xxcwjwt7qq-ue.a.run.app";
 
 const endpoints = {
     newgame: "/newgame",
