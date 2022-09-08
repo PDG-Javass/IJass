@@ -21,10 +21,11 @@ public class PersonPlayer extends Player {
   }
 
   @Override
-  public boolean isBot() { return false; }
+  public boolean isBot() {
+    return false;
+  }
 
   public CardColor chooseTrump() {
     return hand.getColorMostPresent();
   }
-
 }

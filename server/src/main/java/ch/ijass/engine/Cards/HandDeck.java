@@ -107,7 +107,7 @@ public class HandDeck extends Deck {
 
         // si personne n'a coupé
         if (!playMat.isCut(trump)) {
-          if(cardsOfAskedColor.isEmpty()) {
+          if (cardsOfAskedColor.isEmpty()) {
             return content;
           }
           ret.addAll(getAllCardsOfColor(content, trump));
@@ -122,7 +122,7 @@ public class HandDeck extends Deck {
               if (card.getValue().ordinalWithTrump() > highestTrump.getValue().ordinalWithTrump()) {
                 ret.add(card);
               }
-            } else if(cardsOfAskedColor.isEmpty()) {
+            } else if (cardsOfAskedColor.isEmpty()) {
               ret.add(card);
             }
           }
@@ -158,24 +158,25 @@ public class HandDeck extends Deck {
    */
 
   public Card getAdvantageWithoutCut(BoardDeck board, CardColor trump) {
-  // On regarde si on peut prendre l'avantage sans couper
-    if ((!board.isCut(trump) || board.colorAsked() == trump) && getNumberOfCardsByColor(content, board.colorAsked()) != 0) {
+    // On regarde si on peut prendre l'avantage sans couper
+    if ((!board.isCut(trump) || board.colorAsked() == trump)
+        && getNumberOfCardsByColor(content, board.colorAsked()) != 0) {
 
       // La couleur demandée n'est pas atout
       if (board.colorAsked() != trump) {
         Card highestCardOnBoard = board.getHighestByColor(board.content, board.colorAsked(), false);
         Card highestCardInHand = getHighestByColor(content, board.colorAsked(), false);
-        if (highestCardInHand.getValue().ordinal() > highestCardOnBoard.getValue().ordinal()) return highestCardInHand;
+        if (highestCardInHand.getValue().ordinal() > highestCardOnBoard.getValue().ordinal())
+          return highestCardInHand;
 
-      // La couleur demandée est atout
+        // La couleur demandée est atout
       } else {
         Card highestCardOnBoard = board.getHighestByColor(board.content, trump, true);
         Card highestCardInHand = getHighestByColor(content, trump, true);
-        if (highestCardInHand.getValue().ordinalWithTrump() > highestCardOnBoard.getValue().ordinalWithTrump()) return highestCardInHand;
+        if (highestCardInHand.getValue().ordinalWithTrump()
+            > highestCardOnBoard.getValue().ordinalWithTrump()) return highestCardInHand;
       }
     }
     return null;
   }
-
-
 }

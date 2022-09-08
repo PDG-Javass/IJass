@@ -19,7 +19,7 @@ public class BotPlayer extends Player {
     Card choosenCard = null;
 
     System.out.println(getName() + "'s hand : " + hand);
-    System.out.println( "discard deck : " + playedCards);
+    System.out.println("discard deck : " + playedCards);
 
     // on a une seule carte jouable
     if (playableCards.size() == 1) {
@@ -34,7 +34,7 @@ public class BotPlayer extends Player {
 
         // Cas 1 : On tire atout avec le meilleur atout
         int nbTrumpsNature = nbTrumpInNature(playedCards, trump);
-        if ((nbTrumpsHand > 2 && nbTrumpsNature > 0 )
+        if ((nbTrumpsHand > 2 && nbTrumpsNature > 0)
             || (nbTrumpsHand == 2 && nbTrumpsNature > 0 && nbTrumpsNature < 4)) {
           choosenCard = hand.getBockByColor(playableCards, playedCards, trump, true);
           if (choosenCard != null) {
@@ -50,9 +50,10 @@ public class BotPlayer extends Player {
           return hand.play(choosenCard);
         }
 
-        // Cas 3 : On joue une petite carte parmis la couleur la plus présente si ce n'est pas de l'atout
+        // Cas 3 : On joue une petite carte parmis la couleur la plus présente si ce n'est pas de
+        // l'atout
         choosenCard = hand.getLowestByColor(playableCards, hand.getColorMostPresent(), false);
-        if(choosenCard.getColor() != trump) {
+        if (choosenCard.getColor() != trump) {
           return hand.play(choosenCard);
         }
       }
@@ -70,11 +71,10 @@ public class BotPlayer extends Player {
 
         // Cas 2 : On coupe car il y a beaucoup de points à gagner
         if ((board.countPoints(trump) > 10)
-                && hand.getNumberOfCardsByColor(playableCards, trump) > 0) {
+            && hand.getNumberOfCardsByColor(playableCards, trump) > 0) {
           return hand.play(hand.getLowestByColor(playableCards, trump, true));
         }
       }
-
 
       // On a rien de bien à jouer
 
