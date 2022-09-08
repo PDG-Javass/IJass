@@ -182,12 +182,14 @@
       makeCardsPlayable();
     }
   }
-
-  async function checkTrump(trump: number): Promise<void> {
-    if (trump == -1) {
+  
+  async function checkTrump(data): Promise<void> {
+    setAndShowDeck(data);
+    if (data.trump == -1) {
       display.trump.showSelection = true;
       display.trump.showCurrent = false;
-      await waitUserInput();
+
+      await waitUserInput() Implémentation de l'interface client #21 ;
       await fetchChooseTrump(data.idGame, display.trump.choice);
       display.trump.showCurrent = true;
     } else {
@@ -205,10 +207,8 @@
         data = await fetchFirstFold(data.idGame, 0);
 
         if (i == 0) {
-          setAndShowDeck(data);
-
-          if (data.counterRound == 1) {
-            await checkTrump(data.trump);
+          if(data.counterRound == 1){
+            await checkTrump(data);
           }
         }
 
@@ -235,7 +235,7 @@
         console.log("fold" + i);
       }
       data = await fetchStartRound(data.idGame, 0);
-      await checkTrump(data.trump);
+      await checkTrump(data);
     }
     display.showEnd = true;
   }

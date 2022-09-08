@@ -1,11 +1,20 @@
 package ch.ijass.engine.Cards;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.*;
+import com.fasterxml.jackson.annotation.JsonValue;
 
+/**
+ * Un paquet de cartes.
+ */
 public class Deck {
+  /**
+   * Les cartes dans le paquet
+   */
   protected ArrayList<Card> content;
 
+  /**
+   * Crée un paquet de cartes vide.
+   */
   public Deck() {
     content = new ArrayList<>();
   }
@@ -77,8 +86,8 @@ public class Deck {
     if (highestHand == null) return null;
     // On crée un vecteur de cartes contenant toutes les cartes plus elevé que la highestHand
     ArrayList<Card> biggerCards = Card.getBiggerCards(highestHand.getValue(), colorBock, trump);
-
     // On cherche si toute les cartes plus eleve que la highestHand sont presente dans discard
+
     return discard.getContent().containsAll(biggerCards) ? highestHand : null;
   }
 
@@ -97,7 +106,5 @@ public class Deck {
   }
 
   @JsonValue
-  public ArrayList<Card> value() {
-    return content;
-  }
+  public ArrayList<Card> value() { return content; }
 }

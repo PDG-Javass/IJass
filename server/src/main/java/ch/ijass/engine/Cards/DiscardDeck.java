@@ -21,4 +21,5 @@ public class DiscardDeck extends Deck {
   public int getCounterTrump() {
     return counterTrump;
   }
+
 }
