@@ -1,13 +1,9 @@
 package ch.ijass.engine.Players;
 
-/**
- * Une équipe.
- */
+/** Une équipe. */
 public class Team {
 
-  /**
-   * Le score de l'équipe.
-   */
+  /** Le score de l'équipe. */
   private int score;
 
   /**
@@ -19,6 +15,7 @@ public class Team {
 
   /**
    * Ajoute un nombre de points au score de l'équipe.
+   *
    * @param points le nombre de points à ajouter
    */
   public void addPoints(int points) {

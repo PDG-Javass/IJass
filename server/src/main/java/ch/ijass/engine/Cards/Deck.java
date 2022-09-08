@@ -3,18 +3,12 @@ package ch.ijass.engine.Cards;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.*;
 
-/**
- * Un paquet de cartes.
- */
+/** Un paquet de cartes. */
 public class Deck {
-  /**
-   * Les cartes dans le paquet
-   */
+  /** Les cartes dans le paquet */
   protected ArrayList<Card> content;
 
-  /**
-   * Crée un paquet de cartes vide.
-   */
+  /** Crée un paquet de cartes vide. */
   public Deck() {
     content = new ArrayList<>();
   }

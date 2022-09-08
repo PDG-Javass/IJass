@@ -4,7 +4,6 @@ import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Players.*;
 import java.util.ArrayList;
 
-
 public class GameManager {
   private Player firstForRound;
   private Player firstForFold;
@@ -224,5 +223,4 @@ public class GameManager {
     }
     state.setPlayableCards(indexPlayable);
   }
-
 }

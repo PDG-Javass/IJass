@@ -6,13 +6,12 @@ import ch.ijass.engine.Cards.CardColor;
 import ch.ijass.engine.Cards.DiscardDeck;
 import java.util.ArrayList;
 
-/**
- * Un ordinateur jouant au jeu de jass.
- */
+/** Un ordinateur jouant au jeu de jass. */
 public class BotPlayer extends Player {
 
   /**
    * Crée un ordinateur en spécifiant son nom et son équipe
+   *
    * @param name le nom du joueur
    * @param team l'équipe du joueur
    */
