@@ -3,13 +3,27 @@ package ch.ijass.engine.Cards;
 import ch.ijass.engine.Players.Player;
 import java.util.ArrayList;
 
+/**
+ * Une carte.
+ */
 public class Card implements Comparable {
+  /**
+   * La couleur de la carte.
+   */
   private final CardColor color;
+
+  /**
+   * La valeur de la carte.
+   */
   private final CardValue value;
+
+  /**
+   * L'id du joueur qui possède la carte.
+   */
   private int playerId;
 
   /**
-   * Constructeur privé de carte
+   * Crée une carte en spécifiant sa couleur et sa valeur.
    *
    * @param c la couleur souhaitée de la carte
    * @param v la valeur souhaitée de la carte
@@ -34,6 +48,12 @@ public class Card implements Comparable {
     return ret;
   }
 
+  /**
+   * @param rank
+   * @param color
+   * @param trump
+   * @return un vecteur de cartes contenant toutes les cartes battant la carte courante de la même couleur.
+   */
   public static ArrayList<Card> getBiggerCards(CardValue rank, CardColor color, boolean trump) {
     ArrayList<Card> ret = new ArrayList<>();
 
@@ -49,16 +69,36 @@ public class Card implements Comparable {
     return ret;
   }
 
+  /**
+   * La valeur de la carte.
+   * @return
+   */
   public CardValue getValue() {
     return value;
   }
 
-  public void setPlayerId(Player owner) {
-    this.playerId = owner.getId();
-  }
-
+  /**
+   *
+   * @return l'identifiant du propriétaire de la carte
+   */
   public int getPlayerId() {
     return playerId;
+  }
+
+  /**
+   * @return la couleur de la carte
+   */
+
+  public CardColor getColor() {
+    return color;
+  }
+
+  /**
+   * Assigne la carte à un identifiant de joueur
+   * @param owner
+   */
+  public void setPlayerId(Player owner) {
+    this.playerId = owner.getId();
   }
 
   /**
@@ -124,6 +164,13 @@ public class Card implements Comparable {
     return sb.toString();
   }
 
+  /**
+   * Compare la carte courante à une autre carte. La comparaison se fait en fonction de la valeur de la carte et sa couleur.
+   * @implNote La comparaison ne se fait pas en fonction de la force de la carte en jeu. Elle permet uniquement de trier
+   * les cartes par couleur puis valeur.
+   * @param o the object to be compared.
+   * @return
+   */
   @Override
   public int compareTo(Object o) {
     if (o.getClass() != Card.class)
@@ -137,31 +184,9 @@ public class Card implements Comparable {
     }
   }
 
-  public boolean isStronger(Card other, CardColor trump) {
-    if (color == trump) {
-      if (other.color == trump)
-        return value == CardValue.JACK
-            || (value == CardValue.NINE && other.value != CardValue.JACK)
-            || (other.value != CardValue.JACK
-                && other.value != CardValue.NINE
-                && value.ordinal() > other.value.ordinal());
-      else return true;
-    } else return color == other.color && value.ordinal() > other.value.ordinal();
-  }
-
-  public boolean isEqual(Card other) {
-    return compareTo(other) == 0;
-  }
-
-  public CardColor getColor() {
-    return color;
-  }
-
-  public boolean equals(Object obj) {
+  public boolean equals(Object obj){
     if (obj == null || obj.getClass() != Card.class) return false;
-    else {
       Card other = (Card) obj;
       return color == other.color && value == other.value;
-    }
   }
 }

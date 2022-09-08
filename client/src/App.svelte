@@ -4,7 +4,7 @@
   import Board from "./lib/Board.svelte";
   import Home from "./lib/Home.svelte";
   import Rules from "./lib/Rules.svelte";
-  import GameChoice from "./lib/GameChoice.svelte";
+  import Choice from "./lib/Choice.svelte";
 
   let pageStatus: number;
 
@@ -15,7 +15,7 @@
   const pages = [
     { name: "home", component: Home },
     { name: "rules", component: Rules },
-    { name: "choice", component: GameChoice },
+    { name: "choice", component: Choice },
     { name: "board", component: Board },
   ];
 
