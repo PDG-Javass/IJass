@@ -8,44 +8,13 @@
     fetchSecondFold,
     fetchChooseTrump,
     fetchStartRound,
-  } from "../mappings";
-
-  import { nextPage, page } from "../stores";
-
-  let card_board = "";
-  let visible_me = false;
-
-  const timeout = async (ms) => new Promise((res) => setTimeout(res, ms));
-  let next = false;
-
-  async function waitUserInput() {
-    while (next === false) {
-      await timeout(50);
-    }
-    next = false;
-  }
-
-  //play the selected card
-
-  async function playCardOnBoard(x: number) {
-    visible_me = true;
-    card_board = deck[x].name;
-
-    for (let i = 0; i < deck.length; ++i) {
-      deck[i].playable = false;
-    }
-
-    display.cardPlayedId = x;
-
-    deck.splice(x, 1);
-
-    next = true;
-  }
+  } from "../utils/mappings";
 
   const MAX_POINTS = 1000;
   const N_FOLDS = 9;
   const TIME_SLEEP = 1000;
 
+  // Données logiques
   let data: any = {
     idGame: 0,
     counterRound: 0,
@@ -63,6 +32,7 @@
 
   let display = {
     boardStatus: {
+      card: "",
       startIndex: 0,
       remainingToDisplay: 0,
     },
@@ -74,27 +44,55 @@
       showSelection: false,
     },
     cardPlayedId: -1,
-    p: false,
     showEnd: false,
+    visibleMe: false,
   };
 
   let startIndex = data.idFirstForFold;
   let n = data.board.length;
-  //player's deck
-  let deck = [];
 
+  // Deck du joueur et cartes des bots
+  let deck = [];
   let deckBot = [
     { name: "", visible: false },
     { name: "", visible: false },
     { name: "", visible: false },
   ];
 
-  function sleep(ms) {
+  // Fonction d'attente active
+  const timeout = async (ms: number) =>
+    new Promise((res) => setTimeout(res, ms));
+
+  let next = false;
+  async function waitUserInput() {
+    while (next === false) {
+      await timeout(50);
+    }
+    next = false;
+  }
+
+  // "Déplace" la carte jouée sur le plateau
+  async function playCardOnBoard(x: number) {
+    display.visibleMe = true;
+    display.boardStatus.card = deck[x].name;
+
+    for (let i = 0; i < deck.length; ++i) {
+      deck[i].playable = false;
+    }
+
+    display.cardPlayedId = x;
+
+    deck.splice(x, 1);
+
+    next = true;
+  }
+
+  async function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  //show player deck
-  function setAndShowDeck(cardState) {
+  // Initialise les cartes du joueur
+  function setAndShowDeck(cardState: typeof data) {
     for (let i = 0; i < 9; ++i) {
       deck.push({
         name: `cards/card_${cardState.hand[i].color}_${cardState.hand[i].value}_160.png`,
@@ -106,23 +104,24 @@
     deck = deck;
   }
 
-  //set trump if it's player turn
-  function setTrump(id) {
+  // Met à jour l'atout
+  function setTrump(id: number) {
     display.trump.showSelection = false;
     display.trump.choice = id;
     display.trump.current = "trump_" + id + ".png";
     next = true;
   }
 
+  // Rend jouables les cartes qui le sont
   function makeCardsPlayable() {
     for (let i = 0; i < data.playableCards.length; ++i) {
       deck[data.playableCards[i]].playable = true;
-      console.log(data.playableCards[i]);
     }
   }
 
-  //set bot deck
-  function setDeckBot(id) {
+  // Fonctions d'affichage d'une carte de bot sur le plateau
+
+  function setDeckBot(id: number) {
     let cards = data.board;
     for (let i = 0; i < cards.length; ++i) {
       if (cards[i].playerId == id) {
@@ -132,7 +131,7 @@
     }
   }
 
-  function setDeckBotAsc(id) {
+  function setDeckBotAsc(id: number) {
     let cards = data.playedCards;
     let len = data.playedCards.length;
     for (let i = len - 1; i >= len - 4; --i) {
@@ -143,7 +142,7 @@
     }
   }
 
-  function setDeckBotChoose(id, second) {
+  function setDeckBotChoose(id: number, second: boolean) {
     if (second) {
       setDeckBotAsc(id);
     } else {
@@ -152,7 +151,7 @@
     deckBot[id - 1].visible = true;
   }
 
-  //show card, player card become playable
+  // Fonction d'affichage des cartes sur le plateau
   async function showCard(
     startIndex: number,
     remainingToDisplay: number,
@@ -166,11 +165,9 @@
         case 1:
           setDeckBotChoose(1, second);
           break;
-
         case 2:
           setDeckBotChoose(2, second);
           break;
-
         case 3:
           setDeckBotChoose(3, second);
           break;
@@ -182,8 +179,9 @@
       makeCardsPlayable();
     }
   }
-  
-  async function checkTrump(data): Promise<void> {
+
+  // Vérifie, choisit si nécessaire, et affiche l'atout
+  async function checkTrump(data: any): Promise<void> {
     setAndShowDeck(data);
     if (data.trump == -1) {
       display.trump.showSelection = true;
@@ -199,15 +197,15 @@
     }
   }
 
+  // Boucle principale du jeu
   async function mainLoop(gameId: number) {
     data.idGame = gameId;
-    console.log(gameId);
     while (data.scoreBot < MAX_POINTS && data.scorePerson < MAX_POINTS) {
       for (let i = 0; i < N_FOLDS; ++i) {
         data = await fetchFirstFold(data.idGame, 0);
 
         if (i == 0) {
-          if(data.counterRound == 1){
+          if (data.counterRound == 1) {
             await checkTrump(data);
           }
         }
@@ -222,8 +220,6 @@
 
         data = await fetchSecondFold(data.idGame, 0, display.cardPlayedId);
 
-        console.log("second part");
-
         await showCard(startIndex + n, 4 - n, true);
 
         await sleep(TIME_SLEEP * 2);
@@ -231,8 +227,7 @@
         for (let i = 0; i < deckBot.length; ++i) {
           deckBot[i].visible = false;
         }
-        visible_me = false;
-        console.log("fold" + i);
+        display.visibleMe = false;
       }
       data = await fetchStartRound(data.idGame, 0);
       await checkTrump(data);
@@ -246,6 +241,10 @@
   });
 </script>
 
+<!--
+@component
+Composant qui gère et affiche une partie du jeu.
+-->
 <main>
   {#if !display.showEnd}
     <div id="left">
@@ -256,10 +255,8 @@
       />
     </div>
 
-    <!-- board with cards -->
     <div id="middle" class="table">
       <div class="board">
-        <!-- fold cards -->
         <div class="tapis">
           <table class="tab_tapis">
             <tr>
@@ -335,9 +332,9 @@
                 <td />
               {/if}
 
-              {#if visible_me}
+              {#if display.visibleMe}
                 <td id="card_me" class="card-small"
-                  ><img src={card_board} alt="carte" /></td
+                  ><img src={display.boardStatus.card} alt="carte" /></td
                 >
               {:else}
                 <td class="card-transparent"
@@ -361,10 +358,8 @@
         </div>
 
         <div>
-          <!-- players cards-->
           <table class="tab_tapis">
             <tr>
-              <!-- each card is visible at the beginning. On click goes to board and dispear -->
               {#each deck as { name, visible, playable }, i}
                 {#if visible}
                   <td>
@@ -451,7 +446,6 @@
     border-radius: 10%;
     height: 150px;
     width: 105px;
-    /*70% of height*/
     margin-right: 5px;
     float: left;
     background-color: white;
