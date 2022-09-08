@@ -1,8 +1,12 @@
 import { writable, type Writable } from "svelte/store";
-export { nextPage };
+export { page, nextPage, resetPage };
 
-export const page = writable(0);
+const page = writable(0);
 
-function nextPage(page: Writable<number>) {
+function nextPage(page: Writable<number>): void {
     page.update((value) => value + 1);
+}
+
+function resetPage(page: Writable<number>): void {
+    page.update((value) => 0);
 }

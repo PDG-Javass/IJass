@@ -1,8 +1,6 @@
 <script lang="ts">
     import { nextPage, page } from "../stores";
-    const ruleUrl =
-        "https://www.swisslos.ch/fr/jass/informations/les-regles-du-jass/bases-du-jass.html";
-
+    const ruleUrl = "https://www.jassbielbienne.ch/dokus/le_chibre.pdf";
     function handleNext() {
         nextPage(page);
     }
@@ -10,7 +8,7 @@
 
 <main>
     <p>Si tu souhaites relire ou apprendre les règles du jeu:</p>
-    <a href={ruleUrl}>➡Clique sur ce lien⬅</a>
+    <a href={ruleUrl} target="_blank">➡Clique sur ce lien⬅</a>
     <br />
     <button on:click={handleNext}>Continuer</button>
 </main>
