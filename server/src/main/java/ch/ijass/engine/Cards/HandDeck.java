@@ -158,17 +158,24 @@ public class HandDeck extends Deck {
    */
 
   public Card getAdvantageWithoutCut(BoardDeck board, CardColor trump) {
-    if ((board.isCut(trump) && board.colorAsked() != trump)
-        || getNumberOfCardsByColor(content, board.colorAsked()) == 0) {
-      return null;
-    } else {
-      Card highestCardOnBoard = board.getHighestByColor(board.content, board.colorAsked(), false);
-      Card highestCardInHand = getHighestByColor(content, board.colorAsked(), false);
-      if (highestCardInHand.getValue().ordinal() > highestCardOnBoard.getValue().ordinal()) {
-        return highestCardInHand;
+  // On regarde si on peut prendre l'avantage sans couper
+    if ((!board.isCut(trump) || board.colorAsked() == trump) && getNumberOfCardsByColor(content, board.colorAsked()) != 0) {
+
+      // La couleur demandée n'est pas atout
+      if (board.colorAsked() != trump) {
+        Card highestCardOnBoard = board.getHighestByColor(board.content, board.colorAsked(), false);
+        Card highestCardInHand = getHighestByColor(content, board.colorAsked(), false);
+        if (highestCardInHand.getValue().ordinal() > highestCardOnBoard.getValue().ordinal()) return highestCardInHand;
+
+      // La couleur demandée est atout
       } else {
-        return null;
+        Card highestCardOnBoard = board.getHighestByColor(board.content, trump, true);
+        Card highestCardInHand = getHighestByColor(content, trump, true);
+        if (highestCardInHand.getValue().ordinalWithTrump() > highestCardOnBoard.getValue().ordinalWithTrump()) return highestCardInHand;
       }
     }
+    return null;
   }
+
+
 }

@@ -15,15 +15,11 @@ public class BoardDeck extends Deck {
   }
 
   public int getFoldWinner(CardColor trump) {
-    if (content.size() != 4) {
-      throw new RuntimeException("Not all players played");
-    }
-
-    if (isCut(trump)) {
-      return getHighestByColor(content, trump, true).getPlayerId();
-    } else {
-      return getHighestByColor(content, colorAsked(), false).getPlayerId();
-    }
+      if (isCut(trump)) {
+          return getHighestByColor(content, trump, true).getPlayerId();
+      } else {
+          return getHighestByColor(content, colorAsked(), false).getPlayerId();
+      }
   }
 
   public CardColor colorAsked() {
