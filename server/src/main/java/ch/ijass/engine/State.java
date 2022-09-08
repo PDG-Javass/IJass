@@ -2,9 +2,8 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.BoardDeck;
 import ch.ijass.engine.Cards.Card;
-import java.util.ArrayList;
-
 import ch.ijass.engine.Cards.DiscardDeck;
+import java.util.ArrayList;
 import lombok.Data;
 
 @Data
@@ -26,7 +25,6 @@ public class State {
   public ArrayList<Integer> playableCards;
   public DiscardDeck playedCards;
 
-
   public void setHand(ArrayList<Card> hand) {
     this.hand = new ArrayList<>();
     this.hand.addAll(hand);
@@ -36,8 +34,6 @@ public class State {
     this.playableCards = new ArrayList<>();
     this.playableCards.addAll(playableCards);
   }
-
-
 
   State() {
     trump = -1; // Atout pas encore choisi

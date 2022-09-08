@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * Une valeur de carte.
- */
+/** Une valeur de carte. */
 public enum CardValue {
   SIX,
   SEVEN,
@@ -71,7 +69,8 @@ public enum CardValue {
   };
 
   /**
-   * @return les valeurs statiques de l'énuméré dans l'ordre croissant de leur valeur si la couleur est de l'atout
+   * @return les valeurs statiques de l'énuméré dans l'ordre croissant de leur valeur si la couleur
+   *     est de l'atout
    */
   public static List<CardValue> valuesWithTrump() {
     Stream stream =
@@ -89,7 +88,6 @@ public enum CardValue {
   }
 
   /**
-   *
    * @return le nombre de points que vaut la carte
    */
   public int points() {
@@ -97,7 +95,6 @@ public enum CardValue {
   }
 
   /**
-   *
    * @return l'ordinal de la valeur de la carte si sa couleur est l'atout
    */
   public int ordinalWithTrump() {
@@ -106,8 +103,11 @@ public enum CardValue {
 
   /**
    * Retourne la valeur utilisée dans le JSON communiqué au client
+   *
    * @return l'ordinal de la valeur
    */
   @JsonValue
-  public int value() { return ordinal(); }
+  public int value() {
+    return ordinal();
+  }
 }

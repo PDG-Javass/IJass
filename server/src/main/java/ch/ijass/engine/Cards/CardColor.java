@@ -2,9 +2,7 @@ package ch.ijass.engine.Cards;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-/**
- * Une couleur de carte.
- */
+/** Une couleur de carte. */
 public enum CardColor {
   SPADES,
   CLUBS,
@@ -13,6 +11,7 @@ public enum CardColor {
 
   /**
    * Retourne la valeur utilisée dans le JSON communiqué au client
+   *
    * @return l'ordinal de la couleur
    */
   @JsonValue

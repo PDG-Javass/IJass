@@ -2,10 +2,9 @@ package ch.ijass.engine;
 
 import ch.ijass.engine.Cards.*;
 import ch.ijass.engine.Players.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
-// TODO : Méthode coup par coup
-public class GameManager extends State {
+
+public class GameManager {
   private Player firstForRound;
   private Player firstForFold;
   private Player current;
@@ -40,7 +39,9 @@ public class GameManager extends State {
     initiateRound(players.get(0).getId());
   }
 
-  public int getGameId() { return  state.getIdGame(); }
+  public int getGameId() {
+    return state.getIdGame();
+  }
 
   public void setTrump(int trump) {
     this.trump = CardColor.values()[trump];
@@ -49,8 +50,10 @@ public class GameManager extends State {
 
   public boolean nextTurn() {
     if (current.isBot()) {
-      state.board.addCard(current.play(state.board, state.getPlayedCards(), trump, 0)); // Le choix n'est pas utilisé dans
-                                                                                    // la redef de play dans BotPlayer
+      state.board.addCard(
+          current.play(
+              state.board, state.getPlayedCards(), trump, 0)); // Le choix n'est pas utilisé dans
+      // la redef de play dans BotPlayer
       nextPlayer();
       return true;
     }
@@ -82,8 +85,9 @@ public class GameManager extends State {
     // On assigne la nouvelle main du joueur à l'état
     Player person = getPlayerById(playerId);
     state.setHand(person.getHand().getContent());
-    state.setPlayableCards(getIndexArrayList(person.getHand().getContent(),
-            person.getHand().getPlayableCard(state.board, trump)));
+    state.setPlayableCards(
+        getIndexArrayList(
+            person.getHand().getContent(), person.getHand().getPlayableCard(state.board, trump)));
 
     // Assignation des scores des équipes
     Team player = person.getTeam(), bot = players.get((players.indexOf(person) + 1) % 4).getTeam();
@@ -95,30 +99,28 @@ public class GameManager extends State {
     Player person = getPlayerById(playerId);
     state.idFirstForFold = firstForFold.getId();
     state.setHand(person.getHand().getContent());
-    state.setPlayableCards(getIndexArrayList(person.getHand().getContent(),
-            person.getHand().getPlayableCard(state.board, trump)));
-    if (trump != null)
-      state.setTrump(trump.ordinal());
-    else
-      state.setTrump(-1);
+    state.setPlayableCards(
+        getIndexArrayList(
+            person.getHand().getContent(), person.getHand().getPlayableCard(state.board, trump)));
+    if (trump != null) state.setTrump(trump.ordinal());
+    else state.setTrump(-1);
   }
 
   public ArrayList<Integer> getIndexArrayList(ArrayList<Card> cards, ArrayList<Card> playable) {
     ArrayList<Integer> indexes = new ArrayList<>();
     for (int i = 0; i < cards.size(); i++) {
-      if (playable.contains(cards.get(i)))
-        indexes.add(i);
+      if (playable.contains(cards.get(i))) indexes.add(i);
     }
     return indexes;
   }
 
   public void playUntilPlayerTurn(int id) {
-    while (nextTurn());
+    while (nextTurn())
+      ;
   }
 
   public void playUntilEverybodyPlayed() {
-    while (state.board.numberOfCards() < 4)
-      nextTurn();
+    while (state.board.numberOfCards() < 4) nextTurn();
   }
 
   public void playerTurn(int cardChoice) {
@@ -131,6 +133,7 @@ public class GameManager extends State {
     updateStateWhileFold(playerId);
     return state;
   }
+
   public State endFold(int playerId, int cardChoice) {
     playerTurn(cardChoice);
     playUntilEverybodyPlayed();
@@ -154,8 +157,7 @@ public class GameManager extends State {
   }
 
   public void clearHands() {
-    for (Player player : players)
-      player.emptyHand();
+    for (Player player : players) player.emptyHand();
   }
 
   public void distribute() {
@@ -200,17 +202,17 @@ public class GameManager extends State {
       firstForRound = players.get((players.indexOf(firstForRound) + 1) % 4);
     }
   }
+
   public void nextPlayer() {
     current = players.get((players.indexOf(current) + 1) % 4);
   }
 
   public void setHand() {
-    if (current != null)
-      state.setHand(current.getHand().getContent());
+    if (current != null) state.setHand(current.getHand().getContent());
   }
 
   // fonction qui permet de trouver a quel indice se trouve les cartes jouables au sain de la hand
-  private void setPlayable(){
+  private void setPlayable() {
     ArrayList<Integer> indexPlayable = new ArrayList<>();
     int index = 0;
     for (Card card : state.getHand()) {

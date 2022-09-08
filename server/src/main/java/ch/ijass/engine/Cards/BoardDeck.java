@@ -2,9 +2,9 @@ package ch.ijass.engine.Cards;
 
 public class BoardDeck extends Deck {
 
-    public BoardDeck() {
-        super();
-    }
+  public BoardDeck() {
+    super();
+  }
 
   public int countPoints(CardColor trump) {
     int result = 0;
@@ -15,10 +15,6 @@ public class BoardDeck extends Deck {
   }
 
   public int getFoldWinner(CardColor trump) {
-    if (content.size() != 4) {
-      throw new RuntimeException("Not all players played");
-    }
-
     if (isCut(trump)) {
       return getHighestByColor(content, trump, true).getPlayerId();
     } else {
@@ -30,12 +26,12 @@ public class BoardDeck extends Deck {
     return content.get(0).getColor();
   }
 
-    public boolean isCut(CardColor trump) {
-        for (Card card : content) {
-            if (card.getColor() == trump) {
-                return true;
-            }
-        }
-        return false;
+  public boolean isCut(CardColor trump) {
+    for (Card card : content) {
+      if (card.getColor() == trump) {
+        return true;
+      }
     }
+    return false;
+  }
 }
