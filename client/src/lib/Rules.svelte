@@ -1,6 +1,6 @@
 <script lang="ts">
     import { nextPage, page } from "../stores";
-    const ruleUrl = "https://www.jassbielbienne.ch/dokus/le_chibre.pdf"
+    const ruleUrl = "https://www.jassbielbienne.ch/dokus/le_chibre.pdf";
     function handleNext() {
         nextPage(page);
     }

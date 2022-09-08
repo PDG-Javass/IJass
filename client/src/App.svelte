@@ -5,7 +5,6 @@
   import Home from "./lib/Home.svelte";
   import Rules from "./lib/Rules.svelte";
   import Choice from "./lib/Choice.svelte";
-  import End from "./lib/End.svelte";
 
   let pageStatus: number;
 
@@ -18,7 +17,6 @@
     { name: "rules", component: Rules },
     { name: "choice", component: Choice },
     { name: "board", component: Board },
-    { name: "end", component: End}
   ];
 
   $: selected = pages[pageStatus];

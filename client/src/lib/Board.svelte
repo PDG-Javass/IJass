@@ -1,4 +1,7 @@
 <script lang="ts">
+  import Score from "./utils/Score.svelte";
+  import End from "./End.svelte";
+
   import {
     fetchNewGameId,
     fetchFirstFold,
@@ -41,7 +44,7 @@
 
   const MAX_POINTS = 1000;
   const N_FOLDS = 9;
-  const TIME_SLEEP = 1000;
+  const TIME_SLEEP = 5;
 
   let data: any = {
     idGame: 0,
@@ -66,11 +69,13 @@
     trump: {
       choice: -1,
       current: "",
+      showCurrent: false,
       me: false,
-      show: false,
+      showSelection: false,
     },
     cardPlayedId: -1,
     p: false,
+    showEnd: false,
   };
 
   let startIndex = data.idFirstForFold;
@@ -103,7 +108,7 @@
 
   //set trump if it's player turn
   function setTrump(id) {
-    display.trump.show = false;
+    display.trump.showSelection = false;
     display.trump.choice = id;
     display.trump.current = "trump_" + id + ".png";
     next = true;
@@ -178,13 +183,16 @@
     }
   }
 
-  async function checkTrump(trump) {
+  async function checkTrump(trump: number): Promise<void> {
     if (trump == -1) {
-      display.trump.show = true;
+      display.trump.showSelection = true;
+      display.trump.showCurrent = false;
       await waitUserInput();
       await fetchChooseTrump(data.idGame, display.trump.choice);
+      display.trump.showCurrent = true;
     } else {
-      display.trump.show = false;
+      display.trump.showSelection = false;
+      display.trump.showCurrent = true;
       display.trump.current = "trump_" + data.trump + ".png";
     }
   }
@@ -192,7 +200,7 @@
   async function mainLoop(gameId: number) {
     data.idGame = gameId;
     console.log(gameId);
-    while (data.scoreBot < MAX_POINTS || data.scorePerson < MAX_POINTS) {
+    while (data.scoreBot < MAX_POINTS && data.scorePerson < MAX_POINTS) {
       for (let i = 0; i < N_FOLDS; ++i) {
         data = await fetchFirstFold(data.idGame, 0);
 
@@ -218,193 +226,187 @@
 
         await showCard(startIndex + n, 4 - n, true);
 
-        await sleep(4000);
+        await sleep(TIME_SLEEP);
 
         for (let i = 0; i < deckBot.length; ++i) {
           deckBot[i].visible = false;
         }
         visible_me = false;
-
         console.log("fold" + i);
       }
-
       data = await fetchStartRound(data.idGame, 0);
       await checkTrump(data.trump);
     }
-    handleNext();
+    display.showEnd = true;
   }
 
+  // Début de la logique
   fetchNewGameId().then((id) => {
     mainLoop(id);
   });
-
-  function debug() {
-    console.log("from debug");
-    console.log(data);
-  }
-
-  function handleNext() {
-    nextPage(page);
-  }
 </script>
 
-<div id="left">
-  <table class="score" on:click={debug}>
-    <tr><td /><td>Score</td><td /></tr>
-    <tr><td>Moi + Lapinou</td><td /><td>Chacha + Titi</td></tr>
-    <tr><td>{data.scorePerson}</td><td /><td>{data.scoreBot}</td></tr>
-  </table>
-</div>
-
-<!-- board with cards -->
-<div id="middle" class="table">
-  <div class="board">
-    <!-- fold cards -->
-    <div class="tapis">
-      <table class="tab_tapis">
-        <tr>
-          {#if display.trump.show}
-            <td class="card-trump"
-              ><img
-                src="trump_0.png"
-                alt="trump"
-                on:click={() => setTrump(0)}
-              /></td
-            >
-          {:else}
-            <td />
-          {/if}
-
-          {#if deckBot[1].visible}
-            <td class="card-small"><img src={deckBot[1].name} alt="carte" /></td
-            >
-          {:else}
-            <td class="card-transparent"
-              ><img src="cards/card_transparent.png" alt="carte" /></td
-            >
-          {/if}
-
-          {#if display.trump.show}
-            <td class="card-trump"
-              ><img
-                src="trump_1.png"
-                alt="trump"
-                on:click={() => setTrump(1)}
-              /></td
-            >
-          {:else}
-            <td />
-          {/if}
-        </tr>
-
-        <tr>
-          {#if deckBot[2].visible}
-            <td class="card-small"><img src={deckBot[2].name} alt="carte" /></td
-            >
-          {:else}
-            <td class="card-transparent"
-              ><img src="cards/card_transparent.png" alt="carte" /></td
-            >
-          {/if}
-
-          <td />
-
-          {#if deckBot[0].visible}
-            <td class="card-small"><img src={deckBot[0].name} alt="carte" /></td
-            >
-          {:else}
-            <td class="card-transparent"
-              ><img src="cards/card_transparent.png" alt="carte" /></td
-            >
-          {/if}
-        </tr>
-
-        <tr>
-          {#if display.trump.show}
-            <td class="card-trump"
-              ><img
-                src="trump_2.png"
-                alt="trump"
-                on:click={() => setTrump(2)}
-              /></td
-            >
-          {:else}
-            <td />
-          {/if}
-
-          {#if visible_me}
-            <td id="card_me" class="card-small"
-              ><img src={card_board} alt="carte" /></td
-            >
-          {:else}
-            <td class="card-transparent"
-              ><img src="cards/card_transparent.png" alt="carte" /></td
-            >
-          {/if}
-
-          {#if display.trump.show}
-            <td class="card-trump"
-              ><img
-                src="trump_3.png"
-                alt="trump"
-                on:click={() => setTrump(3)}
-              /></td
-            >
-          {:else}
-            <td />
-          {/if}
-        </tr>
-      </table>
+<main>
+  {#if !display.showEnd}
+    <div id="left">
+      <Score
+        scoreBot={data.scoreBot}
+        scorePerson={data.scorePerson}
+        wide={false}
+      />
     </div>
 
-    <div>
-      <!-- players cards-->
-      <table class="tab_tapis">
-        <tr>
-          <!-- each card is visible at the beginning. On click goes to board and dispear -->
-          {#each deck as { name, visible, playable }, i}
-            {#if visible}
-              <td>
-                <div class="card-small">
-                  <img
-                    id={name}
-                    src={name}
-                    class={playable ? "" : "noclick"}
-                    alt="carte"
-                    on:click={() => playCardOnBoard(i)}
-                  />
-                </div>
-              </td>
-            {/if}
-          {/each}
-        </tr>
-      </table>
-    </div>
-  </div>
-</div>
+    <!-- board with cards -->
+    <div id="middle" class="table">
+      <div class="board">
+        <!-- fold cards -->
+        <div class="tapis">
+          <table class="tab_tapis">
+            <tr>
+              {#if display.trump.showSelection}
+                <td class="card-trump"
+                  ><img
+                    src="trump_0.png"
+                    alt="trump"
+                    on:click={() => setTrump(0)}
+                  /></td
+                >
+              {:else}
+                <td />
+              {/if}
 
-<div id="right" class="card-trump">
-  <img src={display.trump.current} alt=" " />
-</div>
+              {#if deckBot[1].visible}
+                <td class="card-small"
+                  ><img src={deckBot[1].name} alt="carte" /></td
+                >
+              {:else}
+                <td class="card-transparent"
+                  ><img src="cards/card_transparent.png" alt="carte" /></td
+                >
+              {/if}
+
+              {#if display.trump.showSelection}
+                <td class="card-trump"
+                  ><img
+                    src="trump_1.png"
+                    alt="trump"
+                    on:click={() => setTrump(1)}
+                  /></td
+                >
+              {:else}
+                <td />
+              {/if}
+            </tr>
+
+            <tr>
+              {#if deckBot[2].visible}
+                <td class="card-small"
+                  ><img src={deckBot[2].name} alt="carte" /></td
+                >
+              {:else}
+                <td class="card-transparent"
+                  ><img src="cards/card_transparent.png" alt="carte" /></td
+                >
+              {/if}
+
+              <td />
+
+              {#if deckBot[0].visible}
+                <td class="card-small"
+                  ><img src={deckBot[0].name} alt="carte" /></td
+                >
+              {:else}
+                <td class="card-transparent"
+                  ><img src="cards/card_transparent.png" alt="carte" /></td
+                >
+              {/if}
+            </tr>
+
+            <tr>
+              {#if display.trump.showSelection}
+                <td class="card-trump"
+                  ><img
+                    src="trump_2.png"
+                    alt="trump"
+                    on:click={() => setTrump(2)}
+                  /></td
+                >
+              {:else}
+                <td />
+              {/if}
+
+              {#if visible_me}
+                <td id="card_me" class="card-small"
+                  ><img src={card_board} alt="carte" /></td
+                >
+              {:else}
+                <td class="card-transparent"
+                  ><img src="cards/card_transparent.png" alt="carte" /></td
+                >
+              {/if}
+
+              {#if display.trump.showSelection}
+                <td class="card-trump"
+                  ><img
+                    src="trump_3.png"
+                    alt="trump"
+                    on:click={() => setTrump(3)}
+                  /></td
+                >
+              {:else}
+                <td />
+              {/if}
+            </tr>
+          </table>
+        </div>
+
+        <div>
+          <!-- players cards-->
+          <table class="tab_tapis">
+            <tr>
+              <!-- each card is visible at the beginning. On click goes to board and dispear -->
+              {#each deck as { name, visible, playable }, i}
+                {#if visible}
+                  <td>
+                    <div class="card-small">
+                      <img
+                        id={name}
+                        src={name}
+                        class={playable ? "" : "noclick"}
+                        alt="carte"
+                        on:click={() => playCardOnBoard(i)}
+                      />
+                    </div>
+                  </td>
+                {/if}
+              {/each}
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    {#if display.trump.showCurrent}
+      <div id="right" class="card-trump">
+        <img src={display.trump.current} alt=" " />
+      </div>
+    {/if}
+  {:else}
+    <End scorePerson={data.scorePerson} scoreBot={data.scoreBot} />
+  {/if}
+</main>
 
 <style>
   #left {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 12px;
+    left: 12px;
   }
 
   #right {
     position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-
-  .score {
-    border: 0.2em solid black;
-    background-color: grey;
-    padding: 10px;
-    font-size: 17px;
+    top: 12px;
+    right: 12px;
   }
 
   .tapis {
@@ -425,7 +427,8 @@
   }
 
   .table {
-    background-color: green;
+    background-color: #015c22;
+    border-radius: 1em;
     height: 800px;
     width: 1200px;
     margin: auto;

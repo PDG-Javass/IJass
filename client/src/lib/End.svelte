@@ -1,20 +1,30 @@
 <script lang="ts">
+    import Score from "./utils/Score.svelte";
+
     import { resetPage, page } from "../stores";
 
-    export let winning:boolean = false;
-    function handleNext() {
-        resetPage(page);
-    }
+    export let scoreBot: number;
+    export let scorePerson: number;
+
+    let winning = scorePerson > scoreBot;
 
     function getEndText(winning: boolean): string {
-        this.winning;
-        return winning ? "Tu as gagné!" : "Tu n'est pas à la hauteur...";
+        return winning ? "Tu as gagné!" : "Tu n'es pas à la hauteur...";
+    }
+
+    function handleNext() {
+        resetPage(page);
     }
 </script>
 
 <main>
-    
+    <Score {scoreBot} {scorePerson} wide={true} />
+    <h1 class="wintext">{getEndText(winning)}</h1>
+    <button on:click={handleNext}>Quitter</button>
 </main>
 
 <style>
+    .wintext {
+        font-size: 3em;
+    }
 </style>
