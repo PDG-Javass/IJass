@@ -1,30 +1,34 @@
 <script lang="ts">
-    import Score from "./utils/Score.svelte";
+  import Score from "./utils/Score.svelte";
 
-    import { resetPage, page } from "../stores";
+  import { resetPage, page } from "../utils/stores";
 
-    export let scoreBot: number;
-    export let scorePerson: number;
+  export let scoreBot: number;
+  export let scorePerson: number;
 
-    let winning = scorePerson > scoreBot;
+  let winning = scorePerson > scoreBot;
 
-    function getEndText(winning: boolean): string {
-        return winning ? "Tu as gagné!" : "Tu n'es pas à la hauteur...";
-    }
+  function getEndText(winning: boolean): string {
+    return winning ? "Tu as gagné!" : "Tu n'es pas à la hauteur...";
+  }
 
-    function handleNext() {
-        resetPage(page);
-    }
+  function handleNext() {
+    resetPage(page);
+  }
 </script>
 
+<!--
+@component
+Composant qui affiche la fin de la partie.
+-->
 <main>
-    <Score {scoreBot} {scorePerson} wide={true} />
-    <h1 class="wintext">{getEndText(winning)}</h1>
-    <button on:click={handleNext}>Quitter</button>
+  <Score {scoreBot} {scorePerson} wide={true} />
+  <h1 class="wintext">{getEndText(winning)}</h1>
+  <button on:click={handleNext}>Quitter</button>
 </main>
 
 <style>
-    .wintext {
-        font-size: 3em;
-    }
+  .wintext {
+    font-size: 3em;
+  }
 </style>

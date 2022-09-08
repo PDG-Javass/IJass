@@ -39,4 +39,11 @@ Si vous souhaitez ajouter une nouvelle requête, il vous suffit d'ajouter une no
 l'annoter avec @GetMapping. Ces méthodes retournent un String qui correspond soit au message d'erreur si un problème 
 d'exécution est survenu, soit à la conversion en JSON de l'état de la partie.
 
+### Pipeline DevOps
 
+Lors de chaque _Pull Request_, deux actions de CI (GitHub Action) vont contrôler respectivement la mise en forme du 
+code Java du serveur à l'aide de Google Java Format, ainsi que sa bonne compilation via Maven.
+
+De plus, chaque _Pull Request_ sur la branche `main` amène à un déploiement de l'application sur Netlify pour le frontend
+et Google Cloud Run pour le backend. Pour plus de détails sur les étapes de déploiement, consulter les fichiers "workflows"
+respectifs situés dans le répertoire [.github](https://github.com/PDG-Javass/IJass/tree/develop/.github/workflows).

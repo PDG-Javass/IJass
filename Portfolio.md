@@ -20,7 +20,7 @@ Il est fortemenent recommandé de lire et d'appliquer le [code de conduite](./CO
 
 ### Installation et utilisation
 
-A suivre...
+Les indications se trouvent dans le Readme.md.
 
 ## Processus de developpement
 
@@ -133,32 +133,32 @@ Voici les fonctionnalités minimum qui seront ajoutées au projet durant ces tro
 
 | Règle à tester | Réussite du test |
 |:-|:-:|
-|Au début de chaque manche, les 36 cartes sont mélangées de façon aléatoire | - |
-|Les joueurs commencent chaque manche avec 9 cartes aléatoires chacun|-|
-|Les cartes dans la main du joueur actif sont triées en tout temps par couleur dans l'ordre carreau-pique-coeur-trèfle dans le sens de lecture|-|
-|Les cartes dans la main du joueur actif de même couleur sont ensuite triées entre elles par puissance croissante dans le sens de lecture sans prendre en compte le buur et le nell|-|
-|Chaque carte est présente une et une seule fois dans l'ensemble des mains de tous les joueurs au début de chaque manche|-|
-|Chaque joueur peut et doit poser une et une seule carte jouable par tour avant de passer au joueur suivant|-|
-|Chacune des deux équipes et constituée de deux joueurs situés de part et d'autre du tapis de jeu|-|
-|Le joueur qui choisit l'atout pour la première manche est celui qui possède le 7 de carreau|-|
-|Les joueurs choisissent l'atout chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
-|Le joueur qui choisit l'atout à chaque manche joue la première carte de la première plie de la manche|-|
-|Les joueurs posent une carte chacun leur tour dans le sens inverse des aiguilles d'une montre|-|
-|Le joueur qui remporte une plie pose la première carte de la plie suivante|-|
-|Si la première carte de la plie est un atout, tous les joueurs qui possèdent au moins un atout différent du buur sont obligés de poser un atout|-|
-|Si la première carte de la plie est un atout, le joueur actif peut poser n'importe quelle carte s'il ne possède pas d'atouts ou uniquement le buur|-|
-|Si la première carte de la plie n'est pas un atout, tous les joueurs qui peuvent suivre dans cette couleur doivent le faire ou couper la plie|-|
-|Si la première carte de la plie n'est pas un atout, le joueur actif peut poser n'importe quelle carte s'il ne peut pas suivre dans la couleur d'entrée|-|
-|Si la première carte de la plie n'est pas un atout et qu'un joueur coupe la plie, les joueurs suivants ne peuvent pas sous-couper à moins de ne pas avoir le choix|-|
-|L'équipe qui remporte la dernière plie de la manche remporte 5 points supplémentaires|-|
-|A la fin de chaque manche, 157 points sont distribués entre les deux équipes|-|
-|Quand une équipe atteint 1000 points, la partie s'arrête et l'équipe qui a atteint ce pallier est déclarée vainqueure|-|
-|Si aucun atout n'est posé, le joueur qui pose la carte la plus haute de la même couleur que la carte d'entrée remporte la plie|-|
-|Si un ou plusieurs joueurs coupent la plie, le joueur ayant posé l'atout le plus puissant remporte la plie|-|
-|En dehors de l'atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : as, roi, dame, valet, dix, neuf, huit, sept et six|-|
-|En dehors de l'atout, l'as vaut 11 points, le roi 4 points, la dame 3 points, le valet 2 points, le dix 10 points et le reste des cartes 0 point|-|
-|En atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : valet/buur, neuf/nell, as, roi, dame, dix, huit, sept et six|-|
-|En atout, le valet/buur vaut 20 points, le neuf/nell 14 points, l'as 11 points, le roi 4 points, la dame 3 points, le dix 10 points et le reste des cartes 0 point|-|
+|Au début de chaque manche, les 36 cartes sont mélangées de façon aléatoire | oui |
+|Les joueurs commencent chaque manche avec 9 cartes aléatoires chacun|oui|
+|Les cartes dans la main du joueur actif sont triées en tout temps par couleur dans l'ordre pique-trèfle-coeur-carreau dans le sens de lecture|oui|
+|Les cartes dans la main du joueur actif de même couleur sont ensuite triées entre elles par puissance croissante dans le sens de lecture sans prendre en compte le buur et le nell|oui|
+|Chaque carte est présente une et une seule fois dans l'ensemble des mains de tous les joueurs au début de chaque manche|oui|
+|Chaque joueur peut et doit poser une et une seule carte jouable par tour avant de passer au joueur suivant|oui|
+|Chacune des deux équipes et constituée de deux joueurs situés de part et d'autre du tapis de jeu|oui|
+|Le joueur qui choisit l'atout pour la première manche est celui qui possède le 7 de carreau|oui|
+|Les joueurs choisissent l'atout chacun leur tour dans le sens inverse des aiguilles d'une montre|oui|
+|Le joueur qui choisit l'atout à chaque manche joue la première carte de la première plie de la manche|oui|
+|Les joueurs posent une carte chacun leur tour dans le sens inverse des aiguilles d'une montre|oui|
+|Le joueur qui remporte une plie pose la première carte de la plie suivante|oui|
+|Si la première carte de la plie est un atout, tous les joueurs qui possèdent au moins un atout différent du buur sont obligés de poser un atout|oui|
+|Si la première carte de la plie est un atout, le joueur actif peut poser n'importe quelle carte s'il ne possède pas d'atouts ou uniquement le buur|oui|
+|Si la première carte de la plie n'est pas un atout, tous les joueurs qui peuvent suivre dans cette couleur doivent le faire ou couper la plie|oui|
+|Si la première carte de la plie n'est pas un atout, le joueur actif peut poser n'importe quelle carte s'il ne peut pas suivre dans la couleur d'entrée|oui|
+|Si la première carte de la plie n'est pas un atout et qu'un joueur coupe la plie, les joueurs suivants ne peuvent pas sous-couper à moins de ne pas avoir le choix|oui|
+|L'équipe qui remporte la dernière plie de la manche remporte 5 points supplémentaires|oui|
+|A la fin de chaque manche, 157 points sont distribués entre les deux équipes|oui|
+|Quand une équipe atteint 1000 points, la partie s'arrête et l'équipe qui a atteint ce palier est déclarée vainqueur|oui|
+|Si aucun atout n'est posé, le joueur qui pose la carte la plus haute de la même couleur que la carte d'entrée remporte la plie|oui|
+|Si un ou plusieurs joueurs coupent la plie, le joueur ayant posé l'atout le plus puissant remporte la plie|oui|
+|En dehors de l'atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : as, roi, dame, valet, dix, neuf, huit, sept et six|oui|
+|En dehors de l'atout, l'as vaut 11 points, le roi 4 points, la dame 3 points, le valet 2 points, le dix 10 points et le reste des cartes 0 point|oui|
+|En atout, l'ordre de puissance des cartes est le suivant, de la plus forte à la plus faible : valet/buur, neuf/nell, as, roi, dame, dix, huit, sept et six|oui|
+|En atout, le valet/buur vaut 20 points, le neuf/nell 14 points, l'as 11 points, le roi 4 points, la dame 3 points, le dix 10 points et le reste des cartes 0 point|oui|
 
 # Sprint 2
 
@@ -192,79 +192,19 @@ Voici la représentation JSON générée par le serveur pour réprésenter l'ét
 
 ```json
 {
-  "game":{
-      "id":0,
-      "round":{
-         "id":0,
-         "trump":0,
-         "beginner":0,
-         "cards" : [
-            {
-                  "family":0,
-                  "value":0
-            },
-            {
-                  "family":0,
-                  "value":1
-            },
-            {
-                  "family":0,
-                  "value":2
-            },
-            {
-                  "family":0,
-                  "value":3
-            },
-            {
-                  "family":0,
-                  "value":4
-            },
-            {
-                  "family":0,
-                  "value":5
-            },
-            {
-                  "family":0,
-                  "value":6
-            },
-            {
-                  "family":0,
-                  "value":7
-            },
-            {
-                  "family":0,
-                  "value":8
-            },
-         ],
-         "fold":{
-            "id":0,
-            "winner":0,
-            "score_ally":0,
-            "score_ennemy":0,
-            "played":[
-               {
-                  "name":"bot1",
-                  "card":{
-                     "family":0,
-                     "value":0
-                  }
-               },
-               {
-                  "name":"bot2",
-                  "card":{
-                     "family":0,
-                     "value":0
-                  }
-               },
-               {
-             Joueur        "family":0,
-                     "value":0
-                  }
-               }
-            ]
-         }
-      }
-   }
+    "idGame": 0,
+    "counterRound": 0,
+    "trump": -1,
+    "counterFold": 0,
+    "idFirstForFold": 0,
+    "board": [{"color": 0, "value": 0, "idPLayer": 3}],
+    "idWinner": 0,
+    "scorePerson": 0,
+    "scoreBot": 0,
+    "hand": [{"color": 0, "value": 2, "idPLayer": 0},{"color": 1, "value": 4, "idPLayer": 0}
+    ],
+    "playableCards": [0],
+    "playedCards": [],
 }
 ```
 
@@ -290,11 +230,12 @@ La mise en place du jeu a s'est bien passé, nous avons néanmoins rencontré le
 - Gestion de l'atout lors des calcul du gagnant de la plie
 - Gestion du tour de jeu en fonction de l'état de la partie
 - Utilisation de Svelte pour le front :
-  - <A compléter par Hugo et Maelle>
+  - Gestion de l'entrée utilisateur
+  - Les fonctions asynchrones
 
 # Sprint 3
 
-## Requêtes et ccommunication entre le client et le serveur
+## Requêtes et communication entre le client et le serveur
 
 Lors de ce sprint nous nous sommes intéressés à la connexion entre le client et le serveur.
 Comme décris dans le précédent sprint, nous avons choisi de communiquer l'état de la partie en JSON.
@@ -311,3 +252,8 @@ Ayant travaillé principalement en deux groupes: le backend et le frontend, nous
 - Nous n'avions pas été assez dans les détails lorsque nous avons imaginé la première version de l'application, cela demandant des changements intermédiaires :
   - La communication n'ayant pas été totalement défini tôt dans le projet, il a fallu adapter le code des deux côtés
   - Nous avons créé le jeu (application serveur) sans considérer les informations que nécessite le GameManager et à quels moments, il a donc fallu fragmenter l'exécution initiale du jeu afin de l'adapter au mapping client-serveur
+
+# Conclusion
+
+Nous avons atteint nos objectifs donc le projet est une réussite. L'apprentissage des nouvelles technologies a pris du temps mais n'a pas été une complication.
+La prochaine fois nous prendrons plus de temps pour discuter des besoins de chacun. Nous ferons aussi plus attention au merge trop tardif qui font perdre du temps.
