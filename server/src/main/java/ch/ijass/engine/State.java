@@ -36,15 +36,6 @@ public class State {
     this.playableCards = new ArrayList<>();
     this.playableCards.addAll(playableCards);
   }
-  /*
-  public void clearPlayedCards() { playedCards.clear(); }
-
-  public void addPlayedCard(Card card) { playedCards.add(card); }
-
-  public void addPlayedCards(ArrayList<Card> cards) {
-    playedCards.addAll(cards);
-  }
-   */
 
 
 

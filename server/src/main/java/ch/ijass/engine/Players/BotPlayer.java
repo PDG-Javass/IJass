@@ -6,8 +6,16 @@ import ch.ijass.engine.Cards.CardColor;
 import ch.ijass.engine.Cards.DiscardDeck;
 import java.util.ArrayList;
 
+/**
+ * Un ordinateur jouant au jeu de jass.
+ */
 public class BotPlayer extends Player {
 
+  /**
+   * Crée un ordinateur en spécifiant son nom et son équipe
+   * @param name le nom du joueur
+   * @param team l'équipe du joueur
+   */
   public BotPlayer(String name, Team team) {
     super(name, team);
   }
@@ -89,12 +97,23 @@ public class BotPlayer extends Player {
     return hand.getColorMostPresent();
   }
 
+  /**
+   * @param playedCards le tas de cartes jouées
+   * @param trump la couleur atout
+   * @return le nombre d'atout ne figurant pas dans la main du joueur
+   */
   private int nbTrumpInNature(DiscardDeck playedCards, CardColor trump) {
     return 9
         - playedCards.getCounterTrump()
         - hand.getNumberOfCardsByColor(hand.getContent(), trump);
   }
 
+  /**
+   * @param cards les cartes dans lesquelles chercher
+   * @param trump la couleur atout
+   * @param limit la limite de points
+   * @return la première carte de la liste qui est inférieure à la limite et n'étant pas de l'atout
+   */
   private Card smallCard(ArrayList<Card> cards, CardColor trump, int limit) {
     for (Card card : cards) {
       if (card.getColor() != trump && card.getValue().ordinal() < limit) {
