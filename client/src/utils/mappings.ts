@@ -34,7 +34,7 @@ async function fetchFirstFold(idGame: number, idPlayer: number): Promise<JSON> {
   });
 }
 
-async function fetchSecondFold(idGame: number, idPlayer: number, cardPlayed: number) {
+async function fetchSecondFold(idGame: number, idPlayer: number, cardPlayed: number): Promise<JSON> {
   let params = `?gameId=${idGame}&playerId=${idPlayer}&cardPlayed=${cardPlayed}`;
   return await fetchRawDataFromEndpoint(endpoints["secondPartFold"] + params).then((rawJSON) => {
     console.log(rawJSON);
@@ -42,7 +42,7 @@ async function fetchSecondFold(idGame: number, idPlayer: number, cardPlayed: num
   });
 }
 
-async function fetchChooseTrump(idGame: number, trump: number) {
+async function fetchChooseTrump(idGame: number, trump: number): Promise<JSON> {
   let params = `?gameId=${idGame}` + `&trump=${trump}`;
   return await fetchRawDataFromEndpoint(endpoints["chooseTrump"] + params).then((rawJSON) => {
     console.log(rawJSON);
@@ -50,7 +50,7 @@ async function fetchChooseTrump(idGame: number, trump: number) {
   });
 }
 
-async function fetchStartRound(idGame: number, playerId: number) {
+async function fetchStartRound(idGame: number, playerId: number): Promise<JSON> {
   let params = `?gameId=${idGame}` + `&playerId=${playerId}`;
   return await fetchRawDataFromEndpoint(endpoints["startRound"] + params).then((rawJSON) => {
     console.log(rawJSON);

@@ -6,6 +6,10 @@
   }
 </script>
 
+<!--
+@component
+Composant qui affiche les choix de jeu.
+-->
 <main>
   <button on:click={handleNext}><p>Partie solo</p></button>
   <br />

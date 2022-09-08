@@ -17,6 +17,10 @@
   }
 </script>
 
+<!--
+@component
+Composant qui affiche la fin de la partie.
+-->
 <main>
   <Score {scoreBot} {scorePerson} wide={true} />
   <h1 class="wintext">{getEndText(winning)}</h1>

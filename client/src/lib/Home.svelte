@@ -8,6 +8,10 @@
   }
 </script>
 
+<!--
+@component
+Composant qui affiche la page d'accueil.
+-->
 <main>
   <h1>Bienvenue sur Javass</h1>
   <img src={homeCard} alt="Cartes de Jass" />

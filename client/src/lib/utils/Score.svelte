@@ -4,6 +4,10 @@
   export let wide: boolean;
 </script>
 
+<!--
+@component
+Composant qui affiche le score de la partie.
+-->
 <main>
   {#if wide}
     <div class="score wide">

@@ -13,7 +13,7 @@
   let card_board = "";
   let visible_me = false;
 
-  const timeout = async (ms) => new Promise((res) => setTimeout(res, ms));
+  const timeout = async (ms: number) => new Promise((res) => setTimeout(res, ms));
   let next = false;
 
   async function waitUserInput() {
@@ -87,12 +87,12 @@
     { name: "", visible: false },
   ];
 
-  function sleep(ms) {
+  async function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   //show player deck
-  function setAndShowDeck(cardState) {
+  function setAndShowDeck(cardState: typeof data) {
     for (let i = 0; i < 9; ++i) {
       deck.push({
         name: `cards/card_${cardState.hand[i].color}_${cardState.hand[i].value}_160.png`,
@@ -105,7 +105,7 @@
   }
 
   //set trump if it's player turn
-  function setTrump(id) {
+  function setTrump(id: number) {
     display.trump.showSelection = false;
     display.trump.choice = id;
     display.trump.current = "trump_" + id + ".png";
@@ -120,7 +120,7 @@
   }
 
   //set bot deck
-  function setDeckBot(id) {
+  function setDeckBot(id: number) {
     let cards = data.board;
     for (let i = 0; i < cards.length; ++i) {
       if (cards[i].playerId == id) {
@@ -130,7 +130,7 @@
     }
   }
 
-  function setDeckBotAsc(id) {
+  function setDeckBotAsc(id: number) {
     let cards = data.playedCards;
     let len = data.playedCards.length;
     for (let i = len - 1; i >= len - 4; --i) {
@@ -141,7 +141,7 @@
     }
   }
 
-  function setDeckBotChoose(id, second) {
+  function setDeckBotChoose(id: number, second: boolean) {
     if (second) {
       setDeckBotAsc(id);
     } else {
@@ -181,7 +181,7 @@
     }
   }
 
-  async function checkTrump(data): Promise<void> {
+  async function checkTrump(data: any): Promise<void> {
     setAndShowDeck(data);
     if (data.trump == -1) {
       display.trump.showSelection = true;
@@ -244,6 +244,10 @@
   });
 </script>
 
+<!--
+@component
+Composant qui gère et affiche une partie du jeu.
+-->
 <main>
   {#if !display.showEnd}
     <div id="left">

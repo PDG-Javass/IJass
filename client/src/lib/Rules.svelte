@@ -8,6 +8,10 @@
   }
 </script>
 
+<!--
+@component
+Composant qui offre un rappel des règles du jeu.
+-->
 <main>
   <p>Si tu souhaites relire ou apprendre les règles du jeu:</p>
   <a href={ruleUrl} target="_blank">➡Clique sur ce lien⬅</a>
